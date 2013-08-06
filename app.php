@@ -62,7 +62,7 @@ class app {
       $route = $this->routes['__home__'];
     }
     // path given but no corresponding route found. This is a 404 error.
-    elseif (!isset($route[$path])) {
+    elseif (!isset($this->routes[$path])) {
       $route = $this->routes['__404__'];
     }
     // path exists in our routes, fetch corresponding route.
