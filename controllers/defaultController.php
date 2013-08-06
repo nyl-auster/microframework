@@ -26,7 +26,7 @@ class defaultController {
   }
 
   function index() {
-    return 'This is the default Homepage. Update your conf/routes.ini to route homepage to a custom controller.';
+    return 'This is the default Homepage. Update or create your /conf/routes.ini to route homepage to a custom controller.';
   }
 
 }
