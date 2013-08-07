@@ -13,8 +13,10 @@ class defaultController {
     $this->app = $app;
   }
 
+  // shortcut to create a new view
   function view($template, $variables = array()) {
-    return $this->app->view($template, $variables);
+    $view = new view($template, $variables);
+    return $view->render();
   }
 
   /**
