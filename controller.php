@@ -1,34 +1,42 @@
 <?php
 /**
- * Map an http request to a class method.
- * 
- * http://yourdomain.com/index.php/hello-world will be considered as "hello-word" internal path.
- * Server search in routes.ini file a entry for "hello-world" that will tel him with method to call in response.
+ * Map an http request to a class method. 
  */
 class controller {
 
   protected $routes = array();
 
+  /**
+   * @param array $routes
+   * An array of associative arrays describing existing routes, with following keys :
+   * - path (string) : path to directory containg the class file
+   * - class : name of the class to instanciate
+   * - method : name of method to call
+   */
   public function __construct($routes = array()) {
     $this->routes = $routes;
   }
 
   /**
-   * from an url "www.mydomain/index.php/my/path?argument=1, this function extracts "my/path" as a path
+   * Return internal url from http request.
+   *
+   * @return string
+   *   e.g : for "www.mydomain/index.php/my/path?argument=1, this function return extracts "my/path" as a path
    */
   public function getPath() {
     return parse_url(trim($_SERVER['PATH_INFO'], '/'), PHP_URL_PATH);
   }
 
   /**
-   * Execute controller corresponding to Internalpath (e.g : "hello/World" )
+   * Execute controller for a given path
+   * @param string $path
+   *   an internal path, e.g : "hello/world".
+   * @return string
+   *   output (html or other formats) from requested controller method.
    */
   public function run($path = '') {
-    // no path given, execute homepage method.    
     if (!$path) return $this->homepage();
-    // path given but no corresponding route found. This is a 404 http error.
     if (!isset($this->routes[$path])) return $this->pageNotFound();
-    // path exists in our routes, fetch corresponding route and call corresponding method
     $route = $this->routes[$path];
     require_once($route['path'] . '/' . $route['class'] . '.php');
     $controller = new $route['class']($this);
@@ -36,7 +44,7 @@ class controller {
   }
 
   /**
-   * Default method called for page not found.
+   * Default method callback for 404 errors.
    */
   public function pageNotFound() {
     header("HTTP/1.1 404 Not Found");
@@ -44,7 +52,7 @@ class controller {
   }
 
   /**
-   * Default method called for homepage (when no path is submitted in http request).
+   * Default method callback for homepage
    */
   public function homepage() {
     return 'Welcome to default Homepage.';
