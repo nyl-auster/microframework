@@ -21,12 +21,12 @@ class controller {
   }
 
   /**
-   * Execute controller corresponding to path
+   * Execute controller corresponding to Internalpath (e.g : "hello/World" )
    */
   public function run($path = '') {
-    // no path given, execute homepage route.    
+    // no path given, execute homepage method.    
     if (!$path) return $this->homepage();
-    // path given but no corresponding route found. This is a 404 error.
+    // path given but no corresponding route found. This is a 404 http error.
     if (!isset($this->routes[$path])) return $this->pageNotFound();
     // path exists in our routes, fetch corresponding route and call corresponding method
     $route = $this->routes[$path];
@@ -40,14 +40,14 @@ class controller {
    */
   public function pageNotFound() {
     header("HTTP/1.1 404 Not Found");
-    return 'page Not found';
+    return 'Oups ! Page not found ... ';
   }
 
   /**
    * Default method called for homepage (when no path is submitted in http request).
    */
   public function homepage() {
-    return 'This is the default Homepage. Update or create your /conf/routes.ini to route homepage to a custom controller.';
+    return 'Welcome to default Homepage.';
   }
 
 }
