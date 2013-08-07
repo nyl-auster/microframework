@@ -2,7 +2,6 @@
 /**
  * Render a templates. Support wrapper templates.
  */
-
 class view {
 
   public $variables = array();
