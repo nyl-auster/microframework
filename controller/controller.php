@@ -8,11 +8,9 @@
 class controller {
 
   protected $routes = array();
-  protected $path = '';
 
   public function __construct($routes = array()) {
     $this->routes = $routes;
-    $this->path = $this->getPath();
   }
 
   /**
@@ -25,17 +23,13 @@ class controller {
   /**
    * Execute controller corresponding to path
    */
-  public function dispatch($path = '') {
+  public function run($path = '') {
     // no path given, execute homepage route.    
     if (!$path) return $this->homepage();
     // path given but no corresponding route found. This is a 404 error.
     if (!isset($this->routes[$path])) return $this->pageNotFound();
-    }
     // path exists in our routes, fetch corresponding route and call corresponding method
-    else {
-      $route = $this->routes[$path];
-    }
-    // waiting for autoloader...
+    $route = $this->routes[$path];
     require_once($route['path'] . '/' . $route['class'] . '.php');
     $controller = new $route['class']($this);
     return $controller->$route['method']();
@@ -44,7 +38,7 @@ class controller {
   /**
    * Default method called for page not found.
    */
-  function pageNotFound() {
+  public function pageNotFound() {
     header("HTTP/1.1 404 Not Found");
     return 'page Not found';
   }
@@ -52,7 +46,7 @@ class controller {
   /**
    * Default method called for homepage (when no path is submitted in http request).
    */
-  function homepage() {
+  public function homepage() {
     return 'This is the default Homepage. Update or create your /conf/routes.ini to route homepage to a custom controller.';
   }
 
