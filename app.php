@@ -43,28 +43,15 @@ class app {
     return $controller->$route['method']();
   }
 
-  /**
-   * Display a template, with or without variables.
-   */
-  public function view($file, $variables = array()) {
-    // pass app objet to our available variables in templates.
-    $variables['app'] = $this;
-    extract($variables);
-    ob_start();
-    include($file);
-    $obOutput = ob_get_contents();
-    ob_end_clean();
-    return $obOutput;
-  }
 
   // create a real url from a symbolic url
-  public function url($path) {
-    $parts = array('index.php', $path);
-    if (isset($this->config['baseUrl'])) {
-      array_unshift($parts, $this->config['baseUrl']);
-    }
-    return '/' . implode('/', $parts);
-  }
+  //public function url($path) {
+    //$parts = array('index.php', $path);
+    //if (isset($this->config['baseUrl'])) {
+      //array_unshift($parts, $this->config['baseUrl']);
+    //}
+    //return '/' . implode('/', $parts);
+  //}
 
 }
 
