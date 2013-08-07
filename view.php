@@ -7,7 +7,6 @@ class view {
 
   public $variables = array();
   public $file = '';
-  public $blocks = '';
   private $wrapperView = null;
 
   public function __construct($file, $variables = array()) {
@@ -23,9 +22,6 @@ class view {
   public function render() {
     $output = $this->includeParse($this->file, $this->variables); 
     if ($this->wrapperView) {
-      // let inner template override variables from wrapper template. Usefull to add some code to parent
-      // from a child template (add css files, add js files, change page title etc...)
-      $this->wrapperView->variables = array_merge($this->wrapperView->variables, $this->variables);
       $this->wrapperView->variables['innerView'] = $output;
       $output = $this->wrapperView->render();     
     }
