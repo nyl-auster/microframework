@@ -2,6 +2,9 @@
 /**
  * Tiny class to map a route to a controller method.
  *
+ * HOW TO USE
+ * ------------
+ *
  * 1 - Call this code in the index.php at the root of your application.
  * @code
  * require 'app.php';
@@ -35,6 +38,18 @@
  * @endcode
  *
  * 4 - goto to yourdomain.com/index.php/hello/world and see "hello world" displaying.
+ *
+ * DIRECTORIES STRUCTURE
+ * --------------------
+ *
+ * app.php
+ * conf/
+ * libraries/
+ * vendor/
+ * templates/
+ * controllers/
+ *
+ * Do not write "index.php" in hard in this file, we may use other entry point if wanted.
  */
 class app {
 
@@ -45,7 +60,7 @@ class app {
       $this->$name = parse_ini_file("conf/$name.ini", true) + parse_ini_file(dirname(__FILE__) ."/conf/$name.ini", true);
     }
   }
-  
+
   /**
    * from an url "www.mydomain/index.php/my/path?argument=1, this function extracts "my/path" as a path
    */
@@ -57,7 +72,7 @@ class app {
    * Execute controller corresponding to path
    */
   public function executeRoute($path = '') {
-    // to path given, execute homepage route.    
+    // no path given, execute homepage route.    
     if (!$path) {
       $route = $this->routes['__home__'];
     }
@@ -65,14 +80,12 @@ class app {
     elseif (!isset($this->routes[$path])) {
       $route = $this->routes['__404__'];
     }
-    // path exists in our routes, fetch corresponding route.
+    // path exists in our routes, fetch corresponding route in our routes' list.
     else {
       $route = $this->routes[$path];
     }
-    // load classes files manually for now.
-    $file = $route['path'] . '/' . $route['class'] . '.php';
     require_once('controllers/defaultController.php');
-    require_once($file);
+    require_once($route['path'] . '/' . $route['class'] . '.php');
     $controller = new $route['class']($this);
     return $controller->$route['method']();
   }
@@ -81,14 +94,23 @@ class app {
    * Display a template, with or without variables.
    */
   public function view($file, $variables = array()) {
-    // pass app objet to our variable
+    // pass app objet to our available variables in templates.
     $variables['app'] = $this;
     extract($variables);
     ob_start();
     include($file);
-    $output = ob_get_contents();
+    $obOutput = ob_get_contents();
     ob_end_clean();
-    return $output;
+    return $obOutput;
+  }
+
+  // create a real url from a symbolic url
+  public function url($path) {
+    $parts = array('index.php', $path);
+    if (isset($this->config['baseUrl'])) {
+      array_unshift($parts, $this->config['baseUrl']);
+    }
+    return '/' . implode('/', $parts);
   }
 
 }
