@@ -5,6 +5,9 @@
 class controller {
 
   protected $routes = array();
+  // script bootstrapping our framework. This controller will be classically called
+  // in a index.php at the root of application, but may be also bootstraped from a "dev.php", for example, if we want.
+  protected $appEntryPoint = 'index.php';
 
   /**
    * @param array $routes
@@ -15,6 +18,12 @@ class controller {
    */
   public function __construct($routes = array()) {
     $this->routes = $routes;
+    $this->appEntryPoint = $this->getAppEntryPoint();
+  }
+
+  private function getAppEntryPoint() {
+    $parts = explode('/', $_SERVER['SCRIPT_NAME']);
+    return array_pop($parts);
   }
 
   /**
@@ -28,13 +37,13 @@ class controller {
   }
 
   /**
-   * Execute controller for a given path
+   * Execute an arbitrary controller for $path
    * @param string $path
    *   an internal path, e.g : "hello/world".
    * @return string
    *   output (html or other formats) from requested controller method.
    */
-  public function run($path = '') {
+  public function executePath($path = '') {
     if (!$path) return $this->homepage();
     if (!isset($this->routes[$path])) return $this->pageNotFound();
     $route = $this->routes[$path];
@@ -56,6 +65,16 @@ class controller {
    */
   public function homepage() {
     return 'Welcome to default Homepage.';
+  }
+
+  /**
+   * @param string $internalPath
+   *   An internal path like 'hello/world'
+   * @return string
+   *   A real relative path understandable by our controller, like "/index.php/hello/world"
+   */
+  public function setUrl($internalPath) {
+    return "/$this->appEntryPoint/$internalPath";
   }
 
 }
