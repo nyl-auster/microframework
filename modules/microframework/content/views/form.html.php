@@ -1,6 +1,10 @@
 <?php use microframework\core\controller; ?>
 
-<form action="<?php print controller::path('content/form/save') ?>" method="post">
+<form action="<?php print controller::path('content/form') ?>" method="post">
+
+<?php if ($errors) : ?>
+Le fomulaire contient des erreurs.
+<?php endif ?>
 
 <!-- field id -->
 <div class="field-wrapper">
@@ -13,8 +17,8 @@
 <!-- field title -->
 <div class="field-wrapper">
 
-  <?php if (isset($_POST['_errors']['title'])) : ?>
-    <div class="error"> <?php print $_POST['_errors']['title'] ?> </div>
+  <?php if (isset($errors['title'])) : ?>
+    <div class="error"> <?php print $errors['title'] ?> </div>
   <?php endif ?>
 
   <div class="label"> Title </div>
@@ -28,8 +32,8 @@
 <!-- field body -->
 <div class="field-wrapper">
 
-  <?php if (isset($_POST['_errors']['body'])) : ?>
-    <div class="error"> <?php print $_POST['_errors']['body'] ?> </div>
+  <?php if (isset($errors['body'])) : ?>
+    <div class="error"> <?php print $errors['body'] ?> </div>
   <?php endif ?>
 
   <div class="label"> Corps </div>
@@ -41,7 +45,7 @@
 
 <!-- field submit -->
 <div class="field">
-<input type="submit" name="submit" value="enregistrer"/>
+<input type="submit" name="form_content_submit" value="enregistrer"/>
 </div>
 
 </form>

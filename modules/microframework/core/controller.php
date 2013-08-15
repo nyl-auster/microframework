@@ -81,5 +81,13 @@ class controller {
     return isset($_GET[$name]) ? $_GET[$name] : FALSE;
   }
 
+  /*
+  static function redirect($path) {
+    $path = self::path($path);
+    header("Location: /$path");      
+    exit;
+  }
+  */
+
 }
 

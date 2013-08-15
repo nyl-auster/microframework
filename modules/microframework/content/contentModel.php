@@ -27,7 +27,7 @@ class contentModel {
       $this->update($values);
     }
     else {
-      $this->insert($id);
+      $this->insert($values);
     }
   }
 
@@ -39,6 +39,16 @@ class contentModel {
       $content = $row; 
     }
     return $content;
+  }
+
+  function listing($conditions = array()) {
+    $query = sprintf("SELECT * FROM content");
+    $result = mysql_query($query) or die(mysql_error());
+    $rows = null;
+    while($row = mysql_fetch_assoc($result)) {
+      $rows[] = $row; 
+    }
+    return $rows;
   }
 
 }
