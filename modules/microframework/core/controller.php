@@ -2,7 +2,14 @@
 namespace microframework\core;
 
 /**
+ * Genereic controller.
  * Map an http request to a class method. 
+ * This class depends on a specific "routes" definition. 
+ * @see constructor for more precisions on that.
+ * 
+ * http request must be of the following
+ * {yourdomain}/{entrypoint}/{path}
+ * E.g : mysite.local/index.php/hello-world
  */
 class controller {
 
@@ -49,7 +56,7 @@ class controller {
    * @return string
    *   output (html or other formats) from requested controller method.
    */
-  public function executePath($path = '') {
+  public function execute($path = '') {
     if (!$path) return $this->homepage();
     if (!isset($this->routes[$path])) return $this->pageNotFound();
     extract($this->routes[$path]);

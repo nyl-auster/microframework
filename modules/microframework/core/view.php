@@ -1,8 +1,8 @@
 <?php
-namespace mircroframework\core;
+namespace microframework\core;
 
 /**
- * Template engine.
+ * Generic template engine class.
  */
 class view {
 

@@ -10,5 +10,5 @@ $routes = is_readable('routes.ini') ? parse_ini_file('routes.ini', true) : array
 
 // execute current requested path
 $controller = new controller($routes);
-print $controller->executePath($controller->getRequestedPath());
+print $controller->execute($controller->getRequestedPath());
 
