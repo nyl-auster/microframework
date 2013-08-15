@@ -2,7 +2,7 @@
 use microframework\core\controller;
 
 // autoloader PSR-0. Use vendor directory to look for the requested class.
-set_include_path("modules");
+set_include_path("modules:vendor");
 spl_autoload_register(function($class){ include preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php'; }); 
 
 // fetch all our routes
