@@ -9,9 +9,11 @@ spl_autoload_register(function($class){ include preg_replace('#\\\|_(?!.+\\\)#',
 $routes = is_readable('routes.ini') ? parse_ini_file('routes.ini', true) : array();
 $settings = is_readable('settings.ini') ? parse_ini_file('settings.ini', true) : array();
 
+// connect to mysql database if any
 if (isset($settings['mysql'])) {
   $mysqlLink = mysql_connect($settings['mysql']['server'], $settings['mysql']['user'], $settings['mysql']['password'])
     or die("Impossible de se connecter : " . mysql_error());
+  mysql_select_db($settings['mysql']['database']);
 }
 
 // execute current requested path

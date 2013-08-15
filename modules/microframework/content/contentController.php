@@ -1,12 +1,12 @@
 <?php
-namespace microframework\content\controllers;
+namespace microframework\content;
 
 # framework packages
 use microframework\core\controller;
 use microframework\core\view;
 
 # module packages
-use microframework\content\models\contentModel;
+use microframework\content\contentModel;
 
 class contentController extends controller {
 
@@ -27,6 +27,7 @@ class contentController extends controller {
       return $this->form();
     }
     else {
+      $content->insert($_POST); 
       return 'Le formulaire a été correctement soumis';
     }
   }
