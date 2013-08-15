@@ -14,9 +14,6 @@ namespace microframework\core;
 class controller {
 
   protected $routes = array();
-  // script bootstrapping our framework. This controller will be classically called
-  // in a index.php at the root of application, but may be also bootstraped from a "dev.php", for example, if we want.
-  protected $appEntryPoint = 'index.php';
 
   /**
    * @param array $routes
@@ -27,16 +24,6 @@ class controller {
    */
   public function __construct($routes = array()) {
     $this->routes = $routes;
-    $this->appEntryPoint = $this->getAppEntryPoint();
-  }
-
-  /**
-   * @return string
-   *   Name of script used as an entry point. E.g : index.php, dev.php, test.php
-   */
-  private function getAppEntryPoint() {
-    $parts = explode('/', $_SERVER['SCRIPT_NAME']);
-    return array_pop($parts);
   }
 
   /**
@@ -83,10 +70,10 @@ class controller {
    * @param string $internalPath
    *   An internal path like 'hello/world'
    * @return string
-   *   A real relative path understandable by our controller, like "/index.php/hello/world"
+   *   A real relative path understandable by our controller, like "{baseurl}/index.php/hello/world"
    */
-  public function setUrl($internalPath) {
-    return "/$this->appEntryPoint/$internalPath";
+  static function path($internalPath) {
+    return $_SERVER['SCRIPT_NAME'] . '/' . $internalPath;
   }
 
 }
