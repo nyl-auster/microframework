@@ -76,5 +76,10 @@ class controller {
     return $_SERVER['SCRIPT_NAME'] . '/' . $internalPath;
   }
 
+  // shortcut for fetching $_GET datas
+  function GET($name) {
+    return isset($_GET[$name]) ? $_GET[$name] : FALSE;
+  }
+
 }
 

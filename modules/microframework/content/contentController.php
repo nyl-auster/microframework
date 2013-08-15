@@ -1,34 +1,50 @@
 <?php
 namespace microframework\content;
 
-# framework packages
+// framework classes
 use microframework\core\controller;
 use microframework\core\view;
 
-# module packages
+// module classes
 use microframework\content\contentModel;
 
 class contentController extends controller {
 
+  protected $objectModel = null;
+
+  function __construct() {
+    $this->objectModel = new contentModel();
+  }
+
   /**
-   * Display a content form
+   * Display a object form
    */
-  public function form($errors = array()) {
-    return new view('modules/microframework/content/views/form.html.php');
+  public function form() {
+    $object = $this->objectModel->load($this->GET('id'));
+    if (!$object) return $this->pageNotFound();
+    return new view('modules/microframework/content/views/form.html.php', array('object' => $object));
+  }
+
+  /**
+   * Display a object
+   */
+  public function view() {
+    $object = $this->objectModel->load($this->GET('id'));
+    if (!$object) return $this->pageNotFound();
+    return new view('modules/microframework/content/views/view.html.php', array('object' => $object));
   }
 
   /**
    * Callback form submission
    */
   public function formSave() {
-    $content = new contentModel();
     $this->formValidate();
     if (!empty($_POST['_errors'])) {
       return $this->form();
     }
     else {
-      $content->insert($_POST); 
-      return 'Le formulaire a été correctement soumis';
+      $this->objectModel->save($_POST); 
+      return 'Le formulaire correctement soumis';
     }
   }
 

@@ -2,6 +2,14 @@
 
 <form action="<?php print controller::path('content/form/save') ?>" method="post">
 
+<!-- field id -->
+<div class="field-wrapper">
+  <div class="field">
+  <?php $id = isset($object['id']) ? $object['id'] : '' ?>
+  <input type="hidden" name="id" value="<?php print $id ?>"/>
+  </div>
+</div>
+
 <!-- field title -->
 <div class="field-wrapper">
 
@@ -11,7 +19,8 @@
 
   <div class="label"> Title </div>
   <div class="field">
-  <input type="textfield" name="title"/>
+  <?php $title = isset($object['title']) ? $object['title'] : '' ?>
+  <input type="textfield" name="title" value="<?php print $title ?>"/>
   </div>
 </div>
 
@@ -25,7 +34,8 @@
 
   <div class="label"> Corps </div>
   <div class="field">
-  <textarea name="body"></textarea>
+  <?php $body = isset($object['body']) ? $object['body'] : '' ?>
+  <textarea name="body"><?php print $body ?></textarea>
   </div>
 </div>
 
