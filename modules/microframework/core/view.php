@@ -1,4 +1,6 @@
 <?php
+namespace mircroframework\core;
+
 /**
  * Template engine.
  */

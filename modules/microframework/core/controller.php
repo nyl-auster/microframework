@@ -1,4 +1,6 @@
 <?php
+namespace microframework\core;
+
 /**
  * Map an http request to a class method. 
  */
@@ -21,6 +23,10 @@ class controller {
     $this->appEntryPoint = $this->getAppEntryPoint();
   }
 
+  /**
+   * @return string
+   *   Name of script used as an entry point. E.g : index.php, dev.php, test.php
+   */
   private function getAppEntryPoint() {
     $parts = explode('/', $_SERVER['SCRIPT_NAME']);
     return array_pop($parts);
@@ -46,10 +52,9 @@ class controller {
   public function executePath($path = '') {
     if (!$path) return $this->homepage();
     if (!isset($this->routes[$path])) return $this->pageNotFound();
-    $route = $this->routes[$path];
-    require_once($route['path'] . '/' . $route['class'] . '.php');
-    $controller = new $route['class']($this);
-    return $controller->$route['method']();
+    extract($this->routes[$path]);
+    $controller = new $class($this);
+    return $controller->$method();
   }
 
   /**
