@@ -1,30 +1,25 @@
 <?php
 namespace microframework\content;
 
-use microframework\core\mysqlQuery;
+use microframework\core\mysqlModel;
 
-class contentModel {
+class contentModel extends mysqlModel {
 
   private $table = 'content';
-  private $query = null;
-
-  function __construct() {
-    $this->query = new mysqlQuery();
-  }
 
   function insert($values) {
     $sql = "INSERT INTO $this->table (title, body, state) VALUES (@title:%s, @body:%s, @state:%d)";
-    $this->query->execute($sql, $values);
+    $this->execute($sql, $values);
   }
 
   function update($values) {
     $sql = "UPDATE $this->table SET title=@title:%s, body=@body:%s, state=@state:%d WHERE id=@id:d";
-    $this->query->execute($sql, $values);
+    $this->execute($sql, $values);
   }
 
   function delete($id) {
-    $sql = sprintf("DELETE from $this->table WHERE id = @id:%d");
-    $this->query->execute($sql, array('id' => $id));
+    $sql = "DELETE from $this->table WHERE id = @id:%d";
+    $this->execute($sql, array('id' => $id));
   }
 
   function save($values) {
@@ -38,7 +33,7 @@ class contentModel {
 
   function load($id) {
     $sql = "SELECT * FROM $this->table WHERE id = @id:%d";
-    $result = $this->query->execute($query, array('id' => $id));
+    $result = $this->execute($query, array('id' => $id));
     $content = null;
     while($row = mysql_fetch_assoc($result)) {
       $content = $row; 
@@ -48,8 +43,8 @@ class contentModel {
 
   function listing($conditions = array()) {
     $sql = "SELECT * FROM $this->table";
-    $result = $this->query->execute($sql);
-    return $this->query->result($result);
+    $result = $this->execute($sql);
+    return $this->result($result);
   }
 
 }

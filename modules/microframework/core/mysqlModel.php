@@ -32,7 +32,7 @@ namespace microframework\core;
 }
  */
 
-class mysqlQuery {
+class mysqlModel {
 
   // token to replace with variables will begin with this sign
   const tokenMarker = '@';
