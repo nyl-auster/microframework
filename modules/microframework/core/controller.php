@@ -16,7 +16,7 @@ class controller {
   protected $routes = array();
 
   /**
-   * @param array $routes
+   * @param array $routes. 
    * An array of associative arrays describing existing routes, with following keys :
    * - path (string) : path to directory containg the class file
    * - class : name of the class to instanciate
@@ -30,7 +30,7 @@ class controller {
    * Return internal url from http request.
    *
    * @return string
-   *   e.g : for "www.mydomain/index.php/my/path?argument=1, this function return extracts "my/path" as a path
+   *   e.g : for "www.mydomain/index.php/my/path?argument=1, this function return extracts "my/path" as a path.
    */
   public function getRequestedPath() {
     return isset($_SERVER['PATH_INFO']) ? parse_url(trim($_SERVER['PATH_INFO'], '/'), PHP_URL_PATH) : '';
@@ -44,8 +44,11 @@ class controller {
    *   output (html or other formats) from requested controller method.
    */
   public function execute($path = '') {
+    // path is empty, serve the homepage.
     if (!$path) return $this->homepage();
+    // we can't find this parth in our routes, this is a 404 error
     if (!isset($this->routes[$path])) return $this->pageNotFound();
+    // instanciate aour class and call corresponding method.
     extract($this->routes[$path]);
     $controller = new $class($this);
     return $controller->$method();
@@ -60,7 +63,7 @@ class controller {
   }
 
   /**
-   * Default method callback for homepage
+   * Default method callback for homepage.
    */
   public function homepage() {
     return 'Welcome to default Homepage.';
@@ -70,15 +73,10 @@ class controller {
    * @param string $internalPath
    *   An internal path like 'hello/world'
    * @return string
-   *   A real relative path understandable by our controller, like "{baseurl}/index.php/hello/world"
+   *   A real relative path understandable by our controller, like "wwww.yourdomain/{baseurl}/index.php/hello/world"
    */
   static function path($internalPath) {
     return $_SERVER['SCRIPT_NAME'] . '/' . $internalPath;
-  }
-
-  // shortcut for fetching $_GET datas
-  function GET($name) {
-    return isset($_GET[$name]) ? $_GET[$name] : FALSE;
   }
 
   /*

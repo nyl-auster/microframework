@@ -43,6 +43,21 @@ Le fomulaire contient des erreurs.
   </div>
 </div>
 
+<!-- field state -->
+<div class="field-wrapper">
+
+  <?php if (isset($errors['state'])) : ?>
+    <div class="error"> <?php print $errors['state'] ?> </div>
+  <?php endif ?>
+
+  <div class="label"> Publié : </div>
+  <div class="field">
+  <?php $state = isset($object['state']) ? $object['state'] : '' ?>
+  Publié <input type="radio" name="state" value="0" <?php $state == 0 ? print "checked=checked" : '' ?>> 
+  Dépublié <input type="radio" name="state" value="1" <?php $state == 1 ? print "checked=checked" : '' ?>> 
+  </div>
+</div>
+
 <!-- field submit -->
 <div class="field">
 <input type="submit" name="form_content_submit" value="enregistrer"/>

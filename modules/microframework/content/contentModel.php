@@ -1,25 +1,30 @@
 <?php
 namespace microframework\content;
 
+use microframework\core\mysqlQuery;
+
 class contentModel {
 
   private $table = 'content';
+  private $query = null;
+
+  function __construct() {
+    $this->query = new mysqlQuery();
+  }
 
   function insert($values) {
-    $values = array_map('mysql_real_escape_string', $values);
-    $query = sprintf("INSERT INTO $this->table (title, body) VALUES ('%s', '%s')", $values['title'], $values['body']);
-    mysql_query($query) or die(mysql_error());
+    $sql = "INSERT INTO $this->table (title, body, state) VALUES (@title:%s, @body:%s, @state:%d)";
+    $this->query->execute($sql, $values);
   }
 
   function update($values) {
-    $values = array_map('mysql_real_escape_string', $values);
-    $query = sprintf("UPDATE $this->table SET title='%s', body='%s' WHERE id=%d", $values['title'], $values['body'], $values['id']);
-    mysql_query($query) or die(mysql_error());
+    $sql = "UPDATE $this->table SET title=@title:%s, body=@body:%s, state=@state:%d WHERE id=@id:d";
+    $this->query->execute($sql, $values);
   }
 
   function delete($id) {
-    $query = sprintf("DELETE from $this->table WHERE id = %d",$id);
-    mysql_query($query) or die(mysql_error());
+    $sql = sprintf("DELETE from $this->table WHERE id = @id:%d");
+    $this->query->execute($sql, array('id' => $id));
   }
 
   function save($values) {
@@ -32,8 +37,8 @@ class contentModel {
   }
 
   function load($id) {
-    $query = sprintf("SELECT * FROM content WHERE id = %d", $id);
-    $result = mysql_query($query) or die(mysql_error());
+    $sql = "SELECT * FROM $this->table WHERE id = @id:%d";
+    $result = $this->query->execute($query, array('id' => $id));
     $content = null;
     while($row = mysql_fetch_assoc($result)) {
       $content = $row; 
@@ -42,13 +47,9 @@ class contentModel {
   }
 
   function listing($conditions = array()) {
-    $query = sprintf("SELECT * FROM content");
-    $result = mysql_query($query) or die(mysql_error());
-    $rows = null;
-    while($row = mysql_fetch_assoc($result)) {
-      $rows[] = $row; 
-    }
-    return $rows;
+    $sql = "SELECT * FROM $this->table";
+    $result = $this->query->execute($sql);
+    return $this->query->result($result);
   }
 
 }
