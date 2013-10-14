@@ -2,7 +2,7 @@
 namespace microframework\core;
 
 /**
- * Genereic controller.
+ * Generic controller.
  * Map an http request to a class method. 
  * This class depends on a specific "routes" definition. 
  * @see constructor for more precisions on that.
