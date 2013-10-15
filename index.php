@@ -3,7 +3,10 @@ use microframework\core\controller;
 
 // autoloader PSR-0. Use vendor directory to look for the requested class.
 set_include_path("modules:vendor");
-spl_autoload_register(function($class){ include preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php'; }); 
+spl_autoload_register(function($class){ 
+  $path = preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php'; 
+  include_once($path);
+}); 
 
 // fetch routes and config
 $routes = is_readable('routes.ini') ? parse_ini_file('routes.ini', true) : array();

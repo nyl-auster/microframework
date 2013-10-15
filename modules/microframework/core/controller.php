@@ -48,6 +48,7 @@ class controller {
     if (!$path) return $this->homepage();
     // we can't find this parth in our routes, this is a 404 error
     if (!isset($this->routes[$path])) return $this->pageNotFound();
+
     // instanciate aour class and call corresponding method.
     extract($this->routes[$path]);
     $controller = new $class($this);
