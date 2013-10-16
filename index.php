@@ -24,7 +24,7 @@ if (isset($settings['mysql'])) {
 }
 
 // execute current requested path
-$controller = new controller($environment, $routes);
+$controller = new controller($routes);
 print $controller->execute($controller->getRequestedPath());
 
 if (isset($mysqlLink)) { 
