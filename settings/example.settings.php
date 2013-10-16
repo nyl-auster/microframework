@@ -7,11 +7,7 @@ $settings['mysql'] = [
   'database' => 'yourdatabase',
 ];
 
-// include dev settings and local settings if any
-if (is_readable('settings-dev.php')) {
-  include('settings-dev.php');
-}
-
+// add local configuration if any. It may override any of the above settings
 if (is_readable('settings-local.php')) {
   include('settings-local.php');
 }
