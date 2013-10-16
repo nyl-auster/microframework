@@ -1,2 +1,2 @@
-routes.php
-settings.php
+settings/routes.php
+settings/settings.php

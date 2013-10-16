@@ -3,7 +3,7 @@ use microframework\core\controller;
 
 // include routes and settings
 if (is_readable('settings/routes.php')) include 'settings/routes.php';
-if (is_readable('settings/settings.php')) include "settings/settings";
+if (is_readable('settings/settings.php')) include "settings/settings.php";
 
 // autoloader PSR-0. Use vendor directory to look for the requested class.
 set_include_path("modules:vendor");
