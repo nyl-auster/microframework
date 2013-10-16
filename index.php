@@ -1,6 +1,11 @@
 <?php
 use microframework\core\controller;
 
+// include routes and settings
+// @TODO include settings by environment
+if (is_readable('routes.php')) include 'routes.php';
+if (is_readable('settings.php')) include 'settings.php';
+
 // autoloader PSR-0. Use vendor directory to look for the requested class.
 set_include_path("modules:vendor");
 spl_autoload_register(function($class){ 
@@ -8,11 +13,8 @@ spl_autoload_register(function($class){
   include_once($path);
 }); 
 
-// fetch routes and config
-$routes = is_readable('routes.ini') ? parse_ini_file('routes.ini', true) : array();
-$settings = is_readable('settings.ini') ? parse_ini_file('settings.ini', true) : array();
-
 // connect to mysql database if any
+// @TODO use pdo instead
 if (isset($settings['mysql'])) {
   $mysqlLink = mysql_connect($settings['mysql']['server'], $settings['mysql']['user'], $settings['mysql']['password'])
     or die("Impossible de se connecter : " . mysql_error());

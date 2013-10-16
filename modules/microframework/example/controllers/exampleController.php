@@ -1,5 +1,6 @@
 <?php
 namespace microframework\example\controllers;
+
 use microframework\core\controller;
 use microframework\core\view;
 
