@@ -7,10 +7,7 @@ if (is_readable('settings/settings.php')) include "settings/settings.php";
 
 // autoloader PSR-0. Use vendor directory to look for the requested class.
 set_include_path("modules:vendor");
-spl_autoload_register(function($class){ 
-  $path = preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php'; 
-  include_once($path);
-}); 
+spl_autoload_register(function($class){include_once preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php';}); 
 
 // @TODO use pdo
 if (isset($settings['mysql'])) {
