@@ -10,5 +10,9 @@ class exampleController extends controller {
     return new view('modules/microframework/example/views/helloWorld.html.php');
   }
 
+  function test() {
+    return 'pouet';
+  }
+
 }
 

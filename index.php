@@ -1,10 +1,12 @@
 <?php
 use microframework\core\controller;
 
+$environment = 'dev';
+
 // include routes and settings
-// @TODO include settings by environment
+//'' @TODO include settings by environment
 if (is_readable('routes.php')) include 'routes.php';
-if (is_readable('settings.php')) include 'settings.php';
+if (is_readable('settings.php')) include "settings-$environment.php";
 
 // autoloader PSR-0. Use vendor directory to look for the requested class.
 set_include_path("modules:vendor");
@@ -22,7 +24,7 @@ if (isset($settings['mysql'])) {
 }
 
 // execute current requested path
-$controller = new controller($routes);
+$controller = new controller($environment, $routes);
 print $controller->execute($controller->getRequestedPath());
 
 if (isset($mysqlLink)) { 

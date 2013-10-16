@@ -13,7 +13,10 @@ namespace microframework\core;
  */
 class controller {
 
+  // array of routes
   protected $routes = array();
+  // currently active environment
+  protected $environment = '';
 
   /**
    * @param array $routes. 
@@ -22,8 +25,9 @@ class controller {
    * - class : name of the class to instanciate
    * - method : name of method to call
    */
-  public function __construct($routes = array()) {
+  public function __construct($environment, $routes = array()) {
     $this->routes = $routes;
+    $this->environment = $environment;
   }
 
   /**
