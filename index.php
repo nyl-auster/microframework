@@ -12,8 +12,7 @@ spl_autoload_register(function($class){
   include_once($path);
 }); 
 
-// connect to mysql database if any
-// @TODO use pdo instead
+// @TODO use pdo
 if (isset($settings['mysql'])) {
   $mysqlLink = mysql_connect($settings['mysql']['server'], $settings['mysql']['user'], $settings['mysql']['password'])
     or die("Impossible de se connecter : " . mysql_error());
