@@ -2,10 +2,11 @@
 use microframework\core\controller;
 
 // include routes and settings
-if (is_readable('settings/routes.php')) include 'settings/routes.php';
-if (is_readable('settings/settings.php')) include "settings/settings.php";
+if (is_readable('routes.php')) include 'routes.php';
+if (is_readable('settings.php')) include "settings.php";
 
-// autoloader PSR-0. Use vendor directory to look for the requested class.
+// autoloader PSR-0. 
+// Use vendor and modules directories to look for the requested class.
 set_include_path("modules:vendor");
 spl_autoload_register(function($class){include_once preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php';}); 
 
