@@ -1,5 +1,5 @@
 <?php
-use microframework\core\controller;
+use microframework\core\routeur;
 
 // include routes and settings
 if (is_readable('routes.php')) include 'routes.php';
@@ -18,8 +18,8 @@ if (isset($settings['mysql'])) {
 }
 
 // execute current requested path
-$controller = new controller($routes);
-print $controller->execute($controller->getRequestedPath());
+$routeur = new routeur($routes);
+print $routeur->executeRoute($routeur->getRouteFromUrl());
 
 if (isset($mysqlLink)) { 
   mysql_close($mysqlLink);
