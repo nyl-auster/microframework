@@ -1,9 +1,10 @@
 <?php
 /**
- * routes file
+ * Ressource registry file.
  */
-$routes['hello-world'] = array(
-  'class' => 'microframework\example\controllers\exampleController',
-  'method' => 'helloWorld',
+
+$registry['machine_id'] = array(
+  'path' => 'example',
+  'class' => 'exampleRessource',
 );
 
