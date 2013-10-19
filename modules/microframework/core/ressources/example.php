@@ -3,9 +3,9 @@ namespace microframework\core\ressources;
 
 use microframework\core\ressource;
 
-class exampleRessource extends ressource {
+class example extends ressource {
 
-  function render() {
+  function content() {
      return "Hello world";
   }
 

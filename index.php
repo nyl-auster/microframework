@@ -10,7 +10,7 @@ if (is_readable('settings.php')) include "settings.php";
 set_include_path("modules:vendor");
 spl_autoload_register(function($class){
   $path = preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php';
-  require $path;
+  include_once $path;
 }); 
 // @TODO use pdo
 if (isset($settings['mysql'])) {
@@ -21,7 +21,7 @@ if (isset($settings['mysql'])) {
 
 // execute current requested path
 $server = new server($registry);
-$ressource = $server->getRessourceByRoute($server->getRouteFromUrl());
+$ressource = $server->getRessourceByRoute(server::getRouteFromUrl());
 print $ressource->render();
 
 if (isset($mysqlLink)) { 
