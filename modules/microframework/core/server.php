@@ -11,12 +11,12 @@ class server {
 
   // default ressources
   protected $registry = array(
-    'notFound' => array(
-      'class' => 'microframework\core\ressources\notFound', 
+    'httpError404' => array(
+      'class' => 'microframework\core\ressources\httpError404', 
       'route' => FALSE, // make sure this ressource is not accessible by http.
     ),
-    'forbidden' => array(
-      'class' => 'microframework\core\ressources\forbidden', 
+    'httpError403' => array(
+      'class' => 'microframework\core\ressources\httpError403', 
       'route' => FALSE, // make sure this ressource is not accessible by http.
     ),
     'homepage' => array(
@@ -60,10 +60,10 @@ class server {
       if ($ressource->access()) {
         return $ressource;
       }
-      // else, return forbidden ressource
+      // else, return httpError403 ressource
       else {
         // no ressource found, serve 404 ressource
-        $ressource = new $this->registry['forbidden']['class'];
+        $ressource = new $this->registry['httpError403']['class'];
         return $ressource;
       }
     }
@@ -71,7 +71,7 @@ class server {
     // no ressource found, this is a 404
     else {
       // no ressource found, serve 404 ressource
-      $ressource = new $this->registry['notFound']['class'];
+      $ressource = new $this->registry['httpError404']['class'];
       return $ressource;
     }
 

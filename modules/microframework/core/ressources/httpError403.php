@@ -3,10 +3,11 @@ namespace microframework\core\ressources;
 
 use microframework\core\ressource;
 
-class example extends ressource {
+class httpError403 extends ressource {
 
   function content() {
-     return "Hello world";
+    header("HTTP/1.1 403 Access Denied");
+    return "Access denied";
   }
 
 }
