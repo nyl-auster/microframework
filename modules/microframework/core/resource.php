@@ -42,17 +42,20 @@ abstract class resource {
    * Render the content of the resource, checking access to this resource.
    */
   function render() {
-    if ($this->access() == TRUE) {
-      if (isset($_POST)) {
-        return $this->post();
-      }
-      else {
-        return $this->get();
-      }
-    }
-    else {
+
+    // do not display anything if access is disallowed
+    if ($this->access() != TRUE) {
       return '';
     }
+
+    // call post method in case of http post request
+    if (isset($_POST)) {
+      return $this->post();
+    }
+
+    // else call get method.
+    return $this->get();
+    
   }
 
 }
