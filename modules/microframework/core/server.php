@@ -2,15 +2,16 @@
 namespace microframework\core;
 
 /**
- * Map an url to a resource.
+ * Map a route to a resource.
  *
  * Example of url to use :
  * www.mysite.local/index.php/hello-world?argument=value&argument2=value2
- * This will return the resource object map to hello-world route in routes.php
+ * "hello-world" will be extract as the "route", and a resource class binded to this
+ * route will be searched in routes.php file.
  */
 class server {
 
-  // special default resources. They may be overriden in routes.php
+  // default routes for homepage, 403 and 404 http errors. Overridable in routes.php file.
   protected $routes = array(
     '' => array('class' => 'microframework\core\resources\homepage'),
     '__http404' => array('class' => 'microframework\core\resources\http404'),
@@ -19,7 +20,7 @@ class server {
 
   /**
    * @param array $routes. 
-   * routes resource associative array. see example.routes.php
+   *   Routes to resources map. see example.routes.php
    */
   public function __construct($routes = array()) {
     $this->routes = array_merge($this->routes, $routes);
@@ -27,38 +28,49 @@ class server {
 
   /**
    * Fetch a resource object by its route.
+   *
    * @param string $route
-   * @return string
-   *   output (html or other formats) from requested controller method.
+   *   route searched. E.g : "my/path".
+   * @return object
+   *   a "resource" object.
    */
-  public function getresourceByRoute($route = '') {
+  public function getResource($route = '') {
 
-    // search a resource corresponding to this $route. Do not match routes
-    // beginning by "__", which is our convention for private but overridable resources.
-    $resource = isset($this->routes[$route]) && strpos($route, '__') === FALSE ? new $this->routes[$route]['class'] : FALSE;
+    // search a resource matching our $route. Skip routes beginning by "__".
+    if (isset($this->routes[$route]) && strpos($route, '__') === FALSE) {
+      $resource = new $this->routes[$route]['class'];
+    }
 
-    // no resource found, server 404 error resource
-    if (!$resource) return new $this->routes['__http404']['class'];
+    // no resource found, serve the 404 error resource
+    if (!isset($resource)) {
+      return new $this->routes['__http404']['class'];
+    }
 
-    // a resource has been found, serve it if access is allowed, otherwise server 403 error resource.
-    return $resource->access() ? $resource : new $this->routes['__http403']['class'];
+    // a resource has been found, but acces is denied, return 403 error resource.
+    if (!$resource->access()) {
+      return new $this->routes['__http403']['class'];
+    }
+
+    // resource exists and access is allowed, hurrah :
+    return $resource;
 
   }
 
   /**
-   * Return a route name from a full url
+   * Return a route name from current full url
+   *
    * @return string
-   *   e.g : for "www.mydomain/index.php/my/route?argument=1, this function return extracts "my/route" as the route.
+   *   e.g : for url "www.mydomain/index.php/my/route?argument=1, this function wille return "my/route".
    */
   static function getRouteFromUrl() {
     return isset($_SERVER['PATH_INFO']) ? parse_url(trim($_SERVER['PATH_INFO'], '/'), PHP_URL_PATH) : '';
   }
 
   /**
-   * Create an url from  route name, to build correct links from routes.
+   * Create an url from  route name.
    * @param string $route
    * @return string
-   *   A relative url understandable, like "/index.php/hello/world"
+   *   A relative url, like "/index.php/hello/world", usable in links.
    */
   static function getUrlFromRoute($route) {
     return $_SERVER['SCRIPT_NAME'] . '/' . $route;
