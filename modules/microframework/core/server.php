@@ -2,57 +2,57 @@
 namespace microframework\core;
 
 /**
- * Map an url to a ressource.
+ * Map an url to a resource.
  *
  * Example of url to use :
  * www.mysite.local/index.php/hello-world?argument=value&argument2=value2
- * This will return the ressource object map to hello-world route in registry.php
+ * This will return the resource object map to hello-world route in registry.php
  */
 class server {
 
-  // special default ressources. They may be overriden in registry.php
+  // special default resources. They may be overriden in registry.php
   protected $registry = array(
     'http404' => array(
-      'class' => 'microframework\core\ressources\http404', 
+      'class' => 'microframework\core\resources\http404', 
     ),
     'http403' => array(
-      'class' => 'microframework\core\ressources\http403', 
+      'class' => 'microframework\core\resources\http403', 
     ),
     'homepage' => array(
-      'class' => 'microframework\core\ressources\homepage', 
+      'class' => 'microframework\core\resources\homepage', 
       'route' => '',
     ),
   );
 
   /**
    * @param array $registry. 
-   * registry ressource associative array. see example.registry.php
+   * registry resource associative array. see example.registry.php
    */
   public function __construct($registry = array()) {
     $this->registry = array_merge($this->registry, $registry);
   }
 
   /**
-   * Fetch a ressource object by its route.
+   * Fetch a resource object by its route.
    * @param string $route
    * @return string
    *   output (html or other formats) from requested controller method.
    */
-  public function getRessourceByRoute($route = '') {
+  public function getresourceByRoute($route = '') {
 
-    // loop through registered ressources
+    // loop through registered resources
     foreach($this->registry as $name => $datas) {
       if (is_string($route) && isset($datas['route']) && $datas['route'] === $route) {
-        $ressource = new $datas['class']();
+        $resource = new $datas['class']();
         break;
       }
     }
 
-    // no ressource found, server 404 error ressource
-    if (!isset($ressource)) return new $this->registry['http404']['class'];
+    // no resource found, server 404 error resource
+    if (!isset($resource)) return new $this->registry['http404']['class'];
 
-    // a ressource has been found, serve it if access is allowed, otherwise server 403 error ressource.
-    return $ressource->access() ? $ressource : new $this->registry['http403']['class'];
+    // a resource has been found, serve it if access is allowed, otherwise server 403 error resource.
+    return $resource->access() ? $resource : new $this->registry['http403']['class'];
 
   }
 

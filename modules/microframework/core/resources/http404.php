@@ -1,9 +1,9 @@
 <?php
-namespace microframework\core\ressources;
+namespace microframework\core\resources;
 
-use microframework\core\ressource;
+use microframework\core\resource;
 
-class http404 extends ressource {
+class http404 extends resource {
 
   function content() {
     header("HTTP/1.1 404 Not Found");

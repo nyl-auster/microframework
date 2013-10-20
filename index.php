@@ -19,8 +19,8 @@ if (isset($settings['mysql'])) {
 
 // execute current requested path
 $server = new server($registry);
-$ressource = $server->getRessourceByRoute(server::getRouteFromUrl());
-print $ressource->render();
+$resource = $server->getResourceByRoute(server::getRouteFromUrl());
+print $resource->render();
 
 if (isset($mysqlLink)) mysql_close($mysqlLink);
 
