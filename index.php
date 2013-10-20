@@ -2,6 +2,7 @@
 use microframework\core\server;
 
 // include routes and settings
+$registry = array();
 if (is_readable('registry.php')) include 'registry.php';
 if (is_readable('settings.php')) include "settings.php";
 
