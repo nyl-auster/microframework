@@ -5,7 +5,7 @@ use microframework\core\resource;
 
 class homepage extends resource {
 
-  function content() {
+  function get() {
      return "This is the default homepage.";
   }
 

@@ -25,15 +25,34 @@ abstract class resource {
   }
 
   /**
-   * Content of the resource.
+   * response to a post request.
+   * Return the get page by default.
    */
-  abstract function content();
+  function post() {
+    return $this->get();
+  }
+
+
+  /**
+   * Response to a get request 
+   */
+  abstract function get();
 
   /**
    * Render the content of the resource, checking access to this resource.
    */
   function render() {
-    return $this->access() == TRUE ? $this->content() : '';
+    if ($this->access() == TRUE) {
+      if (isset($_POST)) {
+        return $this->post();
+      }
+      else {
+        return $this->get();
+      }
+    }
+    else {
+      return '';
+    }
   }
 
 }
