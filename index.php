@@ -2,8 +2,8 @@
 use microframework\core\server;
 
 // include routes and settings
-$registry = array();
-if (is_readable('registry.php')) include 'registry.php';
+$routes = array();
+if (is_readable('routes.php')) include 'routes.php';
 if (is_readable('settings.php')) include "settings.php";
 
 // autoloader PSR-0. Use vendor and modules directories to look for the requested class.
@@ -18,7 +18,7 @@ if (isset($settings['mysql'])) {
 }
 
 // execute current requested path
-$server = new server($registry);
+$server = new server($routes);
 $resource = $server->getResourceByRoute(server::getRouteFromUrl());
 print $resource->render();
 
