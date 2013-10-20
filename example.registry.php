@@ -21,5 +21,3 @@ $registry['http403']['class'] = 'myBundle\myModule\myRessource';
 // includes may be used to let each module have its own registry file.
 include 'microframework/mybundle/mymodule/registry.php';
 
-// this is required
-return $registry;
