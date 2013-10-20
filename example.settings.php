@@ -10,7 +10,7 @@ $settings['mysql'] = array(
   'database' => 'yourdatabase',
 );
 
-// add local configuration if any. It may override any of the above settings
+// add local configuration if any. It may overrides any of the above settings
 if (is_readable('settings-local.php')) {
   include('settings-local.php');
 }
