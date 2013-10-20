@@ -6,18 +6,17 @@ namespace microframework\core;
  *
  * Example of url to use :
  * www.mysite.local/index.php/hello-world?argument=value&argument2=value2
+ * This will return the ressource object map to hello-world route in registry.php
  */
 class server {
 
-  // default ressources
+  // special default ressources. They may be overriden in registry.php
   protected $registry = array(
-    'httpError404' => array(
-      'class' => 'microframework\core\ressources\httpError404', 
-      'route' => FALSE, // make sure this ressource is not accessible by http.
+    'http404' => array(
+      'class' => 'microframework\core\ressources\http404', 
     ),
-    'httpError403' => array(
-      'class' => 'microframework\core\ressources\httpError403', 
-      'route' => FALSE, // make sure this ressource is not accessible by http.
+    'http403' => array(
+      'class' => 'microframework\core\ressources\http403', 
     ),
     'homepage' => array(
       'class' => 'microframework\core\ressources\homepage', 
@@ -27,9 +26,7 @@ class server {
 
   /**
    * @param array $registry. 
-   * An array of associative arrays describing existing ressources, with at least following keys :
-   * - class (string) : name of the class to instanciate with full namespace
-   * - route (mixed) : route that will trigger this ressource. may be FALSE.
+   * registry ressource associative array. see example.registry.php
    */
   public function __construct($registry = array()) {
     $this->registry = array_merge($this->registry, $registry);
@@ -43,37 +40,19 @@ class server {
    */
   public function getRessourceByRoute($route = '') {
 
-    $ressource = NULL;
-
     // loop through registered ressources
-    foreach($this->registry as $registryName => $datas) {
-      if (isset($datas['route']) && $datas['route'] === $route) {
+    foreach($this->registry as $name => $datas) {
+      if (is_string($route) && isset($datas['route']) && $datas['route'] === $route) {
         $ressource = new $datas['class']();
         break;
       }
     }
 
-    // if a ressource has been found
-    if ($ressource) {
-      $ressource = new $this->registry[$registryName]['class'];
-      // if access is allowed, return this ressource
-      if ($ressource->access()) {
-        return $ressource;
-      }
-      // else, return httpError403 ressource
-      else {
-        // no ressource found, serve 404 ressource
-        $ressource = new $this->registry['httpError403']['class'];
-        return $ressource;
-      }
-    }
+    // no ressource found, server 404 error ressource
+    if (!isset($ressource)) return new $this->registry['http404']['class'];
 
-    // no ressource found, this is a 404
-    else {
-      // no ressource found, serve 404 ressource
-      $ressource = new $this->registry['httpError404']['class'];
-      return $ressource;
-    }
+    // a ressource has been found, serve it if access is allowed, otherwise server 403 error ressource.
+    return $ressource->access() ? $ressource : new $this->registry['http403']['class'];
 
   }
 
@@ -87,10 +66,10 @@ class server {
   }
 
   /**
-   * Create an url from  route name.
+   * Create an url from  route name, to build correct links from routes.
    * @param string $route
    * @return string
-   *   A real relative Url understandable by our controller, like "wwww.yourdomain/{baseurl}/index.php/hello/world"
+   *   A relative url understandable, like "/index.php/hello/world"
    */
   static function getUrlFromRoute($route) {
     return $_SERVER['SCRIPT_NAME'] . '/' . $route;

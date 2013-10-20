@@ -11,7 +11,7 @@ class homepage extends ressource {
       'content' => 'Je suis la homepage',
       'title' => 'Homepage',
     );
-    return new view('yann/site/views/ressource.php', $variables);
+    return new view('yann/site/views/homepage.php', $variables);
   }
 
 }

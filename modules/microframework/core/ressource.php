@@ -4,20 +4,17 @@
  *
  * Base class for ressources.
  *
- * All content displayed by this framework is a ressource.
+ * All content displayed by this framework is a ressource object.
  * A ressource may be accessible by an url if it's registered in "registry.php" file.
- * Otherwise, ressource may be rendered instanciating the class (in templates for example),
- * calling the render() method (that take cares of cheking access to the ressource).
+ * In a template, they may be called simply bi instancied them and call "render()" method,
+ * which take care of access.
  */
-
 namespace microframework\core;
-
-use microframework\core\ressourceInterface;
 
 abstract class ressource {
 
   /**
-   * if FALSE, ressource will not be visible.
+   * if FALSE, ressource will not be visible. 
    */
   function access() {
     return TRUE;
@@ -32,12 +29,7 @@ abstract class ressource {
    * Render the content of the ressource, checking access to this ressource.
    */
   function render() {
-    if ($this->access() == TRUE) {
-      return $this->content();
-    }
-    else {
-      return '';
-    }
+    return $this->access() == TRUE ? $this->content() : '';
   }
 
   function __toString() {
