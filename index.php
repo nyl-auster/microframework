@@ -1,6 +1,6 @@
 <?php
 use microframework\core\server;
-use microframework\core\events;
+use microframework\core\eventsManager;
 
 // autoloader PSR-0. Use vendor and modules directories to look for the requested class.
 set_include_path("modules:vendor");
@@ -13,13 +13,13 @@ foreach (array('routes.php', 'settings.php', 'listeners.php') as $file ) {
 }
 
 // instanciate events manager with our listeners configuration
-$events = events::getInstance($listeners);
-$events::fire('app.bootstrap', array('routes' => $routes, 'settings' => $settings, 'listeners' => $listeners));
+$eventsManager = eventsManager::getInstance($listeners);
+$eventsManager->fire('app.bootstrap', array('routes' => $routes, 'settings' => $settings, 'listeners' => $listeners));
 
 // fetch resource matching current url
-$server = new server($routes);
+$server = new server($routes, $eventsManager);
 $resource = $server->getResource($server->getRouteFromUrl());
 print $resource->render();
 
-$events::fire('app.close');
+$eventsManager->fire('app.close');
 

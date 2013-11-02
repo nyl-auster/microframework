@@ -18,12 +18,16 @@ class server {
     '__http403' => array('class' => 'microframework\core\resources\http403'),
   );
 
+  // eventsManager instance
+  protected $eventsManager = null;
+
   /**
    * @param array $routes. 
    *   Routes to resources map. see example.routes.php
    */
-  public function __construct($routes = array()) {
+  public function __construct($routes = array(), \microframework\core\eventsManager $eventsManager) {
     $this->routes = array_merge($this->routes, $routes);
+    $this->eventsManager = $eventsManager;
   }
 
   /**
@@ -50,6 +54,8 @@ class server {
     if (!$resource->access()) {
       return new $this->routes['__http403']['class'];
     }
+
+    $this->eventsManager->fire('server.getResource', array('resource' => $resource));
 
     // resource exists and access is allowed, hurrah :
     return $resource;
