@@ -21,12 +21,20 @@ class events {
     return self::$instance;
   }
 
-  static function fire($event) {
+  /**
+   * Dispatch an event in application
+   * @event (string)
+   *   event name
+   * @params (mixed)
+   *   param to pass to the listener
+   */
+  static function fire($event, $params = array()) {
     if (!isset(self::$listeners[$event])) return false;
     foreach (self::$listeners[$event] as $listener) {
-      if ($listener['enable']) {
-        call_user_func($listener['callable']);
+      if (isset($listener['enable']) && $listener['enable'] == FALSE)  {
+        continue;
       }
+      call_user_func_array($listener['callable'], $params);
     }
   }
 

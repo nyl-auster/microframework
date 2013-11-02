@@ -14,7 +14,7 @@ foreach (array('routes.php', 'settings.php', 'listeners.php') as $file ) {
 
 // instanciate events manager with our listeners configuration
 $events = events::getInstance($listeners);
-$events::fire('app.bootstrap');
+$events::fire('app.bootstrap', array('routes' => $routes, 'settings' => $settings, 'listeners' => $listeners));
 
 // fetch resource matching current url
 $server = new server($routes);

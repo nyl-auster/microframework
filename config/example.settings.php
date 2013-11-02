@@ -1,5 +1,7 @@
 <?php
 /**
+ * @file
+ * Define app settings
  * rename to settings.php to use
  */
 
@@ -11,7 +13,7 @@ $settings['mysql'] = array(
 );
 
 // add local configuration if any. It may overrides any of the above settings
-if (is_readable('settings-local.php')) {
-  include('settings-local.php');
+if (is_readable('settings.local.php')) {
+  include('settings.local.php');
 }
 

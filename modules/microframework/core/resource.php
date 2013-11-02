@@ -32,7 +32,6 @@ abstract class resource {
     return $this->get();
   }
 
-
   /**
    * Response to a get request 
    */

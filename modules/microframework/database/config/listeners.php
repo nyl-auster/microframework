@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * register listeners for a mysql connexion
+ */
 
 $listeners['app.bootstrap']['db.connect'] = array(
   'callable' => 'microframework\database\database::connect',
