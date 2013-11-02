@@ -21,6 +21,10 @@ class view {
     $this->variables = $variables;
   }
 
+  function setVariable($name, $value) {
+    $this->variables[$name] = $value;
+  }
+
   /**
    * Display a template, inside a wrapper template if asked.
    * A variable $innerView is created and must be put inside wrapper template
