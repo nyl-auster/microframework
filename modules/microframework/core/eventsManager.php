@@ -9,7 +9,7 @@ namespace microframework\core;
 class eventsManager {
 
   static protected $instance = null;
-  protected $listeners = array();
+  protected $listeners = [];
 
   /**
    * @param array $listeners

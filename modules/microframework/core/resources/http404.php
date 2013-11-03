@@ -6,7 +6,7 @@ use microframework\core\resource;
 class http404 extends resource {
 
   function get() {
-    header("HTTP/1.1 404 Not Found");
+    http_response_code(404);
     return "Oups, Page not found ! ";
   }
 

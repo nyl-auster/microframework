@@ -6,7 +6,7 @@ use microframework\core\resource;
 class http403 extends resource {
 
   function get() {
-    header("HTTP/1.1 403 Access Denied");
+    http_response_code(403);
     return "Access denied";
   }
 

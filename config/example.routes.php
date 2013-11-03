@@ -5,7 +5,7 @@
  */
 
 // register a new resource, responding to "example" url.
-$routes['example'] = array('class' => 'myBundle\myModule\exampleresource');
+$routes['example'] = ['class' => 'myBundle\myModule\exampleresource'];
 
 // override the default resources provided by server classe :
 // Custom homepage :

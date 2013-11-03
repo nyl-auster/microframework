@@ -6,7 +6,7 @@ namespace microframework\core;
  */
 class view {
 
-  public $variables = array();
+  public $variables = [];
   public $file = '';
   private $wrapperView = null;
 
@@ -16,7 +16,7 @@ class view {
    * @param array $variables
    *   associatives array of variables to pass to the template file.
    */
-  public function __construct($file, $variables = array()) {
+  public function __construct($file, $variables = []) {
     $this->file = $file;
     $this->variables = $variables;
   }

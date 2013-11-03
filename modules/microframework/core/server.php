@@ -12,11 +12,11 @@ namespace microframework\core;
 class server {
 
   // default routes for homepage, 403 and 404 http errors. Overridable in routes.php file.
-  protected $routes = array(
-    '' => array('class' => 'microframework\core\resources\homepage'),
-    '__http404' => array('class' => 'microframework\core\resources\http404'),
-    '__http403' => array('class' => 'microframework\core\resources\http403'),
-  );
+  protected $routes = [
+    '' => ['class' => 'microframework\core\resources\homepage'],
+    '__http404' => ['class' => 'microframework\core\resources\http404'],
+    '__http403' => ['class' => 'microframework\core\resources\http403'],
+  ];
 
   // eventsManager instance
   protected $eventsManager = null;
@@ -25,7 +25,7 @@ class server {
    * @param array $routes. 
    *   Routes to resources map. see example.routes.php
    */
-  public function __construct($routes = array(), \microframework\core\eventsManager $eventsManager) {
+  public function __construct($routes = [], \microframework\core\eventsManager $eventsManager) {
     $this->routes = array_merge($this->routes, $routes);
     $this->eventsManager = $eventsManager;
   }
@@ -55,7 +55,7 @@ class server {
       return new $this->routes['__http403']['class'];
     }
 
-    $this->eventsManager->fire('server.getResource', array('resource' => $resource));
+    $this->eventsManager->fire('server.getResource', ['resource' => $resource]);
 
     // resource exists and access is allowed, hurrah :
     return $resource;
