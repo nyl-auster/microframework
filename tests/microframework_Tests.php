@@ -1,6 +1,6 @@
 <?php
 
-class microframework_TestCase extends PHPUnit_Framework_TestCase {
+class microframework_Tests extends PHPUnit_Framework_TestCase {
 
   protected $eventsManager = null;
   protected $server = null;
