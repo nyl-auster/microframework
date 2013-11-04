@@ -12,6 +12,13 @@ class eventsManager {
   protected $listeners = [];
 
   /**
+   * this is a singleton, see getInstance method.
+   */
+  private function __construct($listeners) {
+    $this->listeners = $listeners;
+  }
+
+  /**
    * @param array $listeners
    *   associative array mapping listeners to events. example :
    * $listeners = [
@@ -21,20 +28,17 @@ class eventsManager {
    *   ],
    * ];
    */
-  private function __construct($listeners) {
-    $this->listeners = $listeners;
-  }
-
-  static public function getListeners() {
-    return $this->listeners;
-  }
-
   static public function getInstance($listeners) {
     if (!self::$instance) {
       self::$instance = new self($listeners);
     }
     return self::$instance;
   }
+
+  static public function getListeners() {
+    return $this->listeners;
+  }
+
 
   /**
    * Dispatch an event in application
