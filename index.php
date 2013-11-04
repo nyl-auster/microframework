@@ -1,5 +1,5 @@
 <?php
-use microframework\core\server;
+use microframework\core\httpResourceServer;
 use microframework\core\eventsManager;
 
 // autoloader PSR-0. Use vendor and modules directories to look for the requested class.
@@ -17,7 +17,7 @@ $eventsManager = eventsManager::getInstance($listeners);
 $eventsManager->fire('app.bootstrap', array('routes' => $routes, 'settings' => $settings, 'listeners' => $listeners));
 
 // fetch resource matching current url
-$server = new server($routes, $eventsManager);
+$server = new httpResourceServer($routes, $eventsManager);
 $resource = $server->getResource($server->getRouteFromUrl());
 print $resource->render();
 

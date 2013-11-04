@@ -9,7 +9,7 @@ namespace microframework\core;
  * "hello-world" will be extract as the "route", and a resource class binded to this
  * route will be searched in routes.php file.
  */
-class server {
+class httpResourceServer {
 
   // default routes for homepage, 403 and 404 http errors. Overridable in routes.php file.
   protected $routes = [
