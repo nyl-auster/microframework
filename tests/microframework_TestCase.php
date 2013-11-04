@@ -1,6 +1,6 @@
 <?php
 
-abstract class microframework_TestCase extends PHPUnit_Framework_TestCase {
+class microframework_TestCase extends PHPUnit_Framework_TestCase {
 
   protected $eventsManager = null;
   protected $server = null;
@@ -13,6 +13,17 @@ abstract class microframework_TestCase extends PHPUnit_Framework_TestCase {
     $this->eventsManager = \microframework\core\eventsManager::getInstance([]);
     $this->server = new \microframework\core\server(array(), $this->eventsManager);
   }
+
+  public function testGetResource() {
+    $resource = $this->server->getResource('');
+    $this->assertInstanceOf('\microframework\core\resource', $resource);
+  }
+
+  public function testHttp404() {
+    $resource = $this->server->getResource('777aaaaaaaaaaaaaaaaaaaa777');
+    $this->assertInstanceOf('\microframework\core\resource', $resource);
+  }
+
 
 }
 
