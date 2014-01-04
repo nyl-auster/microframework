@@ -9,7 +9,7 @@ namespace microframework\core;
 class eventsManager {
 
   static protected $instance = null;
-  protected $listeners = [];
+  protected $listeners = array();
 
   /**
    * this is a singleton, see getInstance method.
