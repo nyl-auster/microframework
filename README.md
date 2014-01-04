@@ -42,7 +42,7 @@ Create a new route for our "helloWorld" resource in config/routes.php. Key will 
 Create a new bundle called "example" in "okc" directory.
 Create a new php file call helloWorld.php with following content :
 
-    <?php
+```php
     // define our namespace to allow PSR-0 autoload
     namespace okc\example;
     // use abstract resource class provided by the framework
@@ -61,6 +61,7 @@ Create a new php file call helloWorld.php with following content :
       }
 
     }
+```
 
 Go to http://www.yourapp.local/index.php/hello-world and see hello world message.
 
@@ -72,6 +73,7 @@ Display the hello world with template system. Add
     use okc\framework\view
 At the top of our file. And return a view object at the end of the get method rather than a string :
 
+```php
     <?php
     namespace okc\example;
 
@@ -93,9 +95,11 @@ At the top of our file. And return a view object at the end of the get method ra
       }
 
     }
+```
 
 Create the helloWordView.php template in okc/example with following content
 
+```php
     <?php
     // our helloWorldView.php template will be included in page.php template adding this line :
     $this->setParentView('okc/example/page.php');
@@ -103,12 +107,14 @@ Create the helloWordView.php template in okc/example with following content
 
     <h2> <?php print strip_tags($title) ?> </h2>
     <p> <?php print strip_tags($content) ?> </p>
-
+```
 Create the page.php template in the same directory.
 
+```php
     <h1> PAGE LAYOUT </h1>
 
     <?php print $childView ?>
+```
 
 Do not forget $childView or helloWordView.php won't be displayed at all.
 $childView is the default variable name for child templates, but you may change the variable name using second param of setParentView method. Here we create a variable "helloWorldView" instead of "childView".
@@ -151,8 +157,10 @@ You can map a php callable to an event with this file. Only two events are provi
 This allow you to add some code to be executed at start or end of the application wihout having to hack index.php file
 You may fire your own events this way. There is no convention to name events, it just have to be a string :
 
+```php
     <?php
     $eventsManager = eventsManager::getInstance($listeners);
     $eventsManager->fire('mymodule.myevent', array('param' => $params));
     ?>
+```
 
