@@ -5,7 +5,8 @@ A resource may be then mapped to an url (by creating a route) or may be called d
 Requirements
 ------------
 
-Php >= 5.3, Apache.
+Php >= 5.3
+Apache
 
 Resources
 ---------
@@ -64,12 +65,14 @@ Views
 -----
 
 Views are used to render html or final representation of a resource.
-a view may be a child of another view : here our template will be put inside "page.php" template.
-Page.php could also be a child a another template if needed.
+A view may be a child of another view : here our template will be put inside "page.php" template.
+Page.php could also be a child of another template if needed.
 
 
     <?php
-    $this->setWrapperView('mybundle/site/views/page.php');
+    // by default, a variable $childView will be created, and you MUST print
+    // $childView variable in parent template to actually see the child template.
+    $this->setParentView('mybundle/site/views/page.php');
     ?>
 
     <h1> <?php print $title ?> </h1>
