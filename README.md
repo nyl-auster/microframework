@@ -1,8 +1,7 @@
 OKC framework
 ==============
 
-Okc framework is a tiny View-Controller php framework for small php projects.
-This is built on "resource" concept rather than classic controllers classes, see below for more information. Except this "resource" concept, Okc framework is pure php as you know it and provide no abstractions. But as PSR-0 standard is used,  you may use any php library using PSR-0, dropping it in "bundles" directory.
+OKC framework is a slim View-Controller php framework.
 
 Requirements
 ------------
