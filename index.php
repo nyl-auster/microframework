@@ -1,5 +1,5 @@
 <?php
-use okc\framework\httpResourceServer;
+use okc\framework\server;
 use okc\framework\eventsManager;
 
 // autoloader PSR-0. Use bundles directory to load classes
@@ -21,7 +21,7 @@ $eventsManager = eventsManager::getInstance($listeners);
 $eventsManager->fire('okc.bootstrap', array('routes' => $routes, 'settings' => $settings, 'listeners' => $listeners));
 
 // fetch resource matching current url
-$server = new httpResourceServer($routes, $eventsManager);
+$server = new server($routes, $eventsManager);
 $resource = $server->getResource($server->getRouteFromUrl());
 print $resource->render();
 
