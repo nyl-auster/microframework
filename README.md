@@ -1,18 +1,25 @@
-Microframework is a simple and tiny view-controller php framework.
-This is build on "resource" concept : each piece of content is handle by a "resource" class.
-A resource may be then mapped to an url (by creating a route) or may be called directly from a view.
+Microframework is a very tiny view-controller php framework for basic projects.
 
 Requirements
 ------------
+* Php >= 5.3
+* Apache
 
-Php >= 5.3
-Apache
+Features
+---------
+* Build your app with resources rather than "controllers". A resource is a class that represents a piece of content of your app / site; providing methods to customize its behavior. A "page" may be seen as a collection of ressources gathered in a special layout.
+* Basic router : map an url to a resource with routes.php file to create web page. 
+* Parent and children views : a template may be wrapped by any other templates and overrides parent template variables if needed.
+* Basic event listeners system : call custom php callable on core or custom events.
+* PSR-0 standard : you may use any php class or libary implementing PSR-0 in your project.
+* Customize 404 and 403 pages with resource of your own.
 
 Resources
 ---------
 
 Custom resources classes *must* extends core abstract resource class and must at least implements the "get" method,
 this is the default method to render a resource and this method will be called on http get request automatically when calling a resource from an url.
+Each resource may implements an access methods to decide if this resource should be displayed to the user or not. When the resource is mapped to an url, returning FALSE in this method will throw a 403 http response code.
 
 Here a simple example of a resource : it used a file to include some content and a template to render the result.
 Example resource :
