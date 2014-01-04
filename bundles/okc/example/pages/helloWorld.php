@@ -1,6 +1,6 @@
 <?php
 // define namespace to allow PSR-0 autoload of our class
-namespace okc\example;
+namespace okc\example\pages;
 
 // use abstract resource provided by the framework
 use okc\framework\resource;
@@ -21,7 +21,7 @@ class helloWorld extends resource {
       'title' => 'Hello World',
       'content' => 'This is an hello world example',
     );
-    return new view('okc/example/helloWorldView.php', $variables);
+    return new view('okc/example/views/helloWorld.php', $variables);
   }
 
 }
