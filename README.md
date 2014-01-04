@@ -1,4 +1,8 @@
-Microframework is a very tiny view-controller php framework for basic projects.
+OKC framework
+==============
+
+Microframework is a tiny view-controller php framework for small php projects.
+Okc framework is built on "resource" concept rather than classic controllers classes, see below for more information.
 
 Requirements
 ------------
@@ -94,8 +98,8 @@ Listeners
 
 A basic listener system is available. See config/example.listeners.php file.
 You can map a php callable to an event with this file. Only two events are provided by core for now
-* app.start
-* app.end
+* okc.bootstrap
+* okc.shutdown
 
 This allow you to add some code to be executed at start or end of the application wihout having to hack index.php file
 You may fire your own events this way :
