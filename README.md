@@ -1,10 +1,8 @@
 OKC framework
 ==============
 
-Microframework is a tiny view-controller php framework for small php projects.
-Okc framework is built on "resource" concept rather than classic controllers classes, see below for more information.
-Except for that resource concept, okc framework is only pure php with no provided abstraction.
-Okc framework follow PSR-0 standard, so you may use any php library following this standard, dropping it in "bundles" directory.
+Okc framework is a tiny View-Controller php framework for small php projects.
+This is built on "resource" concept rather than classic controllers classes, see below for more information. Except this "resource" concept, Okc framework is pure php as you know it and provide no abstractions. But as PSR-0 standard is used,  you may use any php library using PSR-0, dropping it in "bundles" directory.
 
 Requirements
 ------------
@@ -104,7 +102,7 @@ You can map a php callable to an event with this file. Only two events are provi
 * okc.shutdown
 
 This allow you to add some code to be executed at start or end of the application wihout having to hack index.php file
-You may fire your own events this way :
+You may fire your own events this way. There is no convention to name events, it just have to be a string :
 
     <?php
     $eventsManager = eventsManager::getInstance($listeners);
