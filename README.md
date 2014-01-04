@@ -31,8 +31,8 @@ Example resource :
 
     <?php
     namespace mybundle\site\example;
-    use microframework\core\resource;
-    use microframework\core\view;
+    use okc\framework\resource;
+    use okc\framework\view;
 
     class homepage extends resource {
 
