@@ -13,6 +13,7 @@ Features
 * Basic event listeners system : call custom php callable on core or custom events.
 * PSR-0 standard : you may use any php class or libary implementing PSR-0 in your project.
 * Customize 404 and 403 pages with resource of your own.
+* Settings file for your configuration.
 
 Resources
 ---------
