@@ -32,13 +32,12 @@ rename config/example.routes.php file to config/routes.php to create new routes,
 Quickstart : Hello World
 ------------------------
 
-* Rename config/example.routes.php to routes.php
-* Create a new route for our "helloWorld" resource in config/routes.php
-  Key will be the new available url and "class" will contain namespace of the class to use
+Rename config/example.routes.php to routes.php
+Create a new route for our "helloWorld" resource in config/routes.php. Key will be the new available url and "class" will contain namespace of the class to use
     <?php
     $routes['hello-world'] = array('class' => 'okc\example\helloWorld');
-* Create a new bundle called "example" in "okc" directory.
-* Create a new php file call helloWorld.php with following content :
+Create a new bundle called "example" in "okc" directory.
+Create a new php file call helloWorld.php with following content :
 
     <?php
     // define our namespace to allow PSR-0 autoload
