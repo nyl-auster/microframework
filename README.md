@@ -7,16 +7,17 @@ Requirements
 ------------
 * Php >= 5.3
 * Apache
+* Linux
 
 Features
 ---------
-* Build your app around resources. A resource is a class that represents any piece of content of your application; providing methods to customize its behavior and visibility. They may be used to create blocks, pages, rss, xml, json etc...
-* Basic router : map an url to a resource with routes.php file to create a web page. 
+* Build site around resources. A resource is a class that represents any piece of content of your application; providing methods to customize its behavior and visibility. They may be used to create blocks, pages, rss, xml, json etc...
+* Router : map an url to a resource with routes.php file to create a web page. 
 * Parent and children template / views : a template may be wrapped by any other template and overrides parent template variables if needed.
-* Basic events manager : subscribe to core events with php callables or create custom events.
+* Events & listeners manager : subscribe to core events with php callables or fire custom events.
 * PSR-0 standard : you may use any php class or libary implementing PSR-0 in your project.
 * Customize 404 and 403 pages with resources of your own.
-* Settings file for holding configuration.
+* Settings file to hold configuration.
 
 Documentation
 ==============
