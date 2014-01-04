@@ -1,7 +1,7 @@
 OKC framework
 ==============
 
-OKC framework is a slim View-Controller php framework.
+OKC framework is a slim View-Controller php framework. It's build upon "resource" concept, more on that below.
 
 Requirements
 ------------
@@ -122,6 +122,45 @@ $childView is the default variable name for child templates, but you may change 
 
 Page.php could set a parent too, there is no limit for parent / children imbrication of templates.
 
+Display Blocks
+--------------
+
+Resource can be used witout any mapping to an url, blocks can be created this way :
+This resource use access method to tell this block to display only on "hello-world" page.
+
+```php
+<?php
+namespace vendorName\bundleName;
+
+use okc\framework\resource;
+use okc\framework\view;
+use okc\framework\server;
+
+class contactBlock extends resource {
+
+  function access() {
+    if (server::getRouteFromUrl() == 'hello-world') {
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  function get() {
+    return new view('vendorName/bundleName/views/fiche-contact.php');
+  }
+
+}
+```
+
+To display resource, call it somewhere in a page template :
+always use "render" method because it take care of checking access conditions.
+
+```php
+  <?php 
+  $resource = new vendorName\bundleName\contactBlock(); 
+  echo $resource->render();
+  ?>
+```
 
 Resources
 ---------

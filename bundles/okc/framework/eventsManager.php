@@ -2,7 +2,6 @@
 /**
  * @file
  * Events Manager
- *
  */
 namespace okc\framework;
 
@@ -39,9 +38,8 @@ class eventsManager {
     return $this->listeners;
   }
 
-
   /**
-   * Dispatch an event in application
+   * Call all listeners for a particular event
    * @event (string)
    *   event name
    * @params (mixed)

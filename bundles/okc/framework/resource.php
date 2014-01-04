@@ -18,7 +18,9 @@ namespace okc\framework;
 abstract class resource {
 
   /**
-   * if FALSE, resource will not be visible. 
+   * if FALSE, resource will not be visible.
+   * When resource is requested by http, returning FALSE will thow
+   * a 403 access denied.
    */
   function access() {
     return TRUE;
@@ -52,7 +54,7 @@ abstract class resource {
       return $this->post();
     }
 
-    // else call get method.
+    // else call get method for now.
     return $this->get();
     
   }
