@@ -43,6 +43,7 @@ Create a new bundle called "example" in "okc" directory.
 Create a new php file call helloWorld.php with following content :
 
 ```php
+    <?php
     // define our namespace to allow PSR-0 autoload
     namespace okc\example;
     // use abstract resource class provided by the framework
