@@ -10,7 +10,7 @@ Requirements
 
 Features
 ---------
-* Build your app with resources rather than "controllers". A resource is a class that represents a piece of content of your app / site; providing methods to customize its behavior. A "page" may be seen as a collection of ressources gathered in a special layout.
+* Build your app with resources rather than "controllers". A resource is a class that represents any piece of content of your application; providing methods to customize its behavior. They may be used to create blocks or pages, if mapped to an url via the router. 
 * Basic router : map an url to a resource with routes.php file to create web page. 
 * Parent and children views : a template may be wrapped by any other templates and overrides parent template variables if needed.
 * Basic event listeners system : call custom php callable on core or custom events.
