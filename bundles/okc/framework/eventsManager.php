@@ -48,9 +48,6 @@ class eventsManager {
   public function fire($event, $params = array()) {
     if (!isset($this->listeners[$event])) return false;
     foreach ($this->listeners[$event] as $listener) {
-      if (isset($listener['enable']) && $listener['enable'] == FALSE)  {
-        continue;
-      }
       call_user_func_array($listener['callable'], $params);
     }
   }

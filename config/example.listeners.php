@@ -7,8 +7,7 @@
 
 // example listener : $listener[event name][callable name]
 $listeners['okc.bootstrap']['mymodule.hello'] = array(
-  'callable' => 'vendorName\moduleName\className::methodName',
-  'enable' => TRUE, // set to false to disabled this event subscriber
+  'callable' => 'vendorName\bundleName\className::methodName',
 );
 
 // you may include your listeners directly from your custom bundle instead.
