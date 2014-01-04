@@ -1,7 +1,7 @@
 OKC framework
 ==============
 
-OKC framework is a slim View-Controller php framework. It's build upon "resource" concept, more on that below.
+OKC framework is a tiny View-Controller php framework, built around "resource" concept to display pieces of content instead of using methods from a controller class.
 
 Requirements
 ------------
@@ -10,13 +10,14 @@ Requirements
 
 Features
 ---------
-* Build your app with resources rather than "controllers". A resource is a class that represents any piece of content of your application; providing methods to customize its behavior. They may be used to create blocks or pages, if mapped to an url via the router. 
-* Basic router : map an url to a resource with routes.php file to create web page. 
-* Parent and children views : a template may be wrapped by any other templates and overrides parent template variables if needed.
-* Basic event listeners system : call custom php callable on core or custom events.
+* Build your app around resources. A resource is a class that represents any piece of content of your application; providing methods to customize its behavior and visibility. They may be used to create blocks, pages, rss, xml, json etc...
+* Basic router : map an url to a resource with routes.php file to create a web page. 
+* Parent and children template / views : a template may be wrapped by any other template and overrides parent template variables if needed.
+* Basic events manager : subscribe to core events with php callables or create custom events.
 * PSR-0 standard : you may use any php class or libary implementing PSR-0 in your project.
-* Customize 404 and 403 pages with resource of your own.
-* Settings file for your configuration.
+* Customize 404 and 403 pages with resources of your own.
+* Settings file for holding configuration.
+* Aside from resource concept, no abstractions are provided: okc framework is plain old php.
 
 Documentation
 ==============
@@ -25,13 +26,12 @@ Installation
 -------------
 
 Clone the git repository.
-rename config/example.routes.php file to config/routes.php to create new routes, following documentation below.
-
+Rename config/example.routes.php file to config/routes.php to create new routes.
 
 Quickstart : Hello World
 ------------------------
 
-Rename config/example.routes.php to routes.php
+Rename config/example.routes.php to config/routes.php
 Create a new route for our "helloWorld" resource in config/routes.php. Key will be the new available url and "class" will contain namespace of the class to use
 
 ```php
@@ -168,8 +168,9 @@ Resources
 Custom resources classes *must* extends core abstract resource class and must at least implements the "get" method,
 this is the default method to render a resource and this method will be called on http get request automatically when calling a resource from an url.
 Each resource may implements an access methods to decide if this resource should be displayed to the user or not. When the resource is mapped to an url, returning FALSE in this method will throw a 403 http response code.
+Nether call get() method yourself, use render() method instead if you call manually a resource, as it take care of access control.
 
-Routes
+Routes pattern
 ------
 
 To access a resource, you will have to type this kind of url in your brower
@@ -183,17 +184,18 @@ http://www.yourapp.local/index.php/hello?id=3
 Autoloader
 ------------
 
-PSR-0 is used for autoloading. Put your classes in vendor or modules directory.
+PSR-0 is used for autoloading. Simply put your classes in bundles directory.
 
-Listeners
+Events & Listeners
 ---------
 
-A basic listener system is available. See config/example.listeners.php file.
+A basic events & listeners system is available. Rename config/example.listeners.php to config/listeners.php to register your listeners.
 You can map a php callable to an event with this file. Only two events are provided by core for now
 * okc.bootstrap
 * okc.shutdown
 
-This allow you to add some code to be executed at start or end of the application wihout having to hack index.php file
+This allow you to add some code to be executed at start or end of the application wihout having to hack index.php file.
+
 You may fire your own events this way. There is no convention to name events, it just have to be a string :
 
 ```php
@@ -202,4 +204,3 @@ You may fire your own events this way. There is no convention to name events, it
     $eventsManager->fire('mymodule.myevent', array('param' => $params));
     ?>
 ```
-
