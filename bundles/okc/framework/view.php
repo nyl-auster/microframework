@@ -1,5 +1,5 @@
 <?php
-namespace microframework\core;
+namespace okc\framework;
 
 /**
  * Generic template engine class.

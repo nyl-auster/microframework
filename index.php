@@ -1,9 +1,9 @@
 <?php
-use microframework\core\httpResourceServer;
-use microframework\core\eventsManager;
+use okc\framework\httpResourceServer;
+use okc\framework\eventsManager;
 
-// autoloader PSR-0. Use vendor and modules directories to look for the requested class.
-set_include_path("modules:vendor");
+// autoloader PSR-0. Use bundles directory to load classes
+set_include_path("bundles");
 spl_autoload_register(function($class){include_once preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php';}); 
 
 // include config files and instanciate config variables
@@ -14,12 +14,12 @@ foreach (array('routes.php', 'settings.php', 'listeners.php') as $file ) {
 
 // instanciate events manager with our listeners configuration
 $eventsManager = eventsManager::getInstance($listeners);
-$eventsManager->fire('app.bootstrap', array('routes' => $routes, 'settings' => $settings, 'listeners' => $listeners));
+$eventsManager->fire('okc.bootstrap', array('routes' => $routes, 'settings' => $settings, 'listeners' => $listeners));
 
 // fetch resource matching current url
 $server = new httpResourceServer($routes, $eventsManager);
 $resource = $server->getResource($server->getRouteFromUrl());
 print $resource->render();
 
-$eventsManager->fire('app.close');
+$eventsManager->fire('okc.shutdown');
 

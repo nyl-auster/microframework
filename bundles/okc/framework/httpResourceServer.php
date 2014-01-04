@@ -1,5 +1,7 @@
 <?php
-namespace microframework\core;
+namespace okc\framework;
+
+use okc\framework\eventsManager;
 
 /**
  * Map a route to a resource.
@@ -13,9 +15,9 @@ class httpResourceServer {
 
   // default routes for homepage, 403 and 404 http errors. Overridable in routes.php file.
   protected $routes = array(
-    '' => array('class' => 'microframework\core\resources\homepage'),
-    '__http404' => array('class' => 'microframework\core\resources\http404'),
-    '__http403' => array('class' => 'microframework\core\resources\http403'),
+    '' => array('class' => 'okc\framework\resources\homepage'),
+    '__http404' => array('class' => 'okc\framework\resources\http404'),
+    '__http403' => array('class' => 'okc\framework\resources\http403'),
   );
 
   // eventsManager instance
@@ -25,7 +27,7 @@ class httpResourceServer {
    * @param array $routes. 
    *   Routes to resources map. see example.routes.php
    */
-  public function __construct($routes = array(), \microframework\core\eventsManager $eventsManager) {
+  public function __construct($routes = array(), eventsManager $eventsManager) {
     $this->routes = array_merge($this->routes, $routes);
     $this->eventsManager = $eventsManager;
   }

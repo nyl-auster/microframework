@@ -1,7 +1,7 @@
 <?php
-namespace microframework\core\resources;
+namespace okc\framework\resources;
 
-use microframework\core\resource;
+use okc\framework\resource;
 
 class http403 extends resource {
 

@@ -4,7 +4,7 @@
  * Events Manager
  *
  */
-namespace microframework\core;
+namespace okc\framework;
 
 class eventsManager {
 
