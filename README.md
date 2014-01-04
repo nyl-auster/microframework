@@ -1,7 +1,7 @@
 OKC framework
 ==============
 
-OKC framework is a tiny View-Controller php framework, built around "resource" concept to display pieces of content instead of using methods from a controller class.
+OKC framework is a tiny View-Controller php framework, built around "resource" concept to display and generate pieces of content.
 
 Requirements
 ------------
