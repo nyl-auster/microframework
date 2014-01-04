@@ -3,6 +3,8 @@ OKC framework
 
 Microframework is a tiny view-controller php framework for small php projects.
 Okc framework is built on "resource" concept rather than classic controllers classes, see below for more information.
+Except for that resource concept, okc framework is only pure php with no provided abstraction.
+Okc framework follow PSR-0 standard, so you may use any php library following this standard, dropping it in "bundles" directory.
 
 Requirements
 ------------
