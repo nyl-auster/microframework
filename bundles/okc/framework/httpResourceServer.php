@@ -49,13 +49,13 @@ class httpResourceServer {
 
     // no resource found, serve the 404 error resource
     if (!isset($resource)) {
-      http_response_code(403);
+      header($_SERVER["SERVER_PROTOCOL"]." 403 Access Denied"); 
       return new $this->routes['__http404']['class'];
     }
 
     // a resource has been found, but acces is denied, return 403 error resource.
     if (!$resource->access()) {
-      http_response_code(404);
+      header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found "); 
       return new $this->routes['__http403']['class'];
     }
 

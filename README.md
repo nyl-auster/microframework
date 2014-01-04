@@ -19,6 +19,101 @@ Features
 * Customize 404 and 403 pages with resource of your own.
 * Settings file for your configuration.
 
+Documentation
+==============
+
+Installation
+-------------
+
+Clone the git repository.
+rename config/example.routes.php file to config/routes.php to create new routes, following documentation below.
+
+
+Quickstart : Hello World
+------------------------
+
+* Rename config/example.routes.php to routes.php
+* Create a new route for our "helloWorld" resource in config/routes.php
+  Key will be the new available url and "class" will contain namespace of the class to use
+    <?php
+    $routes['hello-world'] = array('class' => 'okc\example\helloWorld');
+* Create a new bundle called "example" in "okc" directory.
+* Create a new php file call helloWorld.php with following content :
+
+    <?php
+    // define our namespace to allow PSR-0 autoload
+    namespace okc\example;
+    // use abstract resource class provided by the framework
+    use okc\framework\resource;
+
+    /**
+     * Say hello to the world.
+     */
+    class helloWorld extends resource {
+
+      /**
+       * This method will be automatically called by the framework when visiting "hello-world" url.
+       */
+      function get() {
+        return 'Hello world';
+      }
+
+    }
+
+* Go to "hello-world" url and you shloud see the "Hello world" message.
+
+Hello world with template system
+--------------------------------
+
+Display the hello world with template system. Add
+    use okc\framework\view
+At the top of our file. And return a view object at the end of the get method rather than a string :
+
+    <?php
+    namespace okc\example;
+
+    use okc\framework\resource;
+    // add template system provided by the framework
+    use okc\framework\view;
+
+    class helloWorld extends resource {
+
+      function get() {
+        // define some variables we want to use in the template.
+        // Usefull only for dynamic datas.
+        $variables = array(
+          'title' => 'Hello World',
+          'content' => 'This is an hello world example',
+        );
+        // add path to the template we want to use. This the full relative path.
+        return new view('okc/example/helloWorldView.php', $variables);
+      }
+
+    }
+
+Create the helloWordView.php template in okc/example with following content
+
+    <?php
+    // our helloWorldView.php template will be included in page.php template adding this line :
+    $this->setParentView('okc/example/page.php');
+    ?>
+
+    <h2> <?php print strip_tags($title) ?> </h2>
+    <p> <?php print strip_tags($content) ?> </p>
+
+Create the page.php template in the same directory.
+
+    <h1> PAGE LAYOUT </h1>
+
+    <?php print $childView ?>
+
+Do not forget $childView or helloWordView.php won't be displayed at all.
+$childView is the default variable name for child templates, but you may change the variable name using second param of setParentView method. Here we create a variable "helloWorldView" instead of "childView".
+    $this->setParentView('okc/example/page.php', 'helloWordView');
+
+Page.php could set a parent too, there is no limit for parent / children imbrication of templates.
+
+
 Resources
 ---------
 

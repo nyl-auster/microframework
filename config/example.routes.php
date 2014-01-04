@@ -4,18 +4,15 @@
  * resource routes example. Rename to routes.php to use.
  */
 
-// register a new resource, responding to "example" url.
-// class is the namespace of the class to load.
-$routes['example'] = ['class' => 'myBundle\myModule\exampleresource'];
+// you may override default homepage, 403 and 404 by using custom resources here.
+$routes['']['class'] = 'okc\framework\resources\homepage';
+$routes['__http403']['class'] = 'okc\framework\resources\http403';
+$routes['__http404']['class'] = 'okc\framework\resources\http404';
 
-// override the default resources provided by server classe :
-// Custom homepage :
-$routes['']['class'] = 'myBundle\myModule\myresource';
-// Custom 404 resource
-$routes['__http404']['class'] = 'myBundle\myModule\myresource';
-// Custom 403 resource.
-$routes['__http403']['class'] = 'myBundle\myModule\myresource';
+// Example route : register a new resource, responding to "hello-world" url.
+// class is the namespace of the class to use. Uncomment to test.
+# $routes['hello-world'] = array('class' => 'okc\example\helloWorld');
 
 // includes may be used to let each module have its own routes file.
-include 'microframework/mybundle/mymodule/routes.php';
+# include 'yourName/yourBundle/config/routes.php';
 

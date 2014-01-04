@@ -4,7 +4,11 @@ use okc\framework\eventsManager;
 
 // autoloader PSR-0. Use bundles directory to load classes
 set_include_path("bundles");
-spl_autoload_register(function($class){include_once preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php';}); 
+spl_autoload_register(function($class){
+  $class = preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php';
+  include_once $class;
+}); 
+
 
 // include config files and instanciate config variables
 $routes = $settings = $listeners = array();
