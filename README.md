@@ -1,7 +1,7 @@
 OKC framework
 ==============
 
-OKC framework is a tiny View-Controller php framework, built around "resource" concept to display and generate pieces of content.
+OKC framework is a tiny View-Controller php framework, build around "resources". 
 
 Requirements
 ------------
@@ -17,30 +17,24 @@ Features
 * PSR-0 standard : you may use any php class or libary implementing PSR-0 in your project.
 * Customize 404 and 403 pages with resources of your own.
 * Settings file for holding configuration.
-* Aside from resource concept, no abstractions are provided: okc framework is plain old php.
 
 Documentation
 ==============
 
-
 Installation
 -------------
 
-Clone the git repository.
-Rename config/example.routes.php file to config/routes.php to create new routes.
+Clone the git repository. Rename config/example.routes.php file to config/routes.php to create new routes or uncomment existing ones.
 
 Directory structure
 -------------------
 
-Custom and core code resides in "bundles" directory. Structure should include a vendor name and then a bundle name :
-   bundles/{yourVendorName}/{yourBundleName}/ your custom classes here.
-Framework code resides in bundles/okc/framework folder.
+Custom and core code resides in "bundles" directory. Core code is a bundle from okc vendor directory. 
 
 Example module
 --------------
 
-Take a look at bundles/okc/example bundle to see how to organize custom code. Rename example.routes.php to routes.php in config folder and uncomment this line to visite the example page.
-   # include 'okc/example/config/routes.php';
+Take a look at bundles/okc/example bundle to see how to organize custom code. 
 
 Quickstart : Hello World
 ------------------------
@@ -108,18 +102,6 @@ At the top of our file. And return a view object at the end of the get method ra
     }
 ```
 
-Create the helloWord.php template in okc/example/views/ with following content. As helloWorld is exactly the name of our class, the framework will use automatically this template to render our array.
-We could also have returned a view object with a custom filename in the get method, like this :
-
-```php
-  <?php
-  $variables = array(
-    'title' => 'Hello World',
-    'content' => 'This is an hello world example',
-   );
-   return new view('okc/example/helloWorldView.php', $variables);
-```
-
 We create helloWorld.php and additionnaly asked this template to be rendered inside a global page.php template.
 
 ```php
@@ -139,10 +121,7 @@ Create the page.php template in the same directory.
     <?php print $childView ?>
 ```
 
-Do not forget $childView or helloWordView.php won't be displayed at all.
-$childView is the default variable name for child templates, but you may change the variable name using second param of setParentView method. Here we create a variable "helloWorldView" instead of "childView".
-    $this->setParentView('okc/example/page.php', 'helloWordView');
-
+Do not forget $childView or helloWordView.php won't be displayed at all. 
 Page.php could set a parent too, there is no limit for parent / children imbrication of templates.
 
 Display Blocks
@@ -184,14 +163,6 @@ always use "render" method because it take care of checking access conditions.
   echo $resource->render();
   ?>
 ```
-
-Resources
----------
-
-Custom resources classes *must* extends core abstract resource class and must at least implements the "get" method,
-this is the default method to render a resource and this method will be called on http get request automatically when calling a resource from an url.
-Each resource may implements an access methods to decide if this resource should be displayed to the user or not. When the resource is mapped to an url, returning FALSE in this method will throw a 403 http response code.
-Nether call get() method yourself, use render() method instead if you call manually a resource, as it take care of access control.
 
 Routes pattern
 ------
