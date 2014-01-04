@@ -17,11 +17,10 @@ class helloWorld extends resource {
    * on http get request.
    */
   function get() {
-    $variables = array(
+    return new view('okc/example/views/helloWorld.php', array(
       'title' => 'Hello World',
       'content' => 'This is an hello world example',
-    );
-    return new view('okc/example/views/helloWorld.php', $variables);
+    ));
   }
 
 }

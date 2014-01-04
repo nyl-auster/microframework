@@ -50,13 +50,13 @@ abstract class resource {
     }
 
     // call post method in case of http post request
-    if (isset($_POST)) {
+    if (!empty($_POST)) {
       return $this->post();
     }
 
     // else call get method for now.
     return $this->get();
-    
+
   }
 
 }

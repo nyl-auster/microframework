@@ -53,12 +53,12 @@ Create a new route for our "helloWorld" resource in config/routes.php. Key will 
 ```
 
 Create a new bundle called "example" in "okc" directory.
-Create a new php file call helloWorld.php with following content :
+Create a new php file call helloWorld.php in a "resources" directory with following content :
 
 ```php
     <?php
     // define our namespace to allow PSR-0 autoload
-    namespace okc\example;
+    namespace okc\example\resources;
     // use abstract resource class provided by the framework
     use okc\framework\resource;
 
@@ -89,7 +89,7 @@ At the top of our file. And return a view object at the end of the get method ra
 
 ```php
     <?php
-    namespace okc\example;
+    namespace okc\example\resources;
 
     use okc\framework\resource;
     // add template system provided by the framework
@@ -99,23 +99,32 @@ At the top of our file. And return a view object at the end of the get method ra
 
       function get() {
         // define some variables we want to use in the template.
-        // Usefull only for dynamic datas.
-        $variables = array(
+        return array(
           'title' => 'Hello World',
           'content' => 'This is an hello world example',
         );
-        // add path to the template we want to use. This the full relative path.
-        return new view('okc/example/helloWorldView.php', $variables);
       }
 
     }
 ```
 
-Create the helloWordView.php template in okc/example with following content
+Create the helloWord.php template in okc/example/views/ with following content. As helloWorld is exactly the name of our class, the framework will use automatically this template to render our array.
+We could also have returned a view object with a custom filename in the get method, like this :
+
+```php
+  <?php
+  $variables = array(
+    'title' => 'Hello World',
+    'content' => 'This is an hello world example',
+   );
+   return new view('okc/example/helloWorldView.php', $variables);
+```
+
+We create helloWorld.php and additionnaly asked this template to be rendered inside a global page.php template.
 
 ```php
     <?php
-    // our helloWorldView.php template will be included in page.php template adding this line :
+    // this tell our current template to be rendered inside page.php parent template.
     $this->setParentView('okc/example/page.php');
     ?>
 

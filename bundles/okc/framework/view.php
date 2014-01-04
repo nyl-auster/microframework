@@ -2,7 +2,7 @@
 namespace okc\framework;
 
 /**
- * Generic template engine class.
+ * Generic template engine class, Usable outside of okc framework.
  */
 class view {
 
