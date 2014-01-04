@@ -7,35 +7,18 @@ namespace okc\framework;
 
 class eventsManager {
 
-  static protected $instance = null;
-  protected $listeners = array();
-
-  /**
-   * this is a singleton, see getInstance method.
-   */
-  private function __construct($listeners) {
-    $this->listeners = $listeners;
-  }
+  static protected $listeners = array();
 
   /**
    * @param array $listeners
-   *   associative array mapping listeners to events. example :
-   * $listeners = [
-   *   'event.name' = [
-   *     'listener.name' = ['callable' => 'my\class::myMethod'],
-   *     'listener2.name' = ['callable' => 'my\class::myMethod2'],
-   *   ],
-   * ];
+   * @see config/listeners.php for array structure.
    */
-  static public function getInstance($listeners) {
-    if (!self::$instance) {
-      self::$instance = new self($listeners);
-    }
-    return self::$instance;
+  function __construct($listeners) {
+    self::$listeners = $listeners;
   }
 
-  static public function getListeners() {
-    return $this->listeners;
+  static function getListeners() {
+    return self::$listeners;
   }
 
   /**
@@ -45,10 +28,10 @@ class eventsManager {
    * @params (mixed)
    *   param to pass to the listener
    */
-  public function fire($event, $params = array()) {
-    if (!isset($this->listeners[$event])) return false;
-    foreach ($this->listeners[$event] as $listener) {
-      call_user_func_array($listener['callable'], $params);
+  static function fire($event, $params = array()) {
+    if (!isset(self::$listeners[$event])) return false;
+    foreach (self::$listeners[$event] as $class => $config) {
+      call_user_func_array("$class::$event", $params);
     }
   }
 

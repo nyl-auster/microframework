@@ -59,8 +59,6 @@ class server {
       return new $this->routes['__http403']['class'];
     }
 
-    $this->eventsManager->fire('server.getResource', array('resource' => $resource));
-
     // resource exists and access is allowed, hurrah :
     return $resource;
 

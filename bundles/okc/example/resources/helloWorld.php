@@ -1,6 +1,6 @@
 <?php
 // define namespace to allow PSR-0 autoload of our class
-namespace okc\example\pages;
+namespace okc\example\resources;
 
 // use abstract resource provided by the framework
 use okc\framework\resource;

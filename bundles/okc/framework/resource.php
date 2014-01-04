@@ -4,7 +4,7 @@
  *
  * Base class for resources.
  *
- * All content displayed by this framework is a resource object.
+ * Most of content displayed by this framework is a resource object.
  *
  * A resource may be accessible by an url if it's registered in "routes.php" file.
  * Otherwise, instanciate a resource by yourself and use render() method to display it,

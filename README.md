@@ -200,21 +200,22 @@ Autoloader
 
 PSR-0 is used for autoloading. Simply put your classes in bundles directory.
 
-Events & Listeners
+Events & listener manager
 ---------
 
-A basic events & listeners system is available. Rename config/example.listeners.php to config/listeners.php to register your listeners.
-You can map a php callable to an event with this file. Only two events are provided by core for now
-* okc.bootstrap
-* okc.shutdown
+An simple events & listeners system is available. Rename config/example.listeners.php to config/listeners.php to register your listeners.
+You can map a class to an event with this file. Class will have to implement a method with the event name.
+Core framework only provide two events for now :
+* frameworkBootstrap
+* frameworkShutdown
 
-This allow you to add some code to be executed at start or end of the application wihout having to hack index.php file.
+This allow you to add some code to be executed at start or end of the application wihout having to hack index.php file. (database connection, session etc)
 
 You may fire your own events this way. There is no convention to name events, it just have to be a string :
 
 ```php
     <?php
-    $eventsManager = eventsManager::getInstance($listeners);
-    $eventsManager->fire('mymodule.myevent', array('param' => $params));
+    okc\framework\eventsManager::fire('mybundleMyevent', array('param' => $params));
     ?>
 ```
+

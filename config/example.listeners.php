@@ -3,13 +3,12 @@
  * @file
  * Define a list of listeners for defined events
  * Rename to listeners.php file to use
+ * 
+ * Example listener declaration :
+ * $listeners['frameworkBootstrap']['okc\example\listeners'] = array();
+ * - frameworkBoostrap is the event name
+ * - okc\example\listeners is the name of the class implement frameworkBootstrap method.
  */
 
-// example listener : $listener[event name][callable name]
-$listeners['okc.bootstrap']['mymodule.hello'] = array(
-  'callable' => 'vendorName\bundleName\className::methodName',
-);
-
-// you may include your listeners directly from your custom bundle instead.
-#include "bundles/vendorName/bundleName/config/listeners.php";
+#include "okc/example/config/listeners.php";
 
