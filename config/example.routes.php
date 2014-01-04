@@ -5,6 +5,7 @@
  */
 
 // register a new resource, responding to "example" url.
+// class is the namespace of the class to load.
 $routes['example'] = ['class' => 'myBundle\myModule\exampleresource'];
 
 // override the default resources provided by server classe :
