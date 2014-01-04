@@ -28,6 +28,13 @@ Installation
 Clone the git repository.
 Rename config/example.routes.php file to config/routes.php to create new routes.
 
+DIRECTORY STRUCTURE
+-------------------
+
+Code resides in "bundles" directory. 
+bundles/{yourVendorName}/{yourBundleName}/ your files here.
+Framework code resides in bunldes/okc/framework folder.
+
 Quickstart : Hello World
 ------------------------
 
