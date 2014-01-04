@@ -1,6 +1,6 @@
-Microframework is a tiny view-controller php framework.
+Microframework is a simple and tiny view-controller php framework.
 This is build on "resource" concept : each piece of content is handle by a "resource" class.
-A resource may be mapped to an url or may be called directly from where you want in the code.
+A resource may be then mapped to an url (by creating a route) or may be called directly from a view.
 
 Requirements
 ------------
@@ -36,6 +36,7 @@ Example resource :
 
 To map this resource to an url, we now need to create a route.
 
+
 Routes
 ------
 
@@ -51,6 +52,8 @@ This is a basic route that will serve exampleresource on "hello" url :
 To access this resource, you will have to type this url in your brower
 http://www.yourapp.local/index.php/hello
 
+If you need params in the url, well just use get parameters like this and then use pure php to get them in your resource. No abstractions for that part, just php.
+http://www.yourapp.local/index.php/hello?id=3
 
 Autoloader
 ------------
