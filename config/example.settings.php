@@ -5,7 +5,12 @@
  * rename to settings.php to use
  */
 
-# $_settings['key'] = 'value';
+// translations settings. used by okc\framework\server
+$_settings['translator'] = array(
+  'enabled' => TRUE,
+  'defaultLanguage' => 'en',
+);
+
 # include 'okc/example/config/settings.php';
 
 // add local configuration if any. It may overrides any of the above settings

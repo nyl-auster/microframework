@@ -14,7 +14,7 @@ spl_autoload_register(function($class){include_once preg_replace('#\\\|_(?!.+\\\
 
 // include config files and instanciate config variables
 $_routes = $_settings = $_listeners = array();
-foreach (array('routes.php', 'settings.php', 'listeners.php') as $file ) {
+foreach (array('routes.php', 'settings.php', 'listeners.php', 'translations.php') as $file ) {
   if (is_readable(OKC_FRAMEWORK_DIRECTORY_CONFIG . "/$file")) {
     include OKC_FRAMEWORK_DIRECTORY_CONFIG . "/$file";
   }
@@ -25,7 +25,10 @@ $eventsManager = new eventsManager($_listeners);
 $eventsManager::fire('frameworkBootstrap', array('routes' => $_routes, 'settings' => $_settings));
 
 // fetch resource matching current url
-$server = new server($_routes, $eventsManager);
+$server = new server($_routes, $_settings['translator'], $eventsManager);
+
+server::getCurrentLanguage();
+
 $resource = $server->getResource($server->getRouteFromUrl());
 print $resource->render();
 

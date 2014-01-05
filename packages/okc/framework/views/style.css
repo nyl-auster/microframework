@@ -94,6 +94,27 @@ em {
   color : black;
 }
 
+navigation#lang ul {
+  padding-top : 15px;
+  text-align : center;
+  font-weight : bold;
+}
+
+navigation#lang ul li {
+  display : inline;
+}
+
+navigation#lang ul li a {
+  display : inline;
+  text-decoration : none;
+  color : black;
+}
+
+navigation#lang ul li a.active {
+  text-decoration : underline;
+}
+
+
 footer {
   background : rgb(12, 12, 12);
   height : 25%;

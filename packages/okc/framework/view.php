@@ -9,7 +9,9 @@ class view {
   public $variables = array();
   public $file = '';
   private $parentView = null;
+  // in which parent variable will be inject the view if wrapped.
   private $parentViewVariableName = null;
+  protected $language = null;
 
   /**
    * @param string $file
@@ -17,9 +19,24 @@ class view {
    * @param array $variables
    *   associatives array of variables to pass to the template file.
    */
-  public function __construct($file, $variables = array()) {
-    $this->file = $file;
+  public function __construct($file, $variables = array(), $language = NULL) {
+    $this->language = $language;
+    $this->file = $this->viewTranslation($file, $language);
     $this->variables = $variables;
+  }
+
+  /**
+   * Look for view according to language if any
+   */
+  function viewTranslation($file, $language) {
+    if ($language) {
+      $file_parts = explode('.', $file);
+      $file_suggestion = implode('.', array($file_parts[0], $this->language, $file_parts[1]));
+      if (is_readable($file_suggestion)) {
+       $file = $file_suggestion;
+      }
+    }
+    return $file;
   }
 
   function setVariable($name, $value) {
@@ -65,9 +82,9 @@ class view {
    * @param array $variables
    *   Allow to overrides parent view variables if needed.
    */
-  public function setParentView($file, $variableName = 'childView', $variables = array()) {
-    $this->parentView = new view($file, $variables);
-    $this->parentViewVariableName = $variableName;
+  public function setParentView($file, $variables = array(), $language = NULL, $parentViewVariableName = 'childView') {
+    $this->parentView = new view($file, $variables, $language);
+    $this->parentViewVariableName = $parentViewVariableName;
   }
 
   public function __toString() {

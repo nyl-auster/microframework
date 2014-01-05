@@ -23,15 +23,20 @@ class server {
   // eventsManager instance
   protected $eventsManager = null;
 
+  // enabled translations ?
+  protected static $translator = array();
+
+  // base path, when framework is installed in a subfolder
   public static $basePath = '';
 
   /**
    * @param array $routes. 
    *   Routes to resources map. see example.routes.php
    */
-  public function __construct($routes = array(), eventsManager $eventsManager) {
+  public function __construct($routes = array(), $translator, eventsManager $eventsManager) {
     $this->routes = array_merge($this->routes, $routes);
     $this->eventsManager = $eventsManager;
+    self::$translator = $translator;
     self::$basePath = $this->getBasePath();
   }
 
@@ -44,6 +49,15 @@ class server {
    *   a "resource" object.
    */
   public function getResource($route = '') {
+
+    // remove prefix language from the route if any
+    if (self::$translator['enabled']) {
+      if ($route) {
+        $route_parts = explode('/', $route);
+        array_shift($route_parts);
+        $route = implode('/', $route_parts);
+      }
+    }
 
     // search a resource matching our $route. Skip routes beginning by "__".
     if (isset($this->routes[$route]) && strpos($route, '__') === FALSE) {
@@ -74,17 +88,54 @@ class server {
    *   e.g : for url "www.mydomain/index.php/my/route?argument=1, this function wille return "my/route".
    */
   static function getRouteFromUrl() {
-    return isset($_SERVER['PATH_INFO']) ? parse_url(trim($_SERVER['PATH_INFO'], '/'), PHP_URL_PATH) : '';
+    $route = isset($_SERVER['PATH_INFO']) ? parse_url(trim($_SERVER['PATH_INFO'], '/'), PHP_URL_PATH) : '';
+
+    // remove prefix language from the route if any
+    if (self::$translator['enabled']) {
+      if ($route) {
+        $route_parts = explode('/', $route);
+        array_shift($route_parts);
+        $route = implode('/', $route_parts);
+      }
+    }
+    
+    return $route;
+
   }
 
   /**
    * Create an url from  route name.
    * @param string $route
+   * @param string $language
+   *   force language prefix for this link (if translator is enabled)
    * @return string
    *   A relative url, like "/index.php/hello/world", usable in links.
    */
-  static function getUrlFromRoute($route) {
-    return $_SERVER['SCRIPT_NAME'] . '/' . $route;
+  static function getUrlFromRoute($route, $language = NULL) {
+
+    // add prefix language if needed.
+    $separator = '/';
+
+    if (self::$translator['enabled']) {
+      $lang = $language ? $language : self::getCurrentLanguage();
+      $separator = '/' . $lang . '/';
+    }
+
+    return $_SERVER['SCRIPT_NAME'] . $separator . $route;
+  }
+
+  /**
+   * Build a html link, language aware, adding an active class if needed.
+   */
+  static function link($route, $text, $options = array()) {
+    $lang = !empty($options['language']) ? $options['language'] : NULL;
+    $options += array('attributes' => array());
+    if (server::getRouteFromUrl() == $route && self::getCurrentLanguage() == $lang) {
+      $options['attributes']['class'][] = 'active';
+    }
+    $href = self::getUrlFromRoute($route, $lang);
+    $link = sprintf('<a href="%s" %s > %s </a>', $href, self::setAttributes($options['attributes']), $text);
+    return $link;
   }
 
   /**
@@ -92,6 +143,32 @@ class server {
    */ 
   static function getBasePath() {
     return str_replace('index.php', '', $_SERVER['SCRIPT_NAME']);
+  }
+
+  static function getLanguage() {
+    return self::$language;
+  }
+
+  static function getCurrentLanguage() {
+    $language = NULL;
+    if (self::$translator['enabled']) {
+      $language = self::$translator['defaultLanguage'];
+      $path = isset($_SERVER['PATH_INFO']) ? parse_url(trim($_SERVER['PATH_INFO'], '/'), PHP_URL_PATH) : '';
+      if ($path) {
+        $path_parts = explode('/', $path);
+        $language = array_shift($path_parts);
+      }
+    }
+    return $language;
+  }
+
+  // @FIXME : move somewhere else (note : thank you drupal)
+  function setAttributes($attributes = array()) {
+    foreach ($attributes as $attribute => &$data) {
+      $data = implode(' ', (array) $data);
+      $data = $attribute . '="' . $data . '"';
+    }
+    return $attributes ? ' ' . implode(' ', $attributes) : '';
   }
 
 }
