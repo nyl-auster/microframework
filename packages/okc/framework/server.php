@@ -23,6 +23,8 @@ class server {
   // eventsManager instance
   protected $eventsManager = null;
 
+  public static $basePath = '';
+
   /**
    * @param array $routes. 
    *   Routes to resources map. see example.routes.php
@@ -30,6 +32,7 @@ class server {
   public function __construct($routes = array(), eventsManager $eventsManager) {
     $this->routes = array_merge($this->routes, $routes);
     $this->eventsManager = $eventsManager;
+    self::$basePath = $this->getBasePath();
   }
 
   /**
@@ -82,6 +85,13 @@ class server {
    */
   static function getUrlFromRoute($route) {
     return $_SERVER['SCRIPT_NAME'] . '/' . $route;
+  }
+
+  /**
+   * @FIXME check security implications with all $_SERVER variables.
+   */ 
+  static function getBasePath() {
+    return str_replace('index.php', '', $_SERVER['SCRIPT_NAME']);
   }
 
 }

@@ -2,11 +2,12 @@
 namespace okc\framework\resources;
 
 use okc\framework\resource;
+use okc\framework\view;
 
 class homepage extends resource {
 
   function get() {
-     return "This is the default homepage.";
+     return new view('okc/framework/views/homepage.php');
   }
 
 }

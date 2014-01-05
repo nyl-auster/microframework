@@ -18,7 +18,7 @@ class helloWorld extends resource {
   function get() {
     return new view('okc/example/views/helloWorld.php', array(
       'title' => 'Hello World',
-      'content' => 'This is an hello world example',
+      'content' => 'Hello world test page',
     ));
   }
 
