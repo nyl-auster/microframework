@@ -50,8 +50,14 @@ Manul Quickstart : Hello World
 ```php
   $routes['hello-world'] = array('class' => 'foo\bar\helloWorld');
 ```
+* Create those new directories in packages directoy, where foo is vendor name and bar is package name.
+```
+- foo
+-- bar
+--- resources
+--- views
+```
 
-* In package directory foo/bar/resources directories. "Foo" is Vendor name and "bar" package name. "Resources" will contain resources.
 * Create a new php file call helloWorld.php in a "resources" directory :
 
 ```php
@@ -86,7 +92,7 @@ Hello world using framework template engine
     class helloWorld extends resource {
 
       function get() {
-        return new view('okc/example/views/helloWorld.php', array(
+        return new view('foo/bar/views/helloWorld.php', array(
           'title' => 'Hello World',
           'content' => 'This is an hello world example',
         ));
