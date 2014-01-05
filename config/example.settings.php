@@ -5,7 +5,7 @@
  * rename to settings.php to use
  */
 
-# $settings['key'] = 'value';
+# $_settings['key'] = 'value';
 # include 'okc/example/config/settings.php';
 
 // add local configuration if any. It may overrides any of the above settings

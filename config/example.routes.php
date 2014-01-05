@@ -9,13 +9,13 @@
 // 403 and 404 resources.
 
 // resource to use for homepage
-$routes['']['class'] = 'okc\framework\resources\homepage';
+$_routes['']['class'] = 'okc\framework\resources\homepage';
 
 // resource to display for 403 http response code
-$routes['__http403']['class'] = 'okc\framework\resources\http403';
+$_routes['__http403']['class'] = 'okc\framework\resources\http403';
 
 // resource to display for 404 http response code
-$routes['__http404']['class'] = 'okc\framework\resources\http404';
+$_routes['__http404']['class'] = 'okc\framework\resources\http404';
 
 // Add your custom routes here, or include them.
 
