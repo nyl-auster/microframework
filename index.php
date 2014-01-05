@@ -15,7 +15,9 @@ spl_autoload_register(function($class){include_once preg_replace('#\\\|_(?!.+\\\
 // include config files and instanciate config variables
 $routes = $settings = $listeners = array();
 foreach (array('routes.php', 'settings.php', 'listeners.php') as $file ) {
-  if (is_readable(OKC_FRAMEWORK_DIRECTORY_CONFIG . "/$file")) include "config/$file";
+  if (is_readable(OKC_FRAMEWORK_DIRECTORY_CONFIG . "/$file")) {
+    include OKC_FRAMEWORK_DIRECTORY_CONFIG . "/$file";
+  }
 }
 
 // instanciate eventsManager with listeners from listeners.php file.
