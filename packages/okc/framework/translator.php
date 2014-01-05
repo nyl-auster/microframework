@@ -5,11 +5,11 @@ use okc\framework\server;
 
 class translator {
 
-  static function t($string_id, $context = 'global') {
+  static function t($string_id) {
     global $_translations;
     $language = server::getCurrentLanguage();
-    if (isset($_translations[$language][$string_id][$context])) {
-      return $_translations[$language][$string_id][$context];
+    if (isset($_translations[$language][$string_id])) {
+      return $_translations[$language][$string_id];
     }
     return $string_id;
   }

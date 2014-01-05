@@ -50,18 +50,10 @@ class server {
    */
   public function getResource($route = '') {
 
-    // remove prefix language from the route if any
-    if (self::$translator['enabled']) {
-      if ($route) {
-        $route_parts = explode('/', $route);
-        array_shift($route_parts);
-        $route = implode('/', $route_parts);
-      }
-    }
-
     // search a resource matching our $route. Skip routes beginning by "__".
     if (isset($this->routes[$route]) && strpos($route, '__') === FALSE) {
-      $resource = new $this->routes[$route]['class'];
+      $class = $this->routes[$route]['class'];
+      $resource = new $class();
     }
 
     // no resource found, serve the 404 error resource

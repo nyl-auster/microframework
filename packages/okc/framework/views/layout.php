@@ -32,8 +32,8 @@ use okc\framework\translator;
 
 <navigation id="lang">
   <ul>
-  <li><?php echo server::link('', translator::t('french'), array('language' => 'fr')) ?> </li>
-  <li><?php echo server::link('', translator::t('english'), array('language' => 'en')) ?> </li>
+  <li><?php echo server::link(server::getRouteFromUrl(), translator::t('french'), array('language' => 'fr')) ?> </li>
+  <li><?php echo server::link(server::getRouteFromUrl(), translator::t('english'), array('language' => 'en')) ?> </li>
   </ul>
 </navigation>
 
@@ -45,5 +45,4 @@ use okc\framework\translator;
 
 </body>
 </html>
-
 
