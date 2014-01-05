@@ -20,7 +20,7 @@ global $routes;
       </div>
 
       <div id="marque-2">
-      Framework <span class="underscore">_</span>
+      Framework
       </div>
 
       <div id="slogan">
