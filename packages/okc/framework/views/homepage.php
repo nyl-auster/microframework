@@ -39,7 +39,7 @@ To create a new page or customize homepage, copy <em>config/example.routes.php</
 See also <a target="_blank" href="https://github.com/nyl-auster/okc-framework/blob/master/README.md"> online documentation </a> on how to create new resources; or take a look at code from packages/okc/example package and its hello world example.<br/>
 </p>
 <p>
-Hello world example page : 
+Hello world example page will be available once you have copy example.routes.php file to routes.php file.
 <a href="<?php echo server::getUrlFromRoute('hello-world')?>"> <?php echo server::getUrlFromRoute('hello-world')?></a>
 </p>
 </div>
