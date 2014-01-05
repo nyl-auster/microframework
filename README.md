@@ -1,7 +1,7 @@
 OKC framework
 ==============
 
-OKC framework is a tiny View-Controller php framework, build around "resources". 
+OKC framework is a tiny View-Controller php framework.
 
 Requirements
 ------------
@@ -13,10 +13,11 @@ Features
 ---------
 * Build site around resources. A resource is a class that represents any piece of content of your application; providing methods to customize its behavior and visibility. They may be used to create blocks, pages, rss, xml, json etc...
 * Router : map an url to a resource with routes.php file to create a web page. 
+* Blocks : call resource directly from wihtin your templates. Use access methods to set their visibility rules.
 * Parent and children template / views : a template may be wrapped by any other template and overrides parent template variables if needed.
 * Events & listeners manager : subscribe to core events with php callables or fire custom events.
-* PSR-0 standard : you may use any php class or libary implementing PSR-0 in your project.
-* Customize 404 and 403 pages with resources of your own.
+* PSR-0 standard : you may use any php class or libary implementing PSR-0 in your project. Just drop them in "packages" directory or create a vendors "directory" for them.
+* Fully customize 404 and 403 pages with resources of your own.
 * Settings file to hold configuration.
 
 Documentation
@@ -26,45 +27,40 @@ Installation
 -------------
 
 Clone the git repository. Rename config/example.routes.php file to config/routes.php to create new routes or uncomment existing ones.
+By default, only homepage resource, 404 and 403 resource will be available. Follow documentation to create a new available resource.
 
-Directory structure
+Directory structure & autoloader PSR-0
 -------------------
 
-Custom and core code resides in "bundles" directory. Core code is a bundle from okc vendor directory. 
+PSR-O autoloader is used to load classes. It looks in "packages" directory. See PSR-0 https://github.com/php-fig/fig-standards/blob/master/accepted/fr/PSR-0.md .
+
+Framework code resides in packages/okc/framework directory.
 
 Example module
 --------------
 
-Take a look at bundles/okc/example bundle to see how to organize custom code. 
+packages/okc/example package can be used as a starter to create a new package quickly.
 
-Quickstart : Hello World
+Manul Quickstart : Hello World
 ------------------------
 
-Rename config/example.routes.php to config/routes.php
-Create a new route for our "helloWorld" resource in config/routes.php. Key will be the new available url and "class" will contain namespace of the class to use
+* Rename config/example.routes.php to config/routes.php
+* Create a new route for our "helloWorld" resource in config/routes.php.
 
 ```php
-  $routes['hello-world'] = array('class' => 'okc\example\helloWorld');
+  $routes['hello-world'] = array('class' => 'foo\bar\helloWorld');
 ```
 
-Create a new bundle called "example" in "okc" directory.
-Create a new php file call helloWorld.php in a "resources" directory with following content :
+* In package directory foo/bar/resources directories. "Foo" is Vendor name and "bar" package name. "Resources" will contain resources.
+* Create a new php file call helloWorld.php in a "resources" directory :
 
 ```php
     <?php
-    // define our namespace to allow PSR-0 autoload
-    namespace okc\example\resources;
-    // use abstract resource class provided by the framework
+    namespace foo\bar\resources;
     use okc\framework\resource;
 
-    /**
-     * Say hello to the world.
-     */
     class helloWorld extends resource {
 
-      /**
-       * This method will be automatically called by the framework when visiting "hello-world" url.
-       */
       function get() {
         return 'Hello world';
       }
@@ -75,35 +71,31 @@ Create a new php file call helloWorld.php in a "resources" directory with follow
 Go to http://www.yourapp.local/index.php/hello-world and see hello world message.
 
 
-Hello world with template system
+Hello world using framework template engine
 --------------------------------
 
-Display the hello world with template system. Add
-    use okc\framework\view
-At the top of our file. And return a view object at the end of the get method rather than a string :
+* Create packages/foo/bar/views/helloWorld.php template file.
+* Update packages/foo/bar/resources/helloWorld.php resource :
 
 ```php
     <?php
-    namespace okc\example\resources;
-
+    namespace foo\bar\resources;
     use okc\framework\resource;
-    // add template system provided by the framework
     use okc\framework\view;
 
     class helloWorld extends resource {
 
       function get() {
-        // define some variables we want to use in the template.
-        return array(
+        return new view('okc/example/views/helloWorld.php', array(
           'title' => 'Hello World',
           'content' => 'This is an hello world example',
-        );
+        ));
       }
 
     }
 ```
 
-We create helloWorld.php and additionnaly asked this template to be rendered inside a global page.php template.
+* add following code in packages/foo/bar/views/helloWorld.php :
 
 ```php
     <?php
@@ -114,22 +106,20 @@ We create helloWorld.php and additionnaly asked this template to be rendered ins
     <h2> <?php print strip_tags($title) ?> </h2>
     <p> <?php print strip_tags($content) ?> </p>
 ```
-Create the page.php template in the same directory.
+Create the packages/foo/bar/views/page.php template in the same directory.
 
 ```php
-    <h1> PAGE LAYOUT </h1>
+    <h1> MAIN PAGE LAYOUT </h1>
 
     <?php print $childView ?>
 ```
-
-Do not forget $childView or helloWordView.php won't be displayed at all. 
-Page.php could set a parent too, there is no limit for parent / children imbrication of templates.
+$childView is the variable that allow helloWorld.php to be wrapped by page.php template. Variable name may be change using second paramter of setParentView method. 
 
 Display Blocks
 --------------
 
 Resource can be used witout any mapping to an url, blocks can be created this way :
-This resource use access method to tell this block to display only on "hello-world" page.
+This resource use access() method to tell this block to display only on "hello-world" page.
 
 ```php
 <?php
@@ -156,7 +146,7 @@ class contactBlock extends resource {
 ```
 
 To display resource, call it somewhere in a page template :
-always use "render" method because it take care of checking access conditions.
+always use "render" method because it takes care of checking access conditions.
 
 ```php
   <?php 
@@ -173,30 +163,28 @@ http://www.yourapp.local/index.php/myPath
 
 "myPath" is the internal path used by the framework, that's to say framework only care about what come after "index.php".
 
-If you need params in the url, well just use get parameters like this and then use pure php to get them in your resource. No abstractions for that part, just php.
+If you need params in the url, well just use classic get parameters and the use plain old php to catch them in your resource. 
+
+```
 http://www.yourapp.local/index.php/hello?id=3
+```
 
-Autoloader
-------------
-
-PSR-0 is used for autoloading. Simply put your classes in bundles directory.
-
-Events & listener manager
----------
+Events & listeners manager
+-------------------------
 
 An simple events & listeners system is available. Rename config/example.listeners.php to config/listeners.php to register your listeners.
-You can map a class to an event with this file. Class will have to implement a method with the event name.
+Classes will have to implement a method with the exact event name.
 Core framework only provide two events for now :
 * frameworkBootstrap
 * frameworkShutdown
 
-This allow you to add some code to be executed at start or end of the application wihout having to hack index.php file. (database connection, session etc)
+This allow to add some code to be executed at start or end of the application wihout having to hack index.php file. (database connection, session etc)
 
-You may fire your own events this way. There is no convention to name events, it just have to be a string :
+Custom events may be fired this way. No convention to name events, it just have to be a string. Params will be passed by reference.
 
 ```php
     <?php
-    okc\framework\eventsManager::fire('mybundleMyevent', array('param' => $params));
+    okc\framework\eventsManager::fire('mypackageEvent', array('param' => $myparam));
     ?>
 ```
 

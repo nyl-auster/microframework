@@ -1,4 +1,4 @@
 config/routes.php
 config/listeners.php
 config/settings.php
-bundles/yann
+packages/yann

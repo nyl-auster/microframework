@@ -1,6 +1,7 @@
 <?php
 namespace okc\example;
 
+// example listeners
 class listeners {
 
   function frameworkBootstrap($params) {
