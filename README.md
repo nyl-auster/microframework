@@ -41,7 +41,7 @@ Example module
 
 packages/okc/example package can be used as a starter to create a new package quickly.
 
-Manul Quickstart : Hello World
+Create a Hello World Resource
 ------------------------
 
 * Rename config/example.routes.php to config/routes.php
