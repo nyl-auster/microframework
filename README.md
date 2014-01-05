@@ -1,6 +1,3 @@
-OKC framework
-==============
-
 ![Logo](https://raw.github.com/nyl-auster/okc-framework/master/packages/okc/framework/logo.png)
 
 OKC framework is a light View-Controller php framework.
