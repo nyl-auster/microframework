@@ -56,6 +56,7 @@ class server {
       $resource = new $class();
     }
 
+
     // no resource found, serve the 404 error resource
     if (!isset($resource)) {
       header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found"); 

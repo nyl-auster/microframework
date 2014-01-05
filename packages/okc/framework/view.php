@@ -20,9 +20,16 @@ class view {
    *   associatives array of variables to pass to the template file.
    */
   public function __construct($file, $variables = array(), $language = NULL) {
-    $this->language = $language;
+    $this->language = $this->getLanguage($language);
     $this->file = $this->viewTranslation($file, $language);
     $this->variables = $variables;
+  }
+
+  function getLanguage($language = NULL) {
+    if($language) {
+      return $language;
+    }
+
   }
 
   /**
@@ -31,7 +38,7 @@ class view {
   function viewTranslation($file, $language) {
     if ($language) {
       $file_parts = explode('.', $file);
-      $file_suggestion = implode('.', array($file_parts[0], $this->language, $file_parts[1]));
+      $file_suggestion = implode('.', array($file_parts[0], $language, $file_parts[1]));
       if (is_readable($file_suggestion)) {
        $file = $file_suggestion;
       }
