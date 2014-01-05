@@ -1,7 +1,7 @@
 OKC framework
 ==============
 
-OKC framework is a tiny View-Controller php framework.
+OKC framework is a light View-Controller php framework.
 
 Requirements
 ------------
