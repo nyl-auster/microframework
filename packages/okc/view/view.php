@@ -1,5 +1,5 @@
 <?php
-namespace okc\framework;
+namespace okc\view;
 
 use okc\eventsManager\eventsManager;
 

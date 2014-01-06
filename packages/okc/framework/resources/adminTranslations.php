@@ -2,7 +2,7 @@
 namespace okc\framework\resources;
 
 use okc\framework\resource;
-use okc\framework\view;
+use okc\view\view;
 
 class adminTranslations extends resource {
 

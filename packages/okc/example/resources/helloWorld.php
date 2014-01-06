@@ -5,7 +5,7 @@
 namespace okc\example\resources;
 
 use okc\framework\resource;
-use okc\framework\view;
+use okc\view\view;
 use okc\i18n\i18n;
 
 /**
