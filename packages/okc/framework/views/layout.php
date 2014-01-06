@@ -1,5 +1,5 @@
 <?php
-use okc\framework\server;
+use okc\server\server;
 use okc\i18n\i18n;
 ?>
 

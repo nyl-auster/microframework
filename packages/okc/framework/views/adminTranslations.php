@@ -1,5 +1,5 @@
 <?php
-use okc\framework\server;
+use okc\server\server;
 $this->setParentView('packages/okc/framework/views/layout.php');
 ?>
 

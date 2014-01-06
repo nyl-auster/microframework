@@ -1,7 +1,7 @@
 <?php
 namespace okc\framework\resources;
 
-use okc\framework\resource;
+use okc\resource\resource;
 use okc\view\view;
 
 class adminRoutes extends resource {

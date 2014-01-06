@@ -1,7 +1,7 @@
 <?php
 namespace okc\i18n;
 
-use okc\framework\server;
+use okc\server\server;
 
 class i18n {
 

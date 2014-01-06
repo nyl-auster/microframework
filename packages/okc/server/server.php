@@ -1,5 +1,5 @@
 <?php
-namespace okc\framework;
+namespace okc\server;
 
 use okc\eventsManager\eventsManager;
 use okc\i18n\i18n;

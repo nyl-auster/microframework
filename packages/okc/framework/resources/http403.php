@@ -1,7 +1,7 @@
 <?php
 namespace okc\framework\resources;
 
-use okc\framework\resource;
+use okc\resource\resource;
 
 class http403 extends resource {
 

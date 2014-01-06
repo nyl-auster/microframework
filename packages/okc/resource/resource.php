@@ -13,7 +13,7 @@
  * The only required method to create a resource is content() from now, which must
  * return html, json or any final representation ready to display on a page.
  */
-namespace okc\framework;
+namespace okc\resource;
 
 abstract class resource {
 
