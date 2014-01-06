@@ -1,6 +1,6 @@
 <?php
 use okc\framework\server;
-use okc\framework\eventsManager;
+use okc\eventsManager\eventsManager;
 use okc\framework\packagesManager;
 
 define('OKC_FRAMEWORK_DIRECTORY_CONFIG', 'config');

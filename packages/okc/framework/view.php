@@ -1,7 +1,7 @@
 <?php
 namespace okc\framework;
 
-use okc\framework\eventsManager;
+use okc\eventsManager\eventsManager;
 
 /**
  * Generic template engine class, Usable outside of okc framework.

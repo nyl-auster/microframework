@@ -1,7 +1,7 @@
 <?php
 namespace okc\framework;
 
-use okc\framework\eventsManager;
+use okc\eventsManager\eventsManager;
 use okc\i18n\i18n;
 
 /**

@@ -3,14 +3,14 @@
  * @file
  * Events Manager
  */
-namespace okc\framework;
+namespace okc\eventsManager;
 
 class eventsManager {
 
   static $listeners = array();
 
   static function setListeners($listeners) {
-    return self::$listeners;
+    self::$listeners = $listeners;
   }
 
   static function getListeners() {
