@@ -15,6 +15,7 @@ Features
 * Blocks : call resource directly from wihtin your templates. Use access methods to set their visibility rules.
 * Parent and children template / views : a template may be wrapped by any other template and overrides parent template variables if needed.
 * Events & listeners manager : subscribe to core events with php callables or fire custom events.
+* Translation support (strings or templates switch given the language)
 * PSR-0 standard : you may use any php class or libary implementing PSR-0 in your project. Just drop them in "packages" directory or create a vendors "directory" for them.
 * Fully customize 404 and 403 pages with resources of your own.
 * Settings file to hold configuration.
