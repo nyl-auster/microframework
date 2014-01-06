@@ -10,5 +10,3 @@
  * - okc\example\listeners is the name of the class implement frameworkBootstrap method.
  */
 
-#include "okc/example/config/listeners.php";
-
