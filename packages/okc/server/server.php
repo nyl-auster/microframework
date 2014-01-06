@@ -2,7 +2,6 @@
 namespace okc\server;
 
 use okc\eventsManager\eventsManager;
-use okc\i18n\i18n;
 
 /**
  * Map a route to a resource.

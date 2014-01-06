@@ -3,12 +3,22 @@ namespace okc\packagesManager;
 
 /**
  * Get informations about packages
+ *
+ * Packages contains at least two level of directories
+ * - level 1 : vendor name
+ * - level 2 : package name
  */
 class packagesManager {
 
   protected $packagesDirectory = '';
   protected $packageConfigDirectory = '';
 
+  /**
+   * @param string $packagesDirectory
+   *   name of directory containing all packages
+   * @param string $packageConfigDirectory
+   *   name of directory containing config files inside each packages
+   */
   function __construct($packagesDirectory, $packageConfigDirectory) {
     $this->packagesDirectory = $packagesDirectory;
     $this->packageConfigDirectory = $packageConfigDirectory;

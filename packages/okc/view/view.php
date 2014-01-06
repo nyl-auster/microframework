@@ -8,26 +8,48 @@ use okc\eventsManager\eventsManager;
  */
 class view {
 
-  public $variables = array();
-  public $file = '';
-  private $parentView = null;
-  // in which parent variable will be inject the view if wrapped.
-  private $parentViewVariableName = null;
+  protected $variables = array();
+  protected $file = '';
+  protected $parentView = null;
+  protected $childViewVariable = null;
 
   /**
    * @param string $file
    *   full relative path to the template file.
    * @param array $variables
    *   associatives array of variables to pass to the template file.
+   * @param string $childView
+   *   Wrapper template will render child view printing this variable name.
    */
-  public function __construct($file, $variables = array()) {
-    eventsManager::fire('view__construct', array('file' => &$file, 'variables' => &$variables));
-    $this->file = $file;
-    $this->variables = $variables;
+  public function __construct($file, $variables = array(), $childViewVariable = 'childView') {
+    $this->setFile($file);
+    $this->setVariables($variables);
+    $this->childViewVariable = $childViewVariable;
+  }
+
+  function setFile($file) {
+    eventsManager::fire('viewSetFile', array('file' => &$file));
+    return $this->file = $file;
   }
 
   function setVariable($name, $value) {
-    $this->variables[$name] = $value;
+    return $this->variables[$name] = $value;
+  }
+
+  function setVariables($variables) {
+    return $this->variables = $variables;
+  }
+
+  function getFile($file) {
+    return $this->file = $file;
+  }
+
+  function getVariable($name) {
+    return $this->variables[$name];
+  }
+
+  function getVariables() {
+    return $this->variables;
   }
 
   /**
@@ -40,7 +62,7 @@ class view {
   public function render() {
     $output = $this->includeParse($this->file, $this->variables); 
     if ($this->parentView) {
-      $this->parentView->variables[$this->parentViewVariableName] = $output;
+      $this->parentView->variables[$this->childViewVariable] = $output;
       $output = $this->parentView->render();     
     }
     return $output;
@@ -69,9 +91,8 @@ class view {
    * @param array $variables
    *   Allow to overrides parent view variables if needed.
    */
-  public function setParentView($file, $variables = array(), $language = NULL, $parentViewVariableName = 'childView') {
+  public function setParentView($file, $variables = array(), $language = NULL) {
     $this->parentView = new view($file, $variables, $language);
-    $this->parentViewVariableName = $parentViewVariableName;
   }
 
   public function __toString() {
