@@ -10,9 +10,3 @@ $_settings['i18n']['enabled'] = TRUE;
 
 $_settings['i18n']['languageNegociation'] = 'urlPrefix';
 
-$_settings['i18n']['languageNegociators']['urlPrefix'] = array(
-  'name' => 'Url Prefix',
-  'description' => 'Determine language by adding a prefix to all routes.',
-  'negociationCallback' => 'okc\i18n\i18n',
-);
-

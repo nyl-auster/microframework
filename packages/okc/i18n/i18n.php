@@ -104,8 +104,8 @@ class i18n {
    */
   static function addUrlPrefix($route, $languageCode = NULL) {
     // do nothing if there is already a prefix.
-    $language = $languageCode ? self::languageCodeToUrlPrefix($languageCode) : self::getLanguage(); 
-    return $language .'/' . $route;
+    $language = $languageCode ? $languageCode : self::getLanguage(); 
+    return self::languageCodeToUrlPrefix($language) .'/' . $route;
   }
 
   /**
