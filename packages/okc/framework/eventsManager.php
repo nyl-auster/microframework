@@ -7,14 +7,10 @@ namespace okc\framework;
 
 class eventsManager {
 
-  static protected $listeners = array();
+  static $listeners = array();
 
-  /**
-   * @param array $listeners
-   * @see config/listeners.php for array structure.
-   */
-  function __construct($listeners) {
-    self::$listeners = $listeners;
+  static function setListeners($listeners) {
+    return self::$listeners;
   }
 
   static function getListeners() {
@@ -25,7 +21,7 @@ class eventsManager {
    * Call all listeners for a particular event
    * @event (string)
    *   event name
-   * @params (mixed)
+   * @params array()
    *   param to pass to the listener
    */
   static function fire($event, $params = array()) {
