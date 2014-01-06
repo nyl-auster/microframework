@@ -1,7 +1,7 @@
 <?php
 use okc\framework\server;
 use okc\eventsManager\eventsManager;
-use okc\framework\packagesManager;
+use okc\packagesManager\packagesManager;
 
 define('OKC_FRAMEWORK_DIRECTORY_CONFIG', 'config');
 define('OKC_FRAMEWORK_DIRECTORY_PACKAGES', 'packages');

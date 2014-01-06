@@ -19,10 +19,10 @@ class eventsManager {
 
   /**
    * Call all listeners for a particular event
-   * @event (string)
+   * @param string $event 
    *   event name
-   * @params array()
-   *   param to pass to the listener
+   * @param array $params
+   *   variables to pass to the listener
    */
   static function fire($event, $params = array()) {
     if (!isset(self::$listeners[$event])) return false;

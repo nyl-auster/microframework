@@ -1,5 +1,5 @@
 <?php
-namespace okc\framework; 
+namespace okc\packagesManager; 
 
 /**
  * Get informations about packages
