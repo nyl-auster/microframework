@@ -15,9 +15,9 @@ class server {
 
   // default routes for homepage, 403 and 404 http errors. Overridable in routes.php file.
   protected $routes = array(
-    '' => array('class' => 'okc\framework\resources\homepage'),
-    '__http404' => array('class' => 'okc\framework\resources\http404'),
-    '__http403' => array('class' => 'okc\framework\resources\http403'),
+    '' => array('class' => 'okc\server\resources\homepage'),
+    '__http404' => array('class' => 'okc\server\resources\http404'),
+    '__http403' => array('class' => 'okc\server\resources\http403'),
   );
 
   // base path, when framework is installed in a subdirectory
