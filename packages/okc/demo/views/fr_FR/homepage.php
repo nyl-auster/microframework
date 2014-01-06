@@ -1,6 +1,6 @@
 <?php
 use okc\server\server;
-$this->setParentView('okc/framework/views/layout.php');
+$this->setParentView('okc/demo/views/layout.php');
 ?>
 
 <p>Ceci est la page d'accueil par défaut, définie dans le package <em>packages/okc/framework</em>. <br/>

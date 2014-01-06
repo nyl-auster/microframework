@@ -1,6 +1,6 @@
 <?php
 use okc\server\server;
-$this->setParentView('packages/okc/framework/views/layout.php');
+$this->setParentView('packages/okc/demo/views/layout.php');
 global $_routes;
 ?>
 

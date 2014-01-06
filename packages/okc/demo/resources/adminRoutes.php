@@ -1,5 +1,5 @@
 <?php
-namespace okc\framework\resources;
+namespace okc\demo\resources;
 
 use okc\resource\resource;
 use okc\view\view;

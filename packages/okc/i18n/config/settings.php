@@ -1,5 +1,10 @@
 <?php
 
+// default language used in the site.
+// We use string Ids so there is always a translation running background
+// from string Ids do default language.
+$_settings['defaultLanguage'] = 'en_EN';
+
 // define language settings.
 $_settings['i18n']['languages']['fr_FR']['urlPrefix'] = 'fr';
 $_settings['i18n']['languages']['en_EN']['urlPrefix'] = 'en';

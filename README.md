@@ -1,4 +1,4 @@
-![Logo](https://raw.github.com/nyl-auster/okc-framework/master/packages/okc/framework/logo.png)
+![Logo](https://raw.github.com/nyl-auster/okc-framework/master/logo.png)
 
 OKC framework is a View-Controller php framework.
 
