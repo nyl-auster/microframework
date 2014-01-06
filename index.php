@@ -50,10 +50,11 @@ foreach ($configFiles as $file ) {
 
 // instanciate eventsManager with listeners from listeners.php file.
 $eventsManager = new eventsManager($_listeners);
+// now app can fire events calling this static method.
 $eventsManager::fire('frameworkBootstrap', array('routes' => $_routes, 'settings' => $_settings));
 
 // fetch resource matching current url
-$server = new server($_routes, $_settings['i18n'], $eventsManager);
+$server = new server($_routes);
 $resource = $server->getResource($server->getRouteFromUrl());
 print $resource->render();
 

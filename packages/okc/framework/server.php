@@ -21,8 +21,6 @@ class server {
     '__http403' => array('class' => 'okc\framework\resources\http403'),
   );
 
-  protected static $i18n = array();
-
   // base path, when framework is installed in a subfolder
   public static $basePath = '';
 
@@ -30,9 +28,8 @@ class server {
    * @param array $routes. 
    *   Routes to resources map. see example.routes.php
    */
-  public function __construct($routes = array(), $i18n) {
+  public function __construct($routes = array()) {
     $this->routes = array_merge($this->routes, $routes);
-    self::$i18n = $i18n;
     self::$basePath = $this->getBasePath();
   }
 
@@ -117,21 +114,6 @@ class server {
    */ 
   static function getBasePath() {
     return str_replace('index.php', '', $_SERVER['SCRIPT_NAME']);
-  }
-
-  static function getLanguage() {
-    return self::$language;
-  }
-
-  static function getCurrentLanguage() {
-    return 'en_EN';
-    //$language = self::$i18n['defaultLanguage'];
-    //$path = isset($_SERVER['PATH_INFO']) ? parse_url(trim($_SERVER['PATH_INFO'], '/'), PHP_URL_PATH) : '';
-    //if ($path) {
-      //$path_parts = explode('/', $path);
-      //$language = array_shift($path_parts);
-    //}
-    //return $language;
   }
 
   // @FIXME : move somewhere else (note : thank you drupal)

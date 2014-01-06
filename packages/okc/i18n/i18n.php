@@ -40,6 +40,25 @@ class i18n {
   }
 
   /**
+   * Listener
+   *
+   * Add suggestions template to load a different template according to
+   * current language.
+   * Search template if a fr_FR or en_EN subfolder in views folder.
+   */
+  function view__construct($file, $variables) {
+    $languageCode = self::getLanguage();
+    $file_parts = explode(DIRECTORY_SEPARATOR, $file);
+    $file_name = array_pop($file_parts);
+    $file_parts[] = $languageCode;
+    $file_parts[] = $file_name;
+    $file_suggestion = implode(DIRECTORY_SEPARATOR, $file_parts);
+    if (is_readable($file_suggestion)) {
+      $file = $file_suggestion;
+    }
+  }
+
+  /**
    * Translate a string Id to a localized string
    */
   static function t($stringId, $language = NULL) {

@@ -9,8 +9,7 @@ use okc\framework\server;
 class homepage extends resource {
 
   function get() {
-     $language = server::getCurrentLanguage();
-     return new view('packages/okc/framework/views/homepage.php', array(), $language);
+     return new view('packages/okc/framework/views/homepage.php');
   }
 
 }

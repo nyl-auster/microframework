@@ -1,6 +1,8 @@
 <?php
 namespace okc\framework;
 
+use okc\framework\eventsManager;
+
 /**
  * Generic template engine class, Usable outside of okc framework.
  */
@@ -11,7 +13,6 @@ class view {
   private $parentView = null;
   // in which parent variable will be inject the view if wrapped.
   private $parentViewVariableName = null;
-  protected $language = null;
 
   /**
    * @param string $file
@@ -19,17 +20,10 @@ class view {
    * @param array $variables
    *   associatives array of variables to pass to the template file.
    */
-  public function __construct($file, $variables = array(), $language = NULL) {
-    $this->language = $this->getLanguage($language);
-    $this->file = $this->viewTranslation($file, $language);
+  public function __construct($file, $variables = array()) {
+    eventsManager::fire('view__construct', array('file' => &$file, 'variables' => &$variables));
+    $this->file = $file;
     $this->variables = $variables;
-  }
-
-  function getLanguage($language = NULL) {
-    if($language) {
-      return $language;
-    }
-
   }
 
   /**
