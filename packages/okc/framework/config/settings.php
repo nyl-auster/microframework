@@ -1,11 +1,7 @@
 <?php
 
-$_settings['translator'] = array(
-  'enabled' => TRUE,
-  'defaultLanguage' => 'en',
-  'definedLanguages' => array(
-    'en' => array('name' => 'English'),
-    'fr' => array('name' => 'French'),
-  ),
-);
+// default language used in the site.
+// We use string Ids so there is always a translation running background
+// from string Ids do default language.
+$_settings['defaultLanguage'] = 'en_EN';
 

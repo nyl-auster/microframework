@@ -6,7 +6,7 @@ namespace okc\example\resources;
 
 use okc\framework\resource;
 use okc\framework\view;
-use okc\framework\translator;
+use okc\i18n\i18n;
 
 /**
  * Extends framework abstract resource.
@@ -18,8 +18,8 @@ class helloWorld extends resource {
    */
   function get() {
     return new view('okc/example/views/helloWorld.php', array(
-      'title' => translator::t('hello_world'),
-      'content' => translator::t('hello_world_test_page'),
+      'title' => i18n::t('hello_world'),
+      'content' => i18n::t('hello_world_test_page'),
     ));
   }
 

@@ -1,6 +1,6 @@
 <?php
 use okc\framework\server;
-use okc\framework\translator;
+use okc\i18n\i18n;
 ?>
 
 <html>
@@ -24,7 +24,7 @@ use okc\framework\translator;
       </div>
 
       <div id="slogan">
-      <p id="phrase-1"> <?php echo translator::t('light_view_controller_php_framework') ?> </p>
+      <p id="phrase-1"> <?php echo i18n::t('light_view_controller_php_framework') ?> </p>
       </div>
 
     </div>
@@ -32,8 +32,8 @@ use okc\framework\translator;
 
 <navigation id="lang">
   <ul>
-  <li><?php echo server::link(server::getRouteFromUrl(), translator::t('french'), array('language' => 'fr')) ?> </li>
-  <li><?php echo server::link(server::getRouteFromUrl(), translator::t('english'), array('language' => 'en')) ?> </li>
+  <li><?php echo server::link(server::getRouteFromUrl(), i18n::t('french'), array('language' => 'fr_FR')) ?> </li>
+  <li><?php echo server::link(server::getRouteFromUrl(), i18n::t('english'), array('language' => 'en_EN')) ?> </li>
   </ul>
 </navigation>
 

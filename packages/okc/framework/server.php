@@ -2,6 +2,7 @@
 namespace okc\framework;
 
 use okc\framework\eventsManager;
+use okc\i18n\i18n;
 
 /**
  * Map a route to a resource.
@@ -20,11 +21,7 @@ class server {
     '__http403' => array('class' => 'okc\framework\resources\http403'),
   );
 
-  // eventsManager instance
-  protected $eventsManager = null;
-
-  // enabled translations ?
-  protected static $translator = array();
+  protected static $i18n = array();
 
   // base path, when framework is installed in a subfolder
   public static $basePath = '';
@@ -33,10 +30,9 @@ class server {
    * @param array $routes. 
    *   Routes to resources map. see example.routes.php
    */
-  public function __construct($routes = array(), $translator, eventsManager $eventsManager) {
+  public function __construct($routes = array(), $i18n) {
     $this->routes = array_merge($this->routes, $routes);
-    $this->eventsManager = $eventsManager;
-    self::$translator = $translator;
+    self::$i18n = $i18n;
     self::$basePath = $this->getBasePath();
   }
 
@@ -82,16 +78,7 @@ class server {
    */
   static function getRouteFromUrl() {
     $route = isset($_SERVER['PATH_INFO']) ? parse_url(trim($_SERVER['PATH_INFO'], '/'), PHP_URL_PATH) : '';
-
-    // remove prefix language from the route if any
-    if (self::$translator['enabled']) {
-      if ($route) {
-        $route_parts = explode('/', $route);
-        array_shift($route_parts);
-        $route = implode('/', $route_parts);
-      }
-    }
-    
+    eventsManager::fire('serverGetRouteFromUrl', array('route' => &$route));
     return $route;
 
   }
@@ -104,29 +91,23 @@ class server {
    * @return string
    *   A relative url, like "/index.php/hello/world", usable in links.
    */
-  static function getUrlFromRoute($route, $language = NULL) {
-
-    // add prefix language if needed.
-    $separator = '/';
-
-    if (self::$translator['enabled']) {
-      $lang = $language ? $language : self::getCurrentLanguage();
-      $separator = '/' . $lang . '/';
-    }
-
-    return $_SERVER['SCRIPT_NAME'] . $separator . $route;
+  static function getUrlFromRoute($route, $languageCode = NULL) {
+    eventsManager::fire('serverGetUrlFromRoute', array('route' => &$route, 'languageCode' => $languageCode));
+    $url = $_SERVER['SCRIPT_NAME'] . '/' . $route;
+    return $url;
   }
 
   /**
    * Build a html link, language aware, adding an active class if needed.
    */
   static function link($route, $text, $options = array()) {
-    $lang = !empty($options['language']) ? $options['language'] : NULL;
+    $languageCode = !empty($options['language']) ? $options['language'] : NULL;
+
     $options += array('attributes' => array());
-    if (server::getRouteFromUrl() == $route && self::getCurrentLanguage() == $lang) {
+    if (self::getRouteFromUrl() == $route) {
       $options['attributes']['class'][] = 'active';
     }
-    $href = self::getUrlFromRoute($route, $lang);
+    $href = self::getUrlFromRoute($route, $languageCode);
     $link = sprintf('<a href="%s" %s > %s </a>', $href, self::setAttributes($options['attributes']), $text);
     return $link;
   }
@@ -143,16 +124,14 @@ class server {
   }
 
   static function getCurrentLanguage() {
-    $language = NULL;
-    if (self::$translator['enabled']) {
-      $language = self::$translator['defaultLanguage'];
-      $path = isset($_SERVER['PATH_INFO']) ? parse_url(trim($_SERVER['PATH_INFO'], '/'), PHP_URL_PATH) : '';
-      if ($path) {
-        $path_parts = explode('/', $path);
-        $language = array_shift($path_parts);
-      }
-    }
-    return $language;
+    return 'en_EN';
+    //$language = self::$i18n['defaultLanguage'];
+    //$path = isset($_SERVER['PATH_INFO']) ? parse_url(trim($_SERVER['PATH_INFO'], '/'), PHP_URL_PATH) : '';
+    //if ($path) {
+      //$path_parts = explode('/', $path);
+      //$language = array_shift($path_parts);
+    //}
+    //return $language;
   }
 
   // @FIXME : move somewhere else (note : thank you drupal)

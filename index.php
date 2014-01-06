@@ -53,7 +53,7 @@ $eventsManager = new eventsManager($_listeners);
 $eventsManager::fire('frameworkBootstrap', array('routes' => $_routes, 'settings' => $_settings));
 
 // fetch resource matching current url
-$server = new server($_routes, $_settings['translator'], $eventsManager);
+$server = new server($_routes, $_settings['i18n'], $eventsManager);
 $resource = $server->getResource($server->getRouteFromUrl());
 print $resource->render();
 

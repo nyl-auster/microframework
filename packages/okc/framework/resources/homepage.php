@@ -3,7 +3,7 @@ namespace okc\framework\resources;
 
 use okc\framework\resource;
 use okc\framework\view;
-use okc\framework\translator;
+use okc\framework\i18n;
 use okc\framework\server;
 
 class homepage extends resource {
