@@ -20,7 +20,7 @@ class server {
     '__http403' => array('class' => 'okc\framework\resources\http403'),
   );
 
-  // base path, when framework is installed in a subfolder
+  // base path, when framework is installed in a subdirectory
   public static $basePath = '';
 
   /**
@@ -29,7 +29,7 @@ class server {
    */
   public function __construct($routes = array()) {
     $this->routes = array_merge($this->routes, $routes);
-    self::$basePath = $this->getBasePath();
+    self::$basePath = self::getBasePath();
   }
 
   /**
