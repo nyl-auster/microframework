@@ -26,20 +26,6 @@ class view {
     $this->variables = $variables;
   }
 
-  /**
-   * Look for view according to language if any
-   */
-  function viewTranslation($file, $language) {
-    if ($language) {
-      $file_parts = explode('.', $file);
-      $file_suggestion = implode('.', array($file_parts[0], $language, $file_parts[1]));
-      if (is_readable($file_suggestion)) {
-       $file = $file_suggestion;
-      }
-    }
-    return $file;
-  }
-
   function setVariable($name, $value) {
     $this->variables[$name] = $value;
   }

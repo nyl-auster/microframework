@@ -46,7 +46,7 @@ class i18n {
    * current language.
    * Search template if a fr_FR or en_EN subfolder in views folder.
    */
-  function view__construct($file, $variables) {
+  function view__construct(&$file, &$variables) {
     $languageCode = self::getLanguage();
     $file_parts = explode(DIRECTORY_SEPARATOR, $file);
     $file_name = array_pop($file_parts);
