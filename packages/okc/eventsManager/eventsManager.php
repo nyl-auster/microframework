@@ -5,16 +5,36 @@
  */
 namespace okc\eventsManager;
 
+use  okc\packagesManager\packagesManager;
+
 class eventsManager {
 
-  static $listeners = array();
-
-  static function setListeners($listeners) {
-    self::$listeners = $listeners;
-  }
-
   static function getListeners() {
-    return self::$listeners;
+
+    $listeners = array();
+
+    // waiting for container system...
+    $pm = new packagesManager('packages', 'config');
+    $packages = $pm->getList();
+
+    foreach ($packages as $packageId => $packageDatas) {
+      foreach ($packageDatas['configFiles'] as $fileName => $filePath) {
+
+        if ($fileName == 'listeners.php') {
+          if (!is_readable($filePath)) continue;
+          $fileDatas = include $filePath;
+          if ($fileDatas == 1) continue;
+
+          foreach ($fileDatas as $eventName => $eventDatas) {
+            foreach ($eventDatas as $listenerName => $listenerDatas) {
+              $listeners[$eventName][$listenerName] = $listenerDatas;
+            }
+          }
+        }
+        
+      }
+    }
+    return $listeners;
   }
 
   /**
@@ -25,8 +45,9 @@ class eventsManager {
    *   variables to pass to the listener
    */
   static function fire($event, $params = array()) {
-    if (!isset(self::$listeners[$event])) return false;
-    foreach (self::$listeners[$event] as $class => $config) {
+    $listeners = self::getListeners();
+    if (!isset($listeners[$event])) return false;
+    foreach ($listeners[$event] as $class => $config) {
       call_user_func_array("$class::$event", $params);
     }
   }

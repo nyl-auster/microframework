@@ -2,6 +2,7 @@
 namespace okc\server;
 
 use okc\eventsManager\eventsManager;
+use okc\packagesManager\packagesManager;
 
 /**
  * Map a route to a resource.
@@ -23,12 +24,36 @@ class server {
   // base path, when framework is installed in a subdirectory
   public static $basePath = '';
 
+  public function getRoutes() {
+    $routes = array();
+    // waiting for container system...
+    $pm = new packagesManager('packages', 'config');
+    $packages = $pm->getList();
+    foreach ($packages as $packageId => $packageDatas) {
+      foreach ($packageDatas['configFiles'] as $fileName => $filePath) {
+
+        // merge all route files to one big route.
+        if ($fileName == 'routes.php') {
+          if (!is_readable($filePath)) continue;
+          $fileDatas = include $filePath;
+          if ($fileDatas == 1) continue;
+          foreach ($fileDatas as $route => $routeDatas) {
+            $routes[$route] = $routeDatas;
+            $routes[$route]['packageId'] = $packageId;
+          }
+        }
+
+      }
+    }
+    return $routes;
+  }
+
   /**
    * @param array $routes. 
    *   Routes to resources map. see example.routes.php
    */
-  public function __construct($routes = array()) {
-    $this->routes = array_merge($this->routes, $routes);
+  public function __construct() {
+    $this->routes = array_merge($this->routes, $this->getRoutes());
     self::$basePath = self::getBasePath();
   }
 
@@ -47,7 +72,6 @@ class server {
       $class = $this->routes[$route]['class'];
       $resource = new $class();
     }
-
 
     // no resource found, serve the 404 error resource
     if (!isset($resource)) {
