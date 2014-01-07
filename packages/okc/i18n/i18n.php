@@ -2,6 +2,7 @@
 namespace okc\i18n;
 
 use okc\server\server;
+use okc\configManager\settings;
 
 class i18n {
 
@@ -13,10 +14,9 @@ class i18n {
    * so that it can find route in the router. (route is never declared with a language)
    */
   function serverGetRouteFromUrl(&$route) {
-    global $_settings;
-
-    if ($_settings['i18n']['enabled']) {
-      if ($_settings['i18n']['languageNegociation'] == 'urlPrefix') {
+    $settings = settings::get('okc.i18n');
+    if ($settings['enabled']) {
+      if ($settings['languageNegociation'] == 'urlPrefix') {
         $route = self::removeUrlPrefix($route); 
       }
     }
@@ -30,9 +30,9 @@ class i18n {
    * we need to add automatically the right urlPrefix for current language.
    */
   function serverGetUrlFromRoute(&$route, $languageCode) {
-    global $_settings;
-    if ($_settings['i18n']['enabled']) {
-      if ($_settings['i18n']['languageNegociation'] == 'urlPrefix') {
+    $settings = settings::get('okc.i18n');
+    if ($settings['enabled']) {
+      if ($settings['languageNegociation'] == 'urlPrefix') {
         $route = self::addUrlPrefix($route, $languageCode); 
       }
     }
@@ -78,9 +78,9 @@ class i18n {
    * return array
    */
   static function getI18nUrlPrefixes() {
-    global $_settings;
+    $settings = settings::get('okc.i18n');
     $prefixes = array();
-    foreach ($_settings['i18n']['languages'] as $language => $datas) {
+    foreach ($settings['languages'] as $language => $datas) {
       $prefixes[] = $datas['urlPrefix'];
     }
     return $prefixes;
@@ -119,10 +119,11 @@ class i18n {
 
     global $_settings;
 
-    $languageCode = $_settings['defaultLanguage'];
+    $settings = settings::get('okc.i18n');
+    $languageCode = $settings['defaultLanguage'];
 
-    if ($_settings['i18n']['enabled']) {
-      if ($_settings['i18n']['languageNegociation'] == 'urlPrefix') {
+    if ($settings['enabled']) {
+      if ($settings['languageNegociation'] == 'urlPrefix') {
         // cannot use server::getRouteFromUrl as this function return route without urlPrefix.
         $currentPath = isset($_SERVER['PATH_INFO']) ? parse_url(trim($_SERVER['PATH_INFO'], '/'), PHP_URL_PATH) : '';
         $urlPrefix = self::getUrlPrefixFromRoute($currentPath);

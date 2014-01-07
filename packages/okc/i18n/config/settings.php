@@ -1,17 +1,31 @@
 <?php
 
-// default language used in the site.
-// We use string Ids so there is always a translation running background
-// from string Ids do default language.
-$_settings['defaultLanguage'] = 'en_EN';
+return array(
 
-// define language settings.
-$_settings['i18n']['languages']['fr_FR']['urlPrefix'] = 'fr';
-$_settings['i18n']['languages']['en_EN']['urlPrefix'] = 'en';
+  // default language used in the site.
+  // We use string Ids so there is always a translation running background
+  // from string Ids do default language.
+  'defaultLanguage' => 'en_EN',
 
-// if TRUE, language will be passed in url to determine in which
-// language we shloud display the content.
-$_settings['i18n']['enabled'] = TRUE;
+  // enabled i18 on site. (e.g : set lang prefix in url etc...)
+  // By default, only defaultLanguage will be used everywhere with no
+  // way to switch language.
+  'enabled' => TRUE,
 
-$_settings['i18n']['languageNegociation'] = 'urlPrefix';
+  // how current language page will be found.
+  'languageNegociation' => 'urlPrefix',
+
+  // define language settings.
+  'languages' => array(
+    'en_EN' => array(
+      'name' => 'English',
+      'urlPrefix' => 'en',
+    ),
+    'fr_FR' => array(
+      'name' => 'French',
+      'urlPrefix' => 'fr',
+    ),
+  )
+
+);
 
