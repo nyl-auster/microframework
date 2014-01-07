@@ -10,15 +10,15 @@ Requirements
 
 Features
 ---------
-* Build site around resources. A resource is a class that represents any piece of content of your application; providing methods to customize its behavior and visibility. They may be used to create blocks, pages, rss, xml, json etc...
+* Resources : Build site around resources. A resource is a class that represents any piece of content of your application.
 * Router : map an url to a resource with routes.php file to create a web page. 
-* Blocks : call resource directly from wihtin your templates. Use access methods to set their visibility rules.
-* Parent and children template / views : a template may be wrapped by any other template and overrides parent template variables if needed.
+* Blocks : call resources directly from wihtin your templates. Use access methods to set their visibility rules.
+* Php temmplate engine, allowing template bo a child of another template.
 * Events & listeners manager : subscribe to core events with php callables or fire custom events.
-* Translation support (strings or templates switch given the language)
+* Translation support (strings or templates switch according to language)
 * PSR-0 standard : you may use any php class or libary implementing PSR-0 in your project. Just drop them in "packages" directory or create a vendors "directory" for them.
 * Fully customize 404 and 403 pages with resources of your own.
-* Settings file to hold configuration.
+* Settings API and file to hold configuration.
 
 Documentation
 ==============
