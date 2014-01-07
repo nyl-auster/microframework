@@ -95,8 +95,8 @@ em {
 }
 
 navigation#lang ul {
-  padding-top : 15px;
-  text-align : center;
+  text-align : right;
+  padding : 15px 30px;
   font-weight : bold;
 }
 
@@ -111,6 +111,26 @@ navigation#lang ul li a {
 }
 
 navigation#lang ul li a.active {
+  text-decoration : underline;
+}
+
+navigation#menu ul {
+  padding-top : 15px;
+  text-align : center;
+  font-weight : bold;
+}
+
+navigation#menu ul li {
+  display : inline;
+}
+
+navigation#menu ul li a {
+  display : inline;
+  text-decoration : none;
+  color : black;
+}
+
+navigation#menu ul li a.active {
   text-decoration : underline;
 }
 

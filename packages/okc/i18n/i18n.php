@@ -1,10 +1,35 @@
 <?php
 namespace okc\i18n;
 
-use okc\server\server;
 use okc\configManager\settings;
+use okc\packagesManager\packagesManager;
 
 class i18n {
+
+  static function getTranslations() {
+
+    $translations = array();
+
+    // waiting for container system...
+    $pm = new packagesManager('packages', 'config');
+    $packages = $pm->getList();
+
+    foreach ($packages as $packageId => $packageDatas) {
+      foreach ($packageDatas['configFiles'] as $fileName => $filePath) {
+
+        if ($fileName == 'translations.php') {
+          if (!is_readable($filePath)) continue;
+          $fileDatas = include $filePath;
+          if ($fileDatas == 1) continue;
+          $translations = $fileDatas;
+        }
+
+      }
+    }
+
+    return $translations;
+
+  }
 
   /**
    * Listener
@@ -62,10 +87,10 @@ class i18n {
    * Translate a string Id to a localized string
    */
   static function t($stringId, $language = NULL) {
-    global $_translations;
+    $translations = self::getTranslations();
     $languageCode = self::getLanguage();
-    if (isset($_translations[$languageCode][$stringId])) {
-       return $_translations[$languageCode][$stringId];
+    if (isset($translations[$languageCode][$stringId])) {
+       return $translations[$languageCode][$stringId];
     }
     return $stringId;
   }
@@ -141,7 +166,6 @@ class i18n {
   }
 
   static function getUrlPrefixFromRoute($route) {
-    global $_settings;
     $route_parts = explode('/', $route);
     if (in_array($route_parts[0], self::getI18nUrlPrefixes())) {
       return $route_parts[0];
@@ -152,9 +176,9 @@ class i18n {
    * Transform fr_FR to fr, to build url
    */
   static function languageCodeToUrlPrefix($langCode) {
-    global $_settings;
-    if (isset($_settings['i18n']['languages'][$langCode])) {
-      return $_settings['i18n']['languages'][$langCode]['urlPrefix'];
+    $settings = settings::get('okc.i18n');
+    if (isset($settings['languages'][$langCode])) {
+      return $settings['languages'][$langCode]['urlPrefix'];
     }
   }
 
@@ -162,8 +186,8 @@ class i18n {
    * Transform fr to fr_FR, to get languageCode from urlPrefix
    */
   static function urlPrefixToLanguageCode($urlPrefix) {
-    global $_settings;
-    foreach ($_settings['i18n']['languages'] as $languageCode => $datas) {
+    $settings = settings::get('okc.i18n');
+    foreach ($settings['languages'] as $languageCode => $datas) {
       if ($datas['urlPrefix'] == $urlPrefix) {
         return $languageCode;
       } 

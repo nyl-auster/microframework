@@ -2,7 +2,6 @@
 namespace okc\server\resources;
 
 use okc\resource\resource;
-use okc\view\view;
 
 class homepage extends resource {
 
