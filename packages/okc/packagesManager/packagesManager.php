@@ -2,11 +2,7 @@
 namespace okc\packagesManager; 
 
 /**
- * Get informations about packages
- *
- * Packages contains at least two level of directories
- * - level 1 : vendor name
- * - level 2 : package name
+ * List existing vendors and packages, and packages config files.
  */
 class packagesManager {
 

@@ -6,6 +6,9 @@ use okc\eventsManager\eventsManager;
 use okc\packagesManager\packagesManager;
 use okc\configManager\settings;
 
+/**
+ * Launch framework
+ */
 class app {
 
   function __construct() {
