@@ -1,11 +1,10 @@
 <?php
 namespace okc\server;
 
-use okc\eventsManager\eventsManager;
-use okc\packagesManager\packagesManager;
+use okc\events\events;
 
 /**
- * Map a route to a resource.
+ * Map a route to a callable.
  *
  * Example of url to use :
  * www.mysite.local/index.php/hello-world?argument=value&argument2=value2
@@ -24,48 +23,25 @@ class server {
   // base path, when framework is installed in a subdirectory
   public static $basePath = '';
 
-  public function getRoutes() {
-    $routes = array();
-    // waiting for container system...
-    $pm = new packagesManager('packages', 'config');
-    $packages = $pm->getList();
-    foreach ($packages as $packageId => $packageDatas) {
-      foreach ($packageDatas['configFiles'] as $fileName => $filePath) {
-
-        // merge all route files to one big route.
-        if ($fileName == 'routes.php') {
-          if (!is_readable($filePath)) continue;
-          $fileDatas = include $filePath;
-          if ($fileDatas == 1) continue;
-          foreach ($fileDatas as $route => $routeDatas) {
-            $routes[$route] = $routeDatas;
-            $routes[$route]['packageId'] = $packageId;
-          }
-        }
-
-      }
-    }
-    return $routes;
-  }
-
   /**
    * @param array $routes. 
    *   Routes to resources map. see example.routes.php
    */
-  public function __construct() {
-    $this->routes = array_merge($this->routes, $this->getRoutes());
+  public function __construct($routes = array()) {
+    $this->routes = array_merge($this->routes, $routes);
     self::$basePath = self::getBasePath();
   }
 
   /**
-   * Fetch a resource object by its route.
+   * Fetch a resource content by its route.
    *
    * @param string $route
    *   route searched. E.g : "my/path".
-   * @return object
-   *   a "resource" object.
+   * @return string
+   *   rendered resource. (taking care of access controls)
+   *   
    */
-  public function getResource($route = '') {
+  public function getResponse($route = '') {
 
     // search a resource matching our $route. Skip routes beginning by "__".
     if (isset($this->routes[$route]) && strpos($route, '__') === FALSE) {
@@ -75,18 +51,18 @@ class server {
 
     // no resource found, serve the 404 error resource
     if (!isset($resource)) {
-      header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found"); 
-      return new $this->routes['__http404']['class'];
+      $resource = new $this->routes['__http404']['class'];
+      return $resource->render();
     }
 
-    // a resource has been found, but acces is denied, return 403 error resource.
+    // a resource has been found, but access is denied, return 403 error resource.
     if (!$resource->access()) {
-      header($_SERVER["SERVER_PROTOCOL"]." 403 Access Denied "); 
-      return new $this->routes['__http403']['class'];
+      $resource = new $this->routes['__http403']['class'];
+      return $resource->render();
     }
 
     // resource exists and access is allowed, hurrah :
-    return $resource;
+    return $resource->render();
 
   }
 
@@ -98,7 +74,7 @@ class server {
    */
   static function getRouteFromUrl() {
     $route = isset($_SERVER['PATH_INFO']) ? parse_url(trim($_SERVER['PATH_INFO'], '/'), PHP_URL_PATH) : '';
-    eventsManager::fire('serverGetRouteFromUrl', array('route' => &$route));
+    events::fire('serverGetRouteFromUrl', array('route' => &$route));
     return $route;
 
   }
@@ -112,7 +88,7 @@ class server {
    *   A relative url, like "/index.php/hello/world", usable in links.
    */
   static function getUrlFromRoute($route, $languageCode = NULL) {
-    eventsManager::fire('serverGetUrlFromRoute', array('route' => &$route, 'languageCode' => $languageCode));
+    events::fire('serverGetUrlFromRoute', array('route' => &$route, 'languageCode' => $languageCode));
     $url = $_SERVER['SCRIPT_NAME'] . '/' . $route;
     return $url;
   }

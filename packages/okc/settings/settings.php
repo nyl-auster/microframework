@@ -1,12 +1,19 @@
 <?php
-namespace okc\configManager;
+namespace okc\settings;
 
+/**
+ * Settings api.
+ *
+ * @FIXME packages and config hardcoded.
+ * @TODO should be able to load all type of files, not only settings.php
+ * @TODO find how to handle variable overrides, we do need this feature to make framework work.
+ */
 class settings {
 
   static protected $settings = array();
 
   /**
-   * $packageId = "vendor.package"
+   * $packageId = "vendorName.packageName"
    */
   static function get($packageId, $settingsFileName = 'settings.php') {
 

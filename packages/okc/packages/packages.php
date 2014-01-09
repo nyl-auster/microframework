@@ -1,10 +1,10 @@
 <?php
-namespace okc\packagesManager; 
+namespace okc\packages; 
 
 /**
  * List existing vendors and packages, and packages config files.
  */
-class packagesManager {
+class packages {
 
   protected $packagesDirectory = '';
   protected $packageConfigDirectory = '';

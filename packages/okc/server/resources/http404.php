@@ -1,5 +1,5 @@
 <?php
-namespace okc\framework\resources;
+namespace okc\server\resources;
 
 use okc\resource\resource;
 

@@ -1,7 +1,7 @@
 <?php
 namespace okc\view;
 
-use okc\eventsManager\eventsManager;
+use okc\events\events;
 
 /**
  * Generic template engine class, Usable outside of okc framework.
@@ -28,7 +28,7 @@ class view {
   }
 
   function setFile($file) {
-    eventsManager::fire('viewSetFile', array('file' => &$file));
+    events::fire('viewSetFile', array('file' => &$file));
     return $this->file = $file;
   }
 
