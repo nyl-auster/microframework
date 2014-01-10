@@ -7,7 +7,7 @@ $settings['defaultLanguage'] = 'en_EN';
 
 // If FALSE, oly default language will be enabled on the site, with no
 // way to display other translations.
-$settings['enabled'] = TRUE;
+$settings['enabled'] = FALSE;
 
   // declare enabled languages
 $settings['languages']['en_EN'] = array('name' => 'English');

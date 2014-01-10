@@ -1,6 +1,6 @@
 <?php
 
-$translations = include('okc/demo/config/translations.php');
-
-return $translations;
+return array_merge(
+  include 'okc/demo/config/translations.php'
+);
 

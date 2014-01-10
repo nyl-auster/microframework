@@ -34,26 +34,6 @@ class i18nUrlPrefix extends i18n {
   }
 
   /**
-   * Listener
-   *
-   * Add suggestions template to load a different template according to
-   * current language.
-   * Search template if a fr_FR or en_EN subfolder in views folder.
-   */
-  function viewSetFile(&$file) {
-    $languageCode = self::getLanguage();
-    $file_parts = explode(DIRECTORY_SEPARATOR, $file);
-    $file_name = array_pop($file_parts);
-    $file_parts[] = $languageCode;
-    $file_parts[] = $file_name;
-    $file_suggestion = implode(DIRECTORY_SEPARATOR, $file_parts);
-    if (is_readable($file_suggestion)) {
-      $file = $file_suggestion;
-    }
-  }
-
-
-  /**
    * Get current active language.
    *
    * return string

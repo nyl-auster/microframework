@@ -16,51 +16,57 @@ class server {
   // base path, when framework is installed in a subdirectory
   public static $basePath = '';
 
-  // events manager object.
-  protected static $events = null;
+
+  // default routes for homepage, 403 and 404 http errors. Overridable in routes.php file.
+  protected $routes = array(
+    '' => array('class' => 'okc\server\resources\homepage'),
+    '__http404' => array('class' => 'okc\server\resources\http404'),
+    '__http403' => array('class' => 'okc\server\resources\http403'),
+  );
 
   /**
    * @param array $routes. 
    *   Routes to resources map. see example.routes.php
    */
   public function __construct($routes = array()) {
-    $this->routes = $routes;
+    $this->routes = array_merge($this->routes, $routes);
     self::$basePath = self::getBasePath();
   }
 
   /**
-   * Fetch a resource content by its route.
-   *
    * @param string $route
-   *   route searched. E.g : "my/path".
-   * @return string
-   *   rendered resource. (taking care of access controls)
    */
-  public function getResponse($route = '') {
+  public function getResource($route = '') {
 
-    // search a resource matching our $route. Skip routes beginning by "__",
+    // search a resource matching our $route. Skip routes beginning by "__".
     if (isset($this->routes[$route]) && strpos($route, '__') === FALSE) {
       $class = $this->routes[$route]['class'];
       $resource = new $class();
     }
 
-    /*
     // no resource found, serve the 404 error resource
     if (!isset($resource)) {
-      $resource = new self::$settings['404Resource']; 
-      return $resource->render();
+      $resource = new $this->routes['__http404']['class'];
+      return $resource;
     }
 
     // a resource has been found, but access is denied, return 403 error resource.
     if (!$resource->access()) {
-      $resource = new self::$settings['403Resource']; 
-      return $resource->render();
+      $resource = new $this->routes['__http403']['class'];
+      return $resource;
     }
-     */
 
     // resource exists and access is allowed, hurrah :
-    return $resource->render();
+    return $resource;
 
+  }
+
+  /**
+   * Return resource content as a string.
+   */
+  public function getResponse($route = '') {
+    $resource = $resource->getResource($route);
+    return $resource->render();
   }
 
   /**
