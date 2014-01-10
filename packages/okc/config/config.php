@@ -4,8 +4,7 @@ namespace okc\config;
 /**
  * Config api.
  *
- * @FIXME packages and config hardcoded.
- * @TODO should be able to load all type of files, not only settings.php
+ * @FIXME config folder hardcoded.
  * @TODO find how to handle variable overrides, we do need this feature to make framework work.
  *
  * config::get('okc.i18n.settings');
