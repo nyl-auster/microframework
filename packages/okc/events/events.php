@@ -5,8 +5,6 @@
  */
 namespace okc\events;
 
-use  okc\packages\packages;
-
 class events {
 
   static $listeners = array();
