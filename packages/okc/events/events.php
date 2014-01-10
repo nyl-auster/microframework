@@ -9,10 +9,14 @@ use  okc\packages\packages;
 
 class events {
 
-  protected static $listeners = array();
+  static $listeners = array();
 
-  static function setListeners($listeners) {
+  function __construct($listeners) {
     self::$listeners = $listeners;
+  }
+
+  function getListeners() {
+    return self::$listeners;
   }
 
   /**
@@ -22,7 +26,7 @@ class events {
    * @param array $params
    *   variables to pass to the listener
    */
-  static function fire($event, $params = array()) {
+  function fire($event, $params = array()) {
     if (!isset(self::$listeners[$event])) return false;
     foreach (self::$listeners[$event] as $class => $config) {
       call_user_func_array("$class::$event", $params);

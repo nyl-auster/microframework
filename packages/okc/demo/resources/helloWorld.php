@@ -6,7 +6,7 @@ namespace okc\demo\resources;
 
 use okc\resource\resource;
 use okc\view\view;
-use okc\i18n\i18n;
+use okc\i18nUrlPrefix\i18nUrlPrefix as i18n;
 
 /**
  * Extends framework abstract resource.

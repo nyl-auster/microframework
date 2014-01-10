@@ -19,6 +19,7 @@ class i18n {
 
   static protected $translations;
   static protected $settings;
+  const defaultLanguage = 'en_En';
 
   /**
    * Inject translations dictionnary
@@ -52,15 +53,15 @@ class i18n {
   }
 
   /**
-   * Get Current global language, according to languageNegociationPlugin enabled in settings.
+   * Get default language. Extends class and overrides this method to do something usefull with
+   * this function.
    *
    * return string
    *   e.g fr_FR, en_EN etc...
    */
    public function getLanguage() {
-     $languageCode = self::$settings['defaultLanguage'];
-     return $languageCode;
-  }
+     return (!empty(self::$settings['defaultLanguage'])) ? self::$settings['defaultLanguage'] : self::defaultLanguage;
+   }
 
 }
 

@@ -1,7 +1,7 @@
 <?php
 use okc\server\server;
 use okc\events\events;
-use okc\i18n\i18n;
+use okc\i18nUrlPrefix\i18nUrlPrefix as i18n;
 use okc\settings\settings;
 
 try {
@@ -37,7 +37,7 @@ try {
   }
 
   // instanciate eventsManager, passing it all registered listeners.
-  events::setListeners($listeners);
+  $events = new events($listeners);
 
   $i18nSettings = settings::get('okc.i18n');
   i18n::setSettings($i18nSettings);
@@ -47,7 +47,7 @@ try {
     throw new okcException("No routes found or have been defined.");
   }
 
-  $server = new server($routes);
+  $server = new server($routes, $events);
   print $server->getResponse($server->getRouteFromUrl());
 }
 catch (Exception $e) {

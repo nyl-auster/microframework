@@ -13,22 +13,18 @@ use okc\events\events;
  */
 class server {
 
-  // default routes for homepage, 403 and 404 http errors. Overridable in routes.php file.
-  protected $routes = array(
-    '' => array('class' => 'okc\server\resources\homepage'),
-    '__http404' => array('class' => 'okc\server\resources\http404'),
-    '__http403' => array('class' => 'okc\server\resources\http403'),
-  );
-
   // base path, when framework is installed in a subdirectory
   public static $basePath = '';
+
+  // events manager object.
+  protected static $events = null;
 
   /**
    * @param array $routes. 
    *   Routes to resources map. see example.routes.php
    */
   public function __construct($routes = array()) {
-    $this->routes = array_merge($this->routes, $routes);
+    $this->routes = $routes;
     self::$basePath = self::getBasePath();
   }
 
@@ -39,27 +35,28 @@ class server {
    *   route searched. E.g : "my/path".
    * @return string
    *   rendered resource. (taking care of access controls)
-   *   
    */
   public function getResponse($route = '') {
 
-    // search a resource matching our $route. Skip routes beginning by "__".
+    // search a resource matching our $route. Skip routes beginning by "__",
     if (isset($this->routes[$route]) && strpos($route, '__') === FALSE) {
       $class = $this->routes[$route]['class'];
       $resource = new $class();
     }
 
+    /*
     // no resource found, serve the 404 error resource
     if (!isset($resource)) {
-      $resource = new $this->routes['__http404']['class'];
+      $resource = new self::$settings['404Resource']; 
       return $resource->render();
     }
 
     // a resource has been found, but access is denied, return 403 error resource.
     if (!$resource->access()) {
-      $resource = new $this->routes['__http403']['class'];
+      $resource = new self::$settings['403Resource']; 
       return $resource->render();
     }
+     */
 
     // resource exists and access is allowed, hurrah :
     return $resource->render();
@@ -98,7 +95,6 @@ class server {
    */
   static function link($route, $text, $options = array()) {
     $languageCode = !empty($options['language']) ? $options['language'] : NULL;
-
     $options += array('attributes' => array());
     if (self::getRouteFromUrl() == $route) {
       $options['attributes']['class'][] = 'active';

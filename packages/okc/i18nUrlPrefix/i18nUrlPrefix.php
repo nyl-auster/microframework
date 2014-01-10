@@ -7,6 +7,8 @@ use okc\settings\settings;
 /**
  * Alter routes from okc server to add language prefix url.
  * Overrides getLanguage method to fetch current active language in url.
+ *
+ * @FIXME inject settings.
  */
 class i18nUrlPrefix extends i18n {
 
