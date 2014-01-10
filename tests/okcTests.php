@@ -24,7 +24,7 @@ class okcTests extends PHPUnit_Framework_TestCase {
    */
   public function testServerHomepageResource() {
     $resource = $this->server->getResource('');
-    $this->assertInstanceOf('\okc\server\resources\homepagePOUET', $resource);
+    $this->assertInstanceOf('\okc\server\resources\homepage', $resource);
   }
 
   /**

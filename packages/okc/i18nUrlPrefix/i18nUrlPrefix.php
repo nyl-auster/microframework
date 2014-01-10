@@ -2,7 +2,7 @@
 namespace okc\i18nUrlPrefix;
 
 use okc\i18n\i18n;
-use okc\settings\settings;
+use okc\config\config;
 
 /**
  * Alter routes from okc server to add language prefix url.
@@ -58,7 +58,8 @@ class i18nUrlPrefix extends i18n {
    * return array
    */
   protected function getUrlPrefixes() {
-    $prefixes = settings::get('okc.i18nUrlPrefix:urlPrefixes');
+    $settings = config::get('okc.i18nUrlPrefix.settings');
+    $prefixes = $settings['urlPrefixes'];
     return $prefixes;
   }
 

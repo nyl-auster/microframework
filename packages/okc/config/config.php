@@ -15,39 +15,22 @@ class config {
   static protected $settings = array();
 
   /**
-   * $packageId = "vendorName.packageName"
+   * $configFile = "vendorName.packageName.fileName"
    */
-  static function get($packageId) {
-
-    $variableName = NULL;
-    $parts = explode(':', $packageId);
-    $packageId = $parts[0];
-    if (isset($parts[1])) {
-      $fileName = $parts[1];
+  static function get($configFile) {
+    if (isset(self::$settings[$configFile])) {
+      return self::$settings[$configFile];
     }
-
-    $parts = explode('.', $packageId); 
-    $vendor = $parts[0];
-    $package = $parts[1];
-
-    // serve static cache if settings are already in.
-    if (isset(self::$settings[$packageId])) {
-      return self::$settings[$packageId];
+    $configFileParts = explode('.', $configFile);
+    $configFileName = array_pop($configFileParts);
+    $configFileParts[] = 'config';
+    $configFileParts[] = $configFileName;
+    $configPath = implode(DIRECTORY_SEPARATOR, $configFileParts);
+    $config = include("$configPath.php");
+    if ($config == 1) {
+      $config = array();
     }
-
-    $filePath = "packages/$vendor/$package/config/$fileName.php";
-    // can't read file, abort
-    if (!is_readable($filePath)) {
-
-    }
-
-    $packageSettings = include($filePath);
-    // empty file or no return statement, abort.
-    if ($packageSettings == 1) return;
-    
-    self::$settings[$packageId] = $packageSettings;
-    return self::$settings[$packageId];
-
+    return self::$settings[$configFile] = $config;
   }
 
 }
