@@ -1,4 +1,6 @@
 <?php
+use okc\config\config;
+use okc\server\server;
 
 class okcTests extends PHPUnit_Framework_TestCase {
 
@@ -16,6 +18,7 @@ class okcTests extends PHPUnit_Framework_TestCase {
       'test/url' => array('class' => 'okc\server\resources\homepage'),
     );
     $this->server = new \okc\server\server($routes);
+    $this->config = new \okc\config\config();
 
   }
 
@@ -49,6 +52,14 @@ class okcTests extends PHPUnit_Framework_TestCase {
   public function testServerGetResponse() {
     $content = $this->server->getResponse('');
     $this->assertContains('Default homepage', $content);
+  }
+
+  /**
+   * Test if config getter is ok.
+   */
+  public function testconfigGet() {
+    $settings = config::get('okc.i18n.settings');
+    $this->assertArrayHasKey('defaultLanguage', $settings);
   }
 
 }
