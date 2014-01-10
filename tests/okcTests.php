@@ -8,7 +8,7 @@ class okcTests extends PHPUnit_Framework_TestCase {
   function __construct() {
 
     // set autoloader.
-    set_include_path(get_include_path() . ":.:../packages");
+    set_include_path(get_include_path() . ":.:packages:../packages");
     spl_autoload_register(function($class){include_once preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php';});
      
     // start server with some test routes
@@ -24,7 +24,7 @@ class okcTests extends PHPUnit_Framework_TestCase {
    */
   public function testServerHomepageResource() {
     $resource = $this->server->getResource('');
-    $this->assertInstanceOf('\okc\server\resources\homepage', $resource);
+    $this->assertInstanceOf('\okc\server\resources\homepagePOUET', $resource);
   }
 
   /**
