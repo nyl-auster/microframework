@@ -43,5 +43,13 @@ class okcTests extends PHPUnit_Framework_TestCase {
     $this->assertInstanceOf('\okc\server\resources\http404', $resource);
   }
 
+  /**
+   * Test if homepage resource is correctly served. 
+   */
+  public function testServerGetResponse() {
+    $content = $this->server->getResponse('');
+    $this->assertContains('Default homepage', $content);
+  }
+
 }
 

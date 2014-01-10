@@ -1,8 +1,6 @@
 <?php
 namespace okc\i18n;
 
-use okc\settings\settings;
-
 /**
  * Translates strings Id to a localized string.
  * e.g :
@@ -21,18 +19,9 @@ class i18n {
   static protected $settings;
   const defaultLanguage = 'en_En';
 
-  /**
-   * Inject translations dictionnary
-   */
-  public function setTranslations($translations) {
-    self::$translations = $translations;
-  }
-
-  /**
-   * Inject i18n settings
-   */ 
-  public function setSettings($settings) {
+  public function __construct($settings, $translations) {
     self::$settings = $settings;
+    self::$translations = $translations;
   }
 
   /**

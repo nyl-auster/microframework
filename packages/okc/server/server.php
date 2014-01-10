@@ -65,7 +65,7 @@ class server {
    * Return resource content as a string.
    */
   public function getResponse($route = '') {
-    $resource = $resource->getResource($route);
+    $resource = $this->getResource($route);
     return $resource->render();
   }
 
