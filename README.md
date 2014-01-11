@@ -1,6 +1,6 @@
 ![Logo](https://raw.github.com/nyl-auster/okc-framework/master/logo.png)
 
-OKC framework is a View-Controller php framework (currenty under development)
+OKC framework is a light View-Controller php framework (currenty under development)
 
 Requirements
 ------------
@@ -8,14 +8,14 @@ Requirements
 * Apache
 * Linux
 
-Features
+Features : 
 ---------
-* Build app around resources. A resource is a class that represents any piece of content of your application.
-* Router : map an url to a resource to create a new web page.
-* Templating : each template may have a wrapper template
-* Events & listeners manager : subscribe to core events with php callables or fire custom events.
-* Translations
-* PSR-0 autoloader within packages directory.
-* Fully customize 404 and 403 pages with resources of your own.
-* config API and file to hold configuration.
+* Controller are "resources". A resource is a class that represents any displayed piece of content of the application.
+* router to map resources to web url
+* Template engine, wrapper templates
+* Events & listeners manager
+* String localisation
+* PSR-0 autoloader 
+* Customizable 404 and 403 pages with custom resources
+* config API to hold app configuration
 
