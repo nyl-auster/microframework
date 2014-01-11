@@ -7,7 +7,6 @@ namespace okc\packages;
 class packages {
 
   protected $packagesDirectory = '';
-  protected $packageConfigDirectory = '';
 
   /**
    * @param string $packagesDirectory
@@ -15,9 +14,8 @@ class packages {
    * @param string $packageConfigDirectory
    *   name of directory containing config files inside each packages
    */
-  function __construct($packagesDirectory, $packageConfigDirectory) {
+  function __construct($packagesDirectory) {
     $this->packagesDirectory = $packagesDirectory;
-    $this->packageConfigDirectory = $packageConfigDirectory;
   }
 
   /**
@@ -44,27 +42,12 @@ class packages {
             while (FALSE !== ($package = readdir($directoryPackage))) {
               if (!in_array($package, array('.', '..'))) {
 
-                $packageId = "$vendor/$package";
+                $packageId = "$vendor.$package";
                 $packages[$packageId] = array(
                   'name' => $package,
                   'vendor' => $vendor,
                   'path' => "$this->packagesDirectory/$vendor/$package",
-                  'configFiles' => array(),
                 );
-
-                // scan packages files.
-                if (is_readable("$this->packagesDirectory/$vendor/$package/$this->packageConfigDirectory")) {
-                  if ($directoryPackageConfig = opendir("$this->packagesDirectory/$vendor/$package/$this->packageConfigDirectory")) {
-                    while (FALSE !== ($configFile = readdir($directoryPackageConfig))) {
-                      if (!in_array($configFile, array('.', '..'))) {
-                        $packages[$packageId]['configFiles'][$configFile] = "$this->packagesDirectory/$vendor/$package/$this->packageConfigDirectory/$configFile";
-
-                      }
-                    }
-                    closedir($directoryPackageConfig);
-                  } // end scan each package config directory
-                }
-
 
               }
             }

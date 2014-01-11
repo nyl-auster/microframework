@@ -1,17 +1,22 @@
 <?php
 
-// default language used in the site.
-// We use string Ids so there is always a translation running background
-// from string Ids do default language.
-$settings['defaultLanguage'] = 'en_EN';
+return array(
 
-// If FALSE, oly default language will be enabled on the site, with no
-// way to display other translations.
-$settings['enabled'] = FALSE;
+  // default language used in the site.
+  // We use string Ids so there is always a translation running background
+  // from string Ids do default language.
+  'i18n.defaultLanguage' => 'en-EN',
 
   // declare enabled languages
-$settings['languages']['en_EN'] = array('name' => 'English');
-$settings['languages']['fr_FR'] = array('name' => 'French');
+  'i18n.languages' => array(
+    'en-EN' => array('name' => 'English'),
+    'fr-FR' => array('name' => 'French'),
+  ),
 
-return $settings;
+  // If FALSE, oly default language will be enabled on the site, with no
+  // way to display other translations.
+  'i18n.enabled' => FALSE,
+
+);
+
 

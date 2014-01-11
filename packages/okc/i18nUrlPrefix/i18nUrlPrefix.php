@@ -58,8 +58,7 @@ class i18nUrlPrefix extends i18n {
    * return array
    */
   protected function getUrlPrefixes() {
-    $settings = config::get('okc.i18nUrlPrefix.settings');
-    $prefixes = $settings['urlPrefixes'];
+    $prefixes = config::get('i18n.urlPrefixes');
     return $prefixes;
   }
 

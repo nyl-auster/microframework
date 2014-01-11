@@ -18,8 +18,8 @@ class helloWorld extends resource {
    */
   function get() {
     return new view('packages/okc/demo/views/helloWorld.php', array(
-      'title' => i18n::t('hello_world'),
-      'content' => i18n::t('hello_world_test_page'),
+      'title' => i18n::t('hello.world'),
+      'content' => i18n::t('hello.world.test.page'),
     ));
   }
 

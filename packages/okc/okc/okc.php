@@ -1,77 +1,44 @@
 <?php
-namespace okc\ioc;
+namespace okc\okc;
 
 /**
  * Glu all packages together with dic help.
  */
-class ioc {
+class okc {
 
   protected $packages;
   protected $packagesList;
+  static $config = array();
 
-  function __construct(okc\packages\packages $packages) {
+  function __construct(\okc\packages\packages $packages) {
     $this->packages = $packages;
     $this->packagesList = $packages->getList();
   }
 
-  function getRoutes() {
-    $routes = array();
-    // waiting for container system...
-    foreach ($this->packagesList as $packageId => $packageDatas) {
-      foreach ($packageDatas['configFiles'] as $fileName => $filePath) {
+  /**
+   * @param string $type
+   *   'settings', 'translations', filename without extension
+   */
+  function invokePackagesConfig($type) {
 
-        // merge all route files to one big route.
-        if ($fileName == 'routes.php') {
-          if (!is_readable($filePath)) continue;
-          $fileDatas = include $filePath;
-          if ($fileDatas == 1) continue;
-          foreach ($fileDatas as $route => $routeDatas) {
-            $routes[$route] = $routeDatas;
-            $routes[$route]['packageId'] = $packageId;
+    if (isset(self::$config[$type])) {
+      return self::$config[$type];
+    }
+
+    foreach ($this->packagesList as $packageId => $packageDatas) {
+      $filepath = $packageDatas['path'] . "/config/$type.php";
+      if (is_readable($filepath)) {
+        $array = include $filepath;
+        if ($array != 1) {
+          foreach ($array as $key => $value) {
+            $config[$key] = $value;
           }
         }
-
       }
     }
-    return $routes;
-  }
 
-  function getListeners() {
-    $listeners = array();
-    foreach ($this->packagesList as $packageId => $packageDatas) {
-      foreach ($packageDatas['configFiles'] as $fileName => $filePath) {
+    return self::$config[$type] = $config;  
 
-        if ($fileName == 'listeners.php') {
-          if (!is_readable($filePath)) continue;
-          $fileDatas = include $filePath;
-          if ($fileDatas == 1) continue;
-
-          foreach ($fileDatas as $eventName => $eventDatas) {
-            foreach ($eventDatas as $listenerName => $listenerDatas) {
-              $listeners[$eventName][$listenerName] = $listenerDatas;
-            }
-          }
-        }
-        
-      }
-    }
-    return $listeners;
-  }
-
-  function getTranslations() {
-    $translations = array();
-    // waiting for container system...
-    foreach ($this->packagesList as $packageId => $packageDatas) {
-      foreach ($packageDatas['configFiles'] as $fileName => $filePath) {
-        if ($fileName == 'translations.php') {
-          if (!is_readable($filePath)) continue;
-          $fileDatas = include $filePath;
-          if ($fileDatas == 1) continue;
-          $translations = $fileDatas;
-        }
-      }
-    }
-    return $translations;
   }
 
 }

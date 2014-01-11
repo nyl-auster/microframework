@@ -1,4 +1,6 @@
 <?php
+use okc\okc\okc;
+use okc\packages\packages;
 use okc\config\config;
 use okc\server\server;
 use okc\events\events;
@@ -10,18 +12,26 @@ set_include_path(implode(PATH_SEPARATOR, array(get_include_path(), 'packages', '
 // register autoloader.
 spl_autoload_register(function($class){ require_once preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php';});
 
-$routes = config::get('routes');
-$listeners = config::get('listeners');
-$translations = config::get('translations');
+$packagesManager = new packages('packages', 'config');
 
-// register listeners in events class.
+$okc = new okc($packagesManager);
+
+// instanciate configuration
+$settings = $okc->invokePackagesConfig('settings');
+$config = new config($settings);
+
+// instanciate events manager
+$listeners = $okc->invokePackagesConfig('listeners');
 $events = new events($listeners);
+
 $events->fire('frameworkBootstrap');
 
-// register translations in i18n class
-new i18n(config::get('okc.i18n.settings'), $translations);
+// instanciate translations
+$translations = $okc->invokePackagesConfig('translations');
+new i18n($translations);
 
-// fetch a resource contant according to current requested Url.
+// fetch a resource according to current requested Url.
+$routes = $okc->invokePackagesConfig('routes');
 $server = new server($routes);
 print $server->getResponse($server->getRouteFromUrl());
 

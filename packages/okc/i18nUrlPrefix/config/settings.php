@@ -2,9 +2,9 @@
 
 // negociators plugins :
 return array(
-  'urlPrefixes' => array(
-    'en_EN' => 'en',
-    'fr_FR' => 'fr',
+  'i18n.urlPrefixes' => array(
+    'en-EN' => 'en',
+    'fr-FR' => 'fr',
   ),
 );
 

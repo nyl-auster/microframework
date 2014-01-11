@@ -24,23 +24,25 @@ use okc\i18n\i18n;
       </div>
 
       <div id="slogan">
-      <p id="phrase-1"> <?php echo i18n::t('light_view_controller_php_framework') ?> </p>
+      <p id="phrase-1"> <?php echo i18n::t('light.view.controller.php.framework') ?> </p>
       </div>
 
     </div>
   </header>
 
+<!--
 <navigation id="lang">
   <ul>
-  <li><?php echo server::link(server::getRouteFromUrl(), i18n::t('french'), array('language' => 'fr_FR')) ?> </li>
-  <li><?php echo server::link(server::getRouteFromUrl(), i18n::t('english'), array('language' => 'en_EN')) ?> </li>
+  <li><?php // echo server::link(server::getRouteFromUrl(), i18n::t('french'), array('language' => 'fr_FR')) ?> </li>
+  <li><?php // echo server::link(server::getRouteFromUrl(), i18n::t('english'), array('language' => 'en_EN')) ?> </li>
   </ul>
 </navigation>
+-->
 
 <navigation id="menu">
   <ul>
   <li><?php echo server::link('', i18n::t('homepage')) ?> </li>
-  <li><?php echo server::link('hello-world', i18n::t('hello_world')) ?> </li>
+  <li><?php echo server::link('hello-world', i18n::t('hello.world')) ?> </li>
   </ul>
 </navigation>
 
