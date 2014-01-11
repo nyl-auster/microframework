@@ -20,7 +20,7 @@ namespace okc\dic;
  *    ),
  * );
  *
- * okc.resource is an arbitraty string name for the service.
+ * okc.resource is an arbitrary string name for the service.
  * default is the default context. 
  * arguments are the arguments passed to the constructor of the class
  * type is the php type, except for "service" type.

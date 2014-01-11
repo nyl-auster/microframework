@@ -4,25 +4,23 @@ use okc\server\server;
 use okc\events\events;
 use okc\i18n\i18n;
 
-// add "packages" as an include path.
-set_include_path(implode(PATH_SEPARATOR, array(get_include_path(), 'packages', 'user', 'user/packages')));
+$config = include('config/settings.php');
+
+// add in include path PSR directories.
+set_include_path(get_include_path() . PATH_SEPARATOR . implode(PATH_SEPARATOR, $config['PSR0Directories']));
 
 // register autoloader.
 spl_autoload_register(function($class){ require_once preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php';});
 
-$routes = config::get('routes');
-$listeners = config::get('listeners');
-$translations = config::get('translations');
-
-// register listeners in events class.
-$events = new events($listeners);
+// instanciate event listener
+$events = new events(config::get('listeners'));
 $events->fire('frameworkBootstrap');
 
-// register translations in i18n class
-new i18n(config::get('okc.i18n.settings'), $translations);
+// instanciate i18n 
+new i18n(config::get('okc.i18n.settings'), config::get('translations'));
 
-// fetch a resource contant according to current requested Url.
-$server = new server($routes);
+// serve a resource corresponding to current url.
+$server = new server(config::get('routes'));
 print $server->getResponse($server->getRouteFromUrl());
 
 $events->fire('frameworkShutdown');

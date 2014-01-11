@@ -1,1 +1,1 @@
-contains OKC Framework global configuration.
+contains framework global configuration.

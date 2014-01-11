@@ -1,6 +1,6 @@
 <?php
 
-$services = array(
+return array(
   'okc.ioc' => array(
     'default' => array(
       'class' => 'okc\ioc\ioc',

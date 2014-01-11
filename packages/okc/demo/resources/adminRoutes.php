@@ -7,7 +7,7 @@ use okc\view\view;
 class adminRoutes extends resource {
 
   function get() {
-    return new view('packages/okc/framework/views/adminRoutes.php');
+    return new view('packages/okc/demo/views/adminRoutes.php');
   }
 
 }

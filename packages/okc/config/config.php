@@ -5,7 +5,6 @@ namespace okc\config;
  * Config api.
  *
  * @FIXME config folder hardcoded.
- * @TODO find how to handle variable overrides, we do need this feature to make framework work.
  *
  * config::get('okc.i18n.settings');
  */
@@ -25,11 +24,21 @@ class config {
     $configFileParts[] = 'config';
     $configFileParts[] = $configFileName;
     $configPath = implode(DIRECTORY_SEPARATOR, $configFileParts);
-    $config = include("$configPath.php");
-    if ($config == 1) {
-      $config = array();
-    }
+
+    $configDefault = self::includeFile("$configPath.php");
+    $configOverrides = self::includeFile("user/$configPath.php");
+
+    $config = array_merge($configDefault, $configOverrides);
+
     return self::$settings[$configFile] = $config;
+  }
+
+  static function includeFile($path) {
+    $include = array();
+    if (is_readable($path)) {
+      $include = include($path);
+    }
+    return $include == 1 ? array() : $include;
   }
 
 }
