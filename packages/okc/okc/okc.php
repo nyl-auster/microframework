@@ -12,7 +12,7 @@ class okc {
 
   function __construct(\okc\packages\packages $packages) {
     $this->packages = $packages;
-    $this->packagesList = $packages->getList();
+    $this->packagesList = $packages->getList($enabledOnly = TRUE);
   }
 
   /**

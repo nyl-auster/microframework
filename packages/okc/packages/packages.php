@@ -2,11 +2,13 @@
 namespace okc\packages; 
 
 /**
- * List existing vendors and packages, and packages config files.
+ * List existing packages and bring back us some information about them.
  */
 class packages {
 
   protected $packagesDirectory = '';
+
+  static $packages;
 
   /**
    * @param string $packagesDirectory
@@ -19,18 +21,13 @@ class packages {
   }
 
   /**
-   * Return array of instancied module object, if they are "enabled".
-   * @param list_disabled (bool)
-   * if TRUE, list also disabled modules.
    */
-  function getList($list_disabled = FALSE) {
+  function getList($enabledOnly = FALSE) {
 
     // static cache for packages.
-    if (!empty($packages)) {
-      return $packages;
+    if (!empty(self::$packages[(int)$enabledOnly])) {
+      return self::$packages[(int)$enabledOnly];
     }
-
-    static $packages = array();
 
     // scan vendors
     if ($directoryVendors = opendir($this->packagesDirectory)) {
@@ -43,8 +40,20 @@ class packages {
               if (!in_array($package, array('.', '..'))) {
 
                 $packageId = "$vendor.$package";
+
+                $metadatas = array();
+                if (is_readable("$this->packagesDirectory/$vendor/$package/config/package.php")) {
+                  $metadatas = include "$this->packagesDirectory/$vendor/$package/config/package.php";
+                }
+
+                if (!isset($metadatas['enabled']) || (!$metadatas['enabled'] && $enabledOnly)) {
+                  continue;
+                }
+                
                 $packages[$packageId] = array(
-                  'name' => $package,
+                  'name' => $metadatas['name'],
+                  'enabled' => $metadatas['enabled'],
+                  'package' => $package,
                   'vendor' => $vendor,
                   'path' => "$this->packagesDirectory/$vendor/$package",
                 );
@@ -60,7 +69,7 @@ class packages {
 
     closedir($directoryPackage);
     closedir($directoryVendors);
-    return $packages;
+    return self::$packages[(int)$enabledOnly] = $packages;
   }
 
 }

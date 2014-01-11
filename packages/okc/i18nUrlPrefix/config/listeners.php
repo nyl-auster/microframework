@@ -1,6 +1,5 @@
 <?php
 
-/*
 return array(
   'serverGetUrlFromRoute' => array(
     'okc\i18nUrlPrefix\i18nUrlPrefix' => array(),
@@ -9,5 +8,4 @@ return array(
     'okc\i18nUrlPrefix\i18nUrlPrefix' => array(),
   ),
 );
- */
 
