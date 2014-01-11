@@ -1,1 +1,0 @@
-Contains user project config
