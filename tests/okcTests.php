@@ -1,6 +1,8 @@
 <?php
 use okc\config\config;
 use okc\server\server;
+use okc\packages\packages;
+use okc\okc\okc;
 
 class okcTests extends PHPUnit_Framework_TestCase {
 
@@ -10,15 +12,34 @@ class okcTests extends PHPUnit_Framework_TestCase {
   function __construct() {
 
     // set autoloader.
-    set_include_path(get_include_path() . ":.:packages:../packages");
+    set_include_path(get_include_path() . ":../:packages:../packages");
     spl_autoload_register(function($class){include_once preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php';});
      
     // start server with some test routes
     $routes = array(
       'test/url' => array('class' => 'okc\server\resources\homepage'),
     );
-    $this->server = new \okc\server\server($routes);
-    $this->config = new \okc\config\config();
+
+    $packages = new packages('../packages', 'config');
+    $okc = new okc($packages);
+
+    // instanciate configuration
+    $settings = $okc->invokePackagesConfig('settings');
+    $config = new config($settings);
+
+    // instanciate events manager
+    $listeners = $okc->invokePackagesConfig('listeners');
+    $events = new events($listeners);
+
+    $events->fire('frameworkBootstrap');
+
+    // instanciate translations
+    $translations = $okc->invokePackagesConfig('translations');
+    new i18n($translations);
+
+    $server = new server($routes);
+
+    $this->server = new server($routes);
 
   }
 
@@ -58,8 +79,8 @@ class okcTests extends PHPUnit_Framework_TestCase {
    * Test if config getter is ok.
    */
   public function testconfigGet() {
-    $settings = config::get('okc.i18n.settings');
-    $this->assertArrayHasKey('defaultLanguage', $settings);
+    $defaultLanguage = config::get('i18n.defaultLanguage');
+    $this->assertContains('en-EN', $defaultLanguage);
   }
 
 }
