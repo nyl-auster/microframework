@@ -24,20 +24,12 @@ class config {
     $configFileParts[] = 'config';
     $configFileParts[] = $configFileName;
     $configPath = implode(DIRECTORY_SEPARATOR, $configFileParts);
-
-    $configDefault = self::includeFile("$configPath.php");
-    $configOverrides = self::includeFile("user/$configPath.php");
-
-    $config = array_merge($configDefault, $configOverrides);
-
+    $config = self::includeFile("$configPath.php");
     return self::$settings[$configFile] = $config;
   }
 
   static function includeFile($path) {
-    $include = array();
-    if (is_readable($path)) {
-      $include = include($path);
-    }
+    $include = include($path);
     return $include == 1 ? array() : $include;
   }
 
