@@ -7,7 +7,8 @@ namespace okc\packages;
 class packages {
 
   protected $packagesDirectory = '';
-  static $packages;
+  protected static $packages;
+  protected $coreVendor;
 
   /**
    * @param string $packagesDirectory
@@ -15,8 +16,9 @@ class packages {
    * @param array $enabledPackages
    *   List of enabled packages.
    */
-  function __construct($packagesDirectory) {
+  function __construct($packagesDirectory, $coreVendor = 'okc') {
     $this->packagesDirectory = $packagesDirectory;
+    $this->coreVendor = $coreVendor;
   }
 
   /**
@@ -38,14 +40,7 @@ class packages {
             while (FALSE !== ($package = readdir($directoryPackage))) {
               if (!in_array($package, array('.', '..'))) {
 
-                $packageId = "$vendor.$package";
-
-                $metadatas = array();
-                if (is_readable("$this->packagesDirectory/$vendor/$package/config/package.php")) {
-                  $metadatas = include "$this->packagesDirectory/$vendor/$package/config/package.php";
-                }
-
-                $packages[$packageId] = array(
+                $packages["$vendor.$package"] = array(
                   'package' => $package,
                   'vendor' => $vendor,
                   'path' => "$this->packagesDirectory/$vendor/$package",
@@ -62,6 +57,7 @@ class packages {
 
     closedir($directoryPackage);
     closedir($directoryVendors);
+
     return self::$packages[(int)$enabledOnly] = $packages;
   }
 
