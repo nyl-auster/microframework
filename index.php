@@ -6,27 +6,32 @@ use okc\server\server;
 use okc\events\events;
 use okc\i18n\i18n;
 
-// add "packages" as an include path.
+// add "packages" and "app/packages" in include path, so that PSR-0 autoloader
+// inspect those directories.
 set_include_path(implode(PATH_SEPARATOR, array(get_include_path(), 'packages', 'app/packages')));
 
-// register autoloader.
+// register our PSR-0 autoloader.
 spl_autoload_register(function($class){ require_once preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php';});
 
-// get packages
+// get our packages list, needed to gathers all settings file.
 $packagesManager = new packages(array('packages', 'app/packages'));
-
 $config = new config($packagesManager);
 $config->load('settings');
 
+// instanciate events Manager with all declared listeners.
 $events = new events($config->load('listeners'));
 
+// instanciate i18n with all declared translations
 new i18n($config->load('translations'));
 
-$events->fire('frameworkBootstrap');
+// Let packages do something before server try to fetch a resource.
+$events->fire('app.bootstrap');
 
-// fetch a resource according to current requested Url.
+// instanciate the server with all declared routes,
+// then find a resource matching the currently requested url.
 $server = new server($config->load('routes'));
 print $server->getResponse($server->getRouteFromUrl());
 
-$events->fire('frameworkShutdown');
+// Let packages do something on application shutdown. 
+$events->fire('app.shutdown');
 
