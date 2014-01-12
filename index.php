@@ -25,7 +25,7 @@ $events = new events($config->load('listeners'));
 new i18n($config->load('translations'));
 
 // Let packages do something before server try to fetch a resource.
-$events->fire('app.bootstrap');
+$events->fire('appBootstrap');
 
 // instanciate the server with all declared routes,
 // then find a resource matching the currently requested url.
@@ -33,5 +33,5 @@ $server = new server($config->load('routes'));
 print $server->getResponse($server->getRouteFromUrl());
 
 // Let packages do something on application shutdown. 
-$events->fire('app.shutdown');
+$events->fire('appShutdown');
 

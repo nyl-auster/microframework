@@ -113,7 +113,7 @@ class i18nUrlPrefix extends i18n {
   public function addUrlPrefix($route, $languageCode = NULL) {
     // do nothing if there is already a prefix.
     $language = $languageCode ? $languageCode : self::getLanguage(); 
-    return self::languageCodeToUrlPrefix($language) .'/' . $route;
+    return self::languageCodeToUrlPrefix($language) . '/' . $route;
   }
 
 }

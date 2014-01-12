@@ -88,7 +88,7 @@ class server {
    */
   static function getRouteFromUrl() {
     $route = '';
-    $route = trim(str_replace(self::getRouteBasePath(), '', $_SERVER['REQUEST_URI']), '/');
+    $route = substr_replace($_SERVER['REQUEST_URI'], '', 0, strlen(self::getRouteBasePath()));
     events::fire('serverGetRouteFromUrl', array('route' => &$route));
     return $route;
 
@@ -99,10 +99,14 @@ class server {
    * We need this to correctly set routes from url and build links from route.
    */
   function getRouteBasePath() {
+    $routeBasePath = '';
     if (config::get('server.rewriteEngine') && is_readable('.htaccess')) {
-      return self::getBasePath();
+      $routeBasePath = self::getBasePath();
     }
-    return $_SERVER['SCRIPT_NAME'];
+    else {
+      $routeBasePath = self::getBasePath() . 'index.php/';
+    }
+    return $routeBasePath;
   }
 
   /**
@@ -135,9 +139,15 @@ class server {
 
   /**
    * @FIXME check security implications with all $_SERVER variables.
+   *
+   * Return string :
+   *   base relative (relative to the domain name) path of framwork intallation.
+   *  for "localhost/directory/okc-framework", if will return
+   *  /directory/ if okc-framework is where okc framework is installed.
    */ 
   static function getBasePath() {
-    return str_replace('index.php', '', $_SERVER['SCRIPT_NAME']);
+    $basePath = str_replace('index.php', '', $_SERVER['SCRIPT_NAME']);
+    return $basePath;
   }
 
 }
