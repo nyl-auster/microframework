@@ -41,8 +41,8 @@ use okc\i18n\i18n;
 
 <navigation id="menu">
   <ul>
-  <li><?php echo server::link('', i18n::t('homepage')) ?> </li>
-  <li><?php echo server::link('hello-world', i18n::t('hello.world')) ?> </li>
+  <li><?php echo server::link(i18n::t('homepage'), '') ?> </li>
+  <li><?php echo server::link(i18n::t('hello.world'), 'hello-world') ?> </li>
   </ul>
 </navigation>
 

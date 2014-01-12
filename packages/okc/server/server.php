@@ -99,7 +99,7 @@ class server {
   /**
    * Build a html link, language aware, adding an active class if needed.
    */
-  static function link($route, $text, $options = array()) {
+  static function link($text, $route, $options = array()) {
     $languageCode = !empty($options['language']) ? $options['language'] : NULL;
     $options += array('attributes' => array());
     if (self::getRouteFromUrl() == $route) {
