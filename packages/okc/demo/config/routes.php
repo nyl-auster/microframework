@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Map our routes to resources
+ */
 return array(
   '' => array(
     'class' => 'okc\demo\resources\homepage',

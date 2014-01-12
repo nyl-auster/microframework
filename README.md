@@ -23,4 +23,9 @@ Installation :
 ---------------
 
 Clone repository, rename example.app/ to app/
+Add your custom code in folder.
 
+Documentation :
+-----------------
+
+See demo packages in packages/okc/demo for a code example

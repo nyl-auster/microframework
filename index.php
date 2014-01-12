@@ -7,7 +7,7 @@ use okc\events\events;
 use okc\i18n\i18n;
 
 // add "packages" as an include path.
-set_include_path(implode(PATH_SEPARATOR, array(get_include_path(), 'packages', 'app', 'app/packages')));
+set_include_path(implode(PATH_SEPARATOR, array(get_include_path(), 'packages', 'app/packages')));
 
 // register autoloader.
 spl_autoload_register(function($class){ require_once preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php';});

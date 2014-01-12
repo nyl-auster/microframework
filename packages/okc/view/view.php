@@ -81,6 +81,10 @@ class view {
     return $ob_content;
   }
 
+  public function setParent($file, $variables = array(), $language = NULL) {
+    $this->setParentView($file, $variables = array(), $language = NULL);
+  }
+
   /**
    * call this function in a template allow to wrap him in a wrapper template
    * @param string $file
