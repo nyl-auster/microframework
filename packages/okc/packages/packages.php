@@ -6,18 +6,18 @@ namespace okc\packages;
  */
 class packages {
 
-  protected $packagesDirectory = '';
+  protected $packagesDirectories = '';
   protected static $packages;
   protected $coreVendor;
 
   /**
-   * @param string $packagesDirectory
+   * @param string $packagesDirectories
    *   name of directory containing all packages
    * @param array $enabledPackages
    *   List of enabled packages.
    */
-  function __construct($packagesDirectory, $coreVendor = 'okc') {
-    $this->packagesDirectory = $packagesDirectory;
+  function __construct($packagesDirectories, $coreVendor = 'okc') {
+    $this->packagesDirectories = $packagesDirectories;
     $this->coreVendor = $coreVendor;
   }
 
@@ -30,20 +30,22 @@ class packages {
       return self::$packages[(int)$enabledOnly];
     }
 
+    foreach($this->packagesDirectories as $packagesDirectory) {
+
     // scan vendors
-    if ($directoryVendors = opendir($this->packagesDirectory)) {
+    if ($directoryVendors = opendir($packagesDirectory)) {
       while (FALSE !== ($vendor = readdir($directoryVendors))) {
-        if (!in_array($vendor, array('.', '..'))) {
+        if (!in_array($vendor, array('.', '..', 'README.md'))) {
 
           // scan packages
-          if ($directoryPackage = opendir("$this->packagesDirectory/$vendor")) {
+          if ($directoryPackage = opendir("$packagesDirectory/$vendor")) {
             while (FALSE !== ($package = readdir($directoryPackage))) {
               if (!in_array($package, array('.', '..'))) {
 
                 $packages["$vendor.$package"] = array(
                   'package' => $package,
                   'vendor' => $vendor,
-                  'path' => "$this->packagesDirectory/$vendor/$package",
+                  'path' => "$packagesDirectory/$vendor/$package",
                 );
 
               }
@@ -57,6 +59,8 @@ class packages {
 
     closedir($directoryPackage);
     closedir($directoryVendors);
+
+    }
 
     return self::$packages[(int)$enabledOnly] = $packages;
   }

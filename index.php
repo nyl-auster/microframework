@@ -7,13 +7,13 @@ use okc\events\events;
 use okc\i18n\i18n;
 
 // add "packages" as an include path.
-set_include_path(implode(PATH_SEPARATOR, array(get_include_path(), 'packages', 'user', 'user/packages')));
+set_include_path(implode(PATH_SEPARATOR, array(get_include_path(), 'packages', 'app', 'app/packages')));
 
 // register autoloader.
 spl_autoload_register(function($class){ require_once preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php';});
 
-// instanciate package manager and okc global class
-$packagesManager = new packages('packages');
+// get packages
+$packagesManager = new packages(array('packages', 'app/packages'));
 
 $config = new config($packagesManager);
 $config->load('settings');

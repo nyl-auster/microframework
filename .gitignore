@@ -1,5 +1,1 @@
-config/settings.php
-config/routes.php
-config/listeners.php
-config/translations.php
-config/app/*
+app/*
