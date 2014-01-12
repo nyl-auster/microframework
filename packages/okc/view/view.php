@@ -92,7 +92,9 @@ class view {
    *   Allow to overrides parent view variables if needed.
    */
   public function setParentView($file, $variables = array(), $language = NULL) {
-    $this->parentView = new view($file, $variables, $language);
+    if ($file) {
+      $this->parentView = new view($file, $variables, $language);
+    }
   }
 
   public function __toString() {
