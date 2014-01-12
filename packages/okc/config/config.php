@@ -5,7 +5,11 @@ use okc\packages\packages;
 
 /**
  * Config api.
- * config::get($type, $name');
+ *
+ * use config::get('name') to get a variable
+ * from one of all settings.php 
+ *
+ * See load() method for possible overrides
  */
 class config {
 
@@ -24,6 +28,9 @@ class config {
     return self::$config['settings'][$key];
   }
 
+  /**
+   * Get any config var from any file.
+   */
   function getByType($type, $key = null) {
     if ($key) {
       return self::$config[$type][$key];
@@ -34,6 +41,11 @@ class config {
   /**
    * @param string $type
    *   'settings', 'translations', filename without extension
+   *
+   * Load all conf from framework. Merge variables according to overrides :
+   * For the same variable name :
+   * - config folder wins over packages config folder
+   * - app/config folder wins over both.
    */
   function load($type) {
 
@@ -68,6 +80,10 @@ class config {
 
   }
 
+  /**
+   * Gather all settings (settings.php, translations.php etc...) from packages
+   * config folder.
+   */
   function invokePackagesConfig($type) {
     $config = array();
     foreach ($this->packages->getList() as $packageId => $packageDatas) {
@@ -84,6 +100,9 @@ class config {
     return $config;
   }
 
+  /**
+   * Return the whole config as an bug array.
+   */
   function getAll() {
     return self::$config;
   }

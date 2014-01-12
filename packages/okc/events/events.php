@@ -2,6 +2,12 @@
 /**
  * @file
  * Events Manager
+ *
+ * example :
+ * if fooBar class wants to react on "app.bootsrap" events :
+ * - register fooBar class as a listener in a listeners.php file
+ *   array('appBootstrap' => array('fooBar' => array());
+ * Create aapBootstrap method in fooBar class. 
  */
 namespace okc\events;
 
