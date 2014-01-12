@@ -7,7 +7,7 @@ use okc\i18n\i18n;
   <head>
     <title> OKC FRAMEWORK </title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <link href="<?php echo server::$basePath ?>packages/okc/demo/views/style.css" rel="stylesheet"/>
+    <link href="<?php echo server::$basePath ?>packages/okc/demo/assets/style.css" rel="stylesheet"/>
   </head>
 <body>
   <header>
@@ -20,11 +20,7 @@ use okc\i18n\i18n;
       </div>
 
       <div id="marque-2">
-      Framework
-      </div>
-
-      <div id="slogan">
-      <p id="phrase-1"> <?php echo i18n::t('light.view.controller.php.framework') ?> </p>
+        FRAMEWORK
       </div>
 
     </div>
@@ -41,8 +37,8 @@ use okc\i18n\i18n;
 
 <navigation id="menu">
   <ul>
-  <li><?php echo server::link(i18n::t('homepage'), '') ?> </li>
-  <li><?php echo server::link(i18n::t('hello.world'), 'hello-world') ?> </li>
+  <li><?php echo server::link(i18n::t('homepage'), '')?></li>
+  <li><?php echo server::link(i18n::t('hello.world'), 'hello-world') ?></li>
   </ul>
 </navigation>
 

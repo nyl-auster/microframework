@@ -106,7 +106,7 @@ class server {
       $options['attributes']['class'][] = 'active';
     }
     $href = self::getUrlFromRoute($route, $languageCode);
-    $link = sprintf('<a href="%s" %s > %s </a>', $href, self::setAttributes($options['attributes']), $text);
+    $link = sprintf('<a href="%s" %s>%s</a>', $href, self::setAttributes($options['attributes']), $text);
     return $link;
   }
 

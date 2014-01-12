@@ -6,7 +6,7 @@ namespace okc\demo\resources;
 
 use okc\resource\resource;
 use okc\view\view;
-use okc\i18nUrlPrefix\i18nUrlPrefix as i18n;
+use okc\i18n\i18n as i18n;
 
 /**
  * Extends framework abstract resource.
@@ -14,13 +14,19 @@ use okc\i18nUrlPrefix\i18nUrlPrefix as i18n;
 class helloWorld extends resource {
 
   /**
-   * When resource is mapped to an url, get method is automatically by frameworl when rendering resource.
+   * Get is a mandatory method, it has to return content to the framework.
+   * here we set a parent view, so that helloWorld.php is inserted inside
+   * the global layout.php template, and also some variables that could have
+   * been bring by our model.
    */
   function get() {
-    return new view('packages/okc/demo/views/helloWorld.php', array(
+    $variables = array(
       'title' => i18n::t('hello.world'),
       'content' => i18n::t('hello.world.test.page'),
-    ));
+    );
+    $view = new view('packages/okc/demo/views/helloWorld.php', $variables);
+    $view->setParentView('packages/okc/demo/views/layout.php');
+    return $view;
   }
 
 }

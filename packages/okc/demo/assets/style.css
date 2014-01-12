@@ -8,12 +8,12 @@
   font-family : sans-serif;
 }
 
-/**************
- * header
- *************/
+body {
+  background : #111111;
+  color : #DDD;
+}
 
 header {
-  background-color : rgb(30, 30, 40);
   /*background-image : url('white_tree.jpg');*/
   background-repeat : no-repeat;
   background-position : top left;
@@ -43,13 +43,11 @@ header .letter{
 }
 
 #letter-O{
-  /*color : blue;*/
-  color : #2B1EA6;
-  color : orange;
+  color : #DDD;
 }
 
 #letter-K{
-  color : purple;
+  color : orange;
 }
 
 #letter-C{
@@ -73,16 +71,13 @@ header .letter{
   max-width : 1000px;
   margin : auto;
   padding-top : 45px;
-  color : rgb(70,70,70);
+  color : #DDD;
   text-align : center;
+  font-style : italic;
 }
 
 #wrapper a {
-  color : black;
-}
-
-#wrapper h1 {
-  color : black;
+  color : #DDD;
 }
 
 #wrapper p {
@@ -91,7 +86,7 @@ header .letter{
 }
 
 em {
-  color : black;
+  color : orange;
 }
 
 navigation#lang ul {
@@ -115,7 +110,7 @@ navigation#lang ul li a.active {
 }
 
 navigation#menu ul {
-  padding-top : 15px;
+  padding-top : 55px;
   text-align : center;
   font-weight : bold;
 }
@@ -127,7 +122,8 @@ navigation#menu ul li {
 navigation#menu ul li a {
   display : inline;
   text-decoration : none;
-  color : black;
+  padding : 10px;
+  color : #DDD;
 }
 
 navigation#menu ul li a.active {
