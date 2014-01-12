@@ -1,4 +1,5 @@
+config/settings.php
 config/routes.php
 config/listeners.php
-config/settings.php
-packages/yann
+config/translations.php
+config/app/*
