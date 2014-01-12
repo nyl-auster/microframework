@@ -3,22 +3,26 @@ namespace okc\server;
 
 use okc\events\events;
 use okc\config\config;
+use okc\okc\okc;
 
 /**
- * Map a route to a callable.
+ * Map a route to a resource class.
  *
  * Example of url to use :
  * www.mysite.local/index.php/hello-world?argument=value&argument2=value2
- * "hello-world" will be extract as the "route", and a resource class binded to this
+ * "hello-world" will be extracted as the "route", and a resource class binded to this
  * route will be searched in routes.php file.
+ *
+ * is server.rewriteEngine is set to TRUE in settings.php, index.php 
+ * can be removed from above url.
  */
 class server {
 
   // base path, when framework is installed in a subdirectory
   public static $basePath = '';
 
-
-  // default routes for homepage, 403 and 404 http errors. Overridable in routes.php file.
+  // default routes for homepage, 403 and 404 http errors.
+  // @todo maybe http404 and 403 resources should be configured in settings.php.
   protected $routes = array(
     '' => array('class' => 'okc\server\resources\homepage'),
     '__http404' => array('class' => 'okc\server\resources\http404'),
@@ -27,7 +31,12 @@ class server {
 
   /**
    * @param array $routes. 
-   *   Routes to resources map. see example.routes.php
+   *   Routes to resources map.
+   *   Examples routes :
+   *   return array(
+   *     'my/path' => array('class' => 'vendor\package\resourceName'),
+   *     'hello-world' => array('class' => 'vendor\package\resourceName'),
+   *   );
    */
   public function __construct($routes = array()) {
     $this->routes = array_merge($this->routes, $routes);
@@ -40,6 +49,7 @@ class server {
   public function getResource($route = '') {
 
     // search a resource matching our $route. Skip routes beginning by "__".
+    // a hack to not server __http404 and 403 resources by url for now.
     if (isset($this->routes[$route]) && strpos($route, '__') === FALSE) {
       $class = $this->routes[$route]['class'];
       $resource = new $class();
@@ -78,7 +88,7 @@ class server {
    */
   static function getRouteFromUrl() {
     $route = '';
-    $route = trim(str_replace(self::routeBasePath(), '', $_SERVER['REQUEST_URI']), '/');
+    $route = trim(str_replace(self::getRouteBasePath(), '', $_SERVER['REQUEST_URI']), '/');
     events::fire('serverGetRouteFromUrl', array('route' => &$route));
     return $route;
 
@@ -86,9 +96,9 @@ class server {
 
   /**
    * Treat differently "index.php" in url, if rewriteEngine is enabled or not.
-   * We need this to correctly get routes from url and build links from route.
+   * We need this to correctly set routes from url and build links from route.
    */
-  function routeBasePath() {
+  function getRouteBasePath() {
     if (config::get('server.rewriteEngine') && is_readable('.htaccess')) {
       return self::getBasePath();
     }
@@ -105,12 +115,7 @@ class server {
    */
   static function getUrlFromRoute($route, $languageCode = NULL) {
     events::fire('serverGetUrlFromRoute', array('route' => &$route, 'languageCode' => $languageCode));
-    if (config::get('server.rewriteEngine') && is_readable('.htaccess')) {
-      $url = self::getBasePath() . $route;
-    }
-    else {
-      $url = $_SERVER['SCRIPT_NAME'] . '/' . $route;
-    }
+    $url = self::getRouteBasePath() . $route;
     return $url;
   }
 
@@ -124,7 +129,7 @@ class server {
       $options['attributes']['class'][] = 'active';
     }
     $href = self::getUrlFromRoute($route, $languageCode);
-    $link = sprintf('<a href="%s" %s>%s</a>', $href, self::setAttributes($options['attributes']), $text);
+    $link = sprintf('<a href="%s" %s>%s</a>', $href, okc::setAttributes($options['attributes']), $text);
     return $link;
   }
 
@@ -133,15 +138,6 @@ class server {
    */ 
   static function getBasePath() {
     return str_replace('index.php', '', $_SERVER['SCRIPT_NAME']);
-  }
-
-  // @FIXME : move somewhere else (note : thank you drupal)
-  function setAttributes($attributes = array()) {
-    foreach ($attributes as $attribute => &$data) {
-      $data = implode(' ', (array) $data);
-      $data = $attribute . '="' . $data . '"';
-    }
-    return $attributes ? ' ' . implode(' ', $attributes) : '';
   }
 
 }
