@@ -1,5 +1,5 @@
 <?php
-namespace okc\p18nUrlPrefix;
+namespace okc\i18nUrlPrefix;
 
 use okc\i18n\i18n;
 use okc\config\config;
