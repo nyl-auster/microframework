@@ -4,7 +4,18 @@ namespace okc\view;
 use okc\events\events;
 
 /**
- * Generic template engine class, Usable outside of okc framework.
+ * Generic template class. Render a template file with variables.
+ *
+ * @code
+ * print new view('path/to/my/view.php', array('myvars' => 'myvalue'));
+ * @endcode
+ *
+ * A view my be rendered inside another view :
+ * @code
+ * $view new view('path/to/my/view.php', array('myvars' => 'myvalue'));
+ * $view->setParentView('path/to/parentView.php');
+ * print $view;
+ * @endcode
  */
 class view {
 
