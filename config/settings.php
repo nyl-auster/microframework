@@ -1,11 +1,13 @@
 <?php
 /**
  * @file
- * app settings
+ * okc framework settings
  * copy to app/config and edit to override
  */
 
 return array(
+
+  'server.rewriteEngine' => FALSE,
 
   // default translation language
   'i18n.language.default' => 'en-EN',

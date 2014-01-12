@@ -2,6 +2,7 @@
 namespace okc\server;
 
 use okc\events\events;
+use okc\config\config;
 
 /**
  * Map a route to a callable.
@@ -92,7 +93,12 @@ class server {
    */
   static function getUrlFromRoute($route, $languageCode = NULL) {
     events::fire('serverGetUrlFromRoute', array('route' => &$route, 'languageCode' => $languageCode));
-    $url = $_SERVER['SCRIPT_NAME'] . '/' . $route;
+    if (config::get('server.rewriteEngine') && is_readable('.htaccess')) {
+      $url = '/' . $route;
+    }
+    else {
+      $url = $_SERVER['SCRIPT_NAME'] . '/' . $route;
+    }
     return $url;
   }
 
