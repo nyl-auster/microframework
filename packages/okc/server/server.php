@@ -77,10 +77,22 @@ class server {
    *   e.g : for url "www.mydomain/index.php/my/route?argument=1, this function wille return "my/route".
    */
   static function getRouteFromUrl() {
-    $route = isset($_SERVER['PATH_INFO']) ? parse_url(trim($_SERVER['PATH_INFO'], '/'), PHP_URL_PATH) : '';
+    $route = '';
+    $route = trim(str_replace(self::routeBasePath(), '', $_SERVER['REQUEST_URI']), '/');
     events::fire('serverGetRouteFromUrl', array('route' => &$route));
     return $route;
 
+  }
+
+  /**
+   * Treat differently "index.php" in url, if rewriteEngine is enabled or not.
+   * We need this to correctly get routes from url and build links from route.
+   */
+  function routeBasePath() {
+    if (config::get('server.rewriteEngine') && is_readable('.htaccess')) {
+      return self::getBasePath();
+    }
+    return $_SERVER['SCRIPT_NAME'];
   }
 
   /**
