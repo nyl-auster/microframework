@@ -32,36 +32,35 @@ class packages {
 
     foreach($this->packagesDirectories as $packagesDirectory) {
 
-    // scan vendors
-    if ($directoryVendors = opendir($packagesDirectory)) {
-      while (FALSE !== ($vendor = readdir($directoryVendors))) {
-        if (!in_array($vendor, array('.', '..', 'README.md'))) {
+      // scan vendors
+      if (!is_dir($packagesDirectory))  continue;
 
-          // scan packages
-          if ($directoryPackage = opendir("$packagesDirectory/$vendor")) {
-            while (FALSE !== ($package = readdir($directoryPackage))) {
-              if (!in_array($package, array('.', '..'))) {
+      if ($directoryVendors = opendir($packagesDirectory)) {
+        while (FALSE !== ($vendor = readdir($directoryVendors))) {
+          if (!in_array($vendor, array('.', '..'))) {
 
-                $packages["$vendor.$package"] = array(
-                  'package' => $package,
-                  'vendor' => $vendor,
-                  'path' => "$packagesDirectory/$vendor/$package",
-                );
+            // scan packages
+            if (!is_dir("$packagesDirectory/$vendor")) continue;
 
+            if ($directoryPackage = opendir("$packagesDirectory/$vendor")) {
+              while (FALSE !== ($package = readdir($directoryPackage))) {
+                if (!in_array($package, array('.', '..'))) {
+                  $packages["$vendor.$package"] = array(
+                    'package' => $package,
+                    'vendor' => $vendor,
+                    'path' => "$packagesDirectory/$vendor/$package",
+                  );
+                }
               }
-            }
-          } // end scan each vendor directory
+              closedir($directoryPackage);
+            } // end scan each vendor directory
 
-
+          }
         }
-      }
-    } // end scan packages directory
-
-    closedir($directoryPackage);
-    closedir($directoryVendors);
+        closedir($directoryVendors);
+      } // end scan packages directory
 
     }
-
     return self::$packages[(int)$enabledOnly] = $packages;
   }
 
