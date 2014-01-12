@@ -19,3 +19,8 @@ Features :
 * Customizable 404 and 403 pages with custom resources
 * config API to hold app configuration
 
+Installation :
+---------------
+
+Clone repository, rename example.app/ to app/
+

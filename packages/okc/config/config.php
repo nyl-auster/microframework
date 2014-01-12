@@ -49,7 +49,7 @@ class config {
     // then look for other settings or overrides in those directories.
     $configFiles = array(
       "config/$type.php",
-      "user/config/$type.php",
+      "app/config/$type.php",
     );
 
     // merge all this.
