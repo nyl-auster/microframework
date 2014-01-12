@@ -1,47 +1,92 @@
 <?php
 namespace okc\config;
 
+use okc\packages\packages;
+
 /**
  * Config api.
- *
- * @FIXME config folder hardcoded.
- * @TODO find how to handle variable overrides, we do need this feature to make framework work.
- *
- * config::get('okc.i18n.settings');
+ * config::get($type, $name');
  */
 class config {
 
   static protected $settings = array();
+  static protected $config = array();
+  protected $packages = null;
 
-  function __construct($settings) {
-    self::$settings = $settings;
-  }
-
-  function get($key) {
-    if (isset(self::$settings)) {
-      return self::$settings[$key];
-    }
+  function __construct(packages $packages) {
+    $this->packages = $packages;
   }
 
   /**
-   * $configFile = "vendorName.packageName.fileName"
-  static function get($configFile) {
-    if (isset(self::$settings[$configFile])) {
-      return self::$settings[$configFile];
+   * Shortcut to get settings var quickly
+   */
+  function get($key) {
+    return self::$config['settings'][$key];
+  }
+
+  function getByType($type, $key = null) {
+    if ($key) {
+      return self::$config[$type][$key];
+    }
+    return self::$config[$type];
+  }
+
+  /**
+   * @param string $type
+   *   'settings', 'translations', filename without extension
+   */
+  function load($type) {
+
+    $config = array();
+
+    if (isset(self::$config[$type])) {
+      return self::$config[$type];
     }
 
-    $configFileParts = explode('.', $configFile);
-    $configFileName = array_pop($configFileParts);
-    $configFileParts[] = 'config';
-    $configFileParts[] = $configFileName;
-    $configPath = implode(DIRECTORY_SEPARATOR, $configFileParts);
-    $config = include("$configPath.php");
-    if ($config == 1) {
-      $config = array();
+    // first get packages config.
+    $config = $this->invokePackagesConfig($type);
+
+    // then look for other settings or overrides in those directories.
+    $configFiles = array(
+      "config/$type.php",
+      "user/config/$type.php",
+    );
+
+    // merge all this.
+    foreach ($configFiles as $configFile) {
+      $configOverrides = array();
+      if (is_readable($configFile)) {
+        $configInclude = include $configFile;
+        if ($configInclude != 1) {
+           $configOverrides = $configInclude;
+        }
+      }
+      $config = array_merge($config, $configOverrides);
     }
-    return self::$settings[$configFile] = $config;
+
+    return self::$config[$type] = $config;  
+
   }
-  */
+
+  function invokePackagesConfig($type) {
+    $config = array();
+    foreach ($this->packages->getList() as $packageId => $packageDatas) {
+      $filepath = $packageDatas['path'] . "/config/$type.php";
+      if (is_readable($filepath)) {
+        $array = include $filepath;
+        if ($array != 1) {
+          foreach ($array as $key => $value) {
+            $config[$key] = $value;
+          }
+        }
+      }
+    }
+    return $config;
+  }
+
+  function getAll() {
+    return self::$config;
+  }
 
 }
 

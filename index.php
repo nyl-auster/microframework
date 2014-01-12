@@ -12,27 +12,20 @@ set_include_path(implode(PATH_SEPARATOR, array(get_include_path(), 'packages', '
 // register autoloader.
 spl_autoload_register(function($class){ require_once preg_replace('#\\\|_(?!.+\\\)#','/',$class).'.php';});
 
-$packagesManager = new packages('packages', 'config');
+// instanciate package manager and okc global class
+$packagesManager = new packages('packages');
 
-$okc = new okc($packagesManager);
+$config = new config($packagesManager);
+$config->load('settings');
 
-// instanciate configuration
-$settings = $okc->invokePackagesConfig('settings');
-$config = new config($settings);
+$events = new events($config->load('listeners'));
 
-// instanciate events manager
-$listeners = $okc->invokePackagesConfig('listeners');
-$events = new events($listeners);
+new i18n($config->load('translations'));
 
 $events->fire('frameworkBootstrap');
 
-// instanciate translations
-$translations = $okc->invokePackagesConfig('translations');
-new i18n($translations);
-
 // fetch a resource according to current requested Url.
-$routes = $okc->invokePackagesConfig('routes');
-$server = new server($routes);
+$server = new server($config->load('routes'));
 print $server->getResponse($server->getRouteFromUrl());
 
 $events->fire('frameworkShutdown');

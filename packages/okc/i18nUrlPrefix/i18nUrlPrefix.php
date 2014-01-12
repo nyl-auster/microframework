@@ -1,5 +1,5 @@
 <?php
-namespace okc\i18nUrlPrefix;
+namespace okc\p18nUrlPrefix;
 
 use okc\i18n\i18n;
 use okc\config\config;
@@ -58,7 +58,7 @@ class i18nUrlPrefix extends i18n {
    * return array
    */
   protected function getUrlPrefixes() {
-    $prefixes = config::get('i18n.urlPrefixes');
+    $prefixes = config::get('i18n.url.prefixes');
     return $prefixes;
   }
 

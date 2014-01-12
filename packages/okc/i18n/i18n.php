@@ -50,7 +50,7 @@ class i18n {
    *   e.g fr-FR, en-EN etc...
    */
    public function getLanguage() {
-     return config::get('i18n.defaultLanguage');
+     return config::get('i18n.language.default');
    }
 
 }

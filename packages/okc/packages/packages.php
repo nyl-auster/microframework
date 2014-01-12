@@ -7,14 +7,13 @@ namespace okc\packages;
 class packages {
 
   protected $packagesDirectory = '';
-
   static $packages;
 
   /**
    * @param string $packagesDirectory
    *   name of directory containing all packages
-   * @param string $packageConfigDirectory
-   *   name of directory containing config files inside each packages
+   * @param array $enabledPackages
+   *   List of enabled packages.
    */
   function __construct($packagesDirectory) {
     $this->packagesDirectory = $packagesDirectory;
@@ -46,13 +45,7 @@ class packages {
                   $metadatas = include "$this->packagesDirectory/$vendor/$package/config/package.php";
                 }
 
-                if (!isset($metadatas['enabled']) || (!$metadatas['enabled'] && $enabledOnly)) {
-                  continue;
-                }
-                
                 $packages[$packageId] = array(
-                  'name' => $metadatas['name'],
-                  'enabled' => $metadatas['enabled'],
                   'package' => $package,
                   'vendor' => $vendor,
                   'path' => "$this->packagesDirectory/$vendor/$package",
