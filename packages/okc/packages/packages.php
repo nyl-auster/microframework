@@ -8,7 +8,6 @@ class packages {
 
   protected $packagesDirectories = '';
   protected static $packages;
-  protected $coreVendor;
 
   /**
    * @param string $packagesDirectories
@@ -16,9 +15,8 @@ class packages {
    * @param array $enabledPackages
    *   List of enabled packages.
    */
-  function __construct($packagesDirectories, $coreVendor = 'okc') {
+  function __construct($packagesDirectories) {
     $this->packagesDirectories = $packagesDirectories;
-    $this->coreVendor = $coreVendor;
   }
 
   /**
