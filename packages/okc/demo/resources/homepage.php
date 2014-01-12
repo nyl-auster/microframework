@@ -6,9 +6,11 @@ use okc\view\view;
 
 class homepage extends resource {
 
-  // some very basic get implementation. We could have simply returned a string.
   function get() {
-     return new view('packages/okc/demo/views/homepage.php');
+     $view = new view('packages/okc/demo/views/homepage.php');
+     // insert homepage.php in layout.php template, to build a pretty homepage.
+     $view->setParentView('packages/okc/demo/views/layout.php');
+     return $view;
   }
 
 }

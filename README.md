@@ -10,22 +10,22 @@ Requirements
 
 Features : 
 ---------
-* Controller are "resources". A resource is a class that represents any displayed piece of content of the application.
-* router to map resources to web url
-* Template engine, wrapper templates
+* Controller are "resources" class. A resource object represents any piece of content of the application.
+* router : map url to resources
+* Template enginei with parent / child system.
 * Events & listeners manager
 * String localisation
 * PSR-0 autoloader 
 * Customizable 404 and 403 pages with custom resources
-* config API to hold app configuration
+* config API to hold app configuration.
 
 Installation :
 ---------------
 
-Clone repository, rename example.app/ to app/
-Add your custom code in folder.
+Clone master (or download latest release), rename example.app/ to app/
+Add your custom code in newly created directory.
 
 Documentation :
 -----------------
+Take a look at the demo package in packages/okc/demo for a code example.
 
-See demo packages in packages/okc/demo for a code example
