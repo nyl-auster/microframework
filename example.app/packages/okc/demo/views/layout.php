@@ -7,7 +7,7 @@ use okc\i18n\i18n;
   <head>
     <title> OKC FRAMEWORK </title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <link href="<?php echo server::$basePath ?>packages/okc/demo/assets/style.css" rel="stylesheet"/>
+    <link href="<?php echo server::$basePath ?>app/packages/okc/demo/assets/style.css" rel="stylesheet"/>
   </head>
 <body>
   <header>

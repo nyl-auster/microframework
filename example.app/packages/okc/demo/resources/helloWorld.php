@@ -23,8 +23,8 @@ class helloWorld extends resource {
     $variables = array(
       'content' => i18n::t('hello.world.test.page'),
     );
-    $view = new view('packages/okc/demo/views/helloWorld.php', $variables);
-    $view->setParentView('packages/okc/demo/views/layout.php');
+    $view = new view('app/packages/okc/demo/views/helloWorld.php', $variables);
+    $view->setParentView('app/packages/okc/demo/views/layout.php');
     return $view;
   }
 
