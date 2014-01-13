@@ -5,7 +5,7 @@ use okc\i18n\i18n;
 use okc\config\config;
 
 /**
- * Alter routes from okc server to add language prefix url.
+ * Alter routes from okc server to add language prefix to urls.
  * Overrides getLanguage method to fetch current active language in url.
  *
  * @FIXME inject settings.
@@ -35,6 +35,9 @@ class i18nUrlPrefix extends i18n {
 
   /**
    * Get current active language.
+   *
+   * @FIXME not working anymore. And path_info is no more used since it won't work
+   * with rewriteEngine enabled...
    *
    * return string
    *   e.g fr_FR, en_EN

@@ -55,6 +55,7 @@ class server {
       $resource = new $class();
     }
 
+
     // no resource found, serve the 404 error resource
     if (!isset($resource)) {
       $resource = new $this->routes['__http404']['class'];

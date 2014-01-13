@@ -6,7 +6,6 @@ namespace okc\okc;
  */
 class okc {
 
-  // @FIXME : move somewhere else (note : thank you drupal)
   function setAttributes($attributes = array()) {
     foreach ($attributes as $attribute => &$data) {
       $data = implode(' ', (array) $data);
@@ -15,30 +14,17 @@ class okc {
     return $attributes ? ' ' . implode(' ', $attributes) : '';
   }
 
-  function dpr($var) {
-    echo '<pre>';
-    print_r($var);
-    echo '</pre>';
-  }
-
-  function dpre($var) {
+  function pre($var) {
     echo '<pre>';
     print_r($var);
     echo '</pre>';
     exit;
   }
 
-  function dvd($var) {
+  function pr($var) {
     echo '<pre>';
     print_r($var);
     echo '</pre>';
-  }
-
-  function dve($var) {
-    echo '<pre>';
-    print_r($var);
-    echo '</pre>';
-    exit;
   }
 
 }
