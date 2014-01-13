@@ -14,7 +14,8 @@ class homepage extends resource {
     $out .= '<html>';
     $out .= '<body>';
     $out .= 'Hello ! <br/><br/>';
-    $out .= 'Please rename <strong>example.app</strong> directory to <strong>app</strong> to install and start coding.';
+    $out .= 'Please <em>copy</em> <strong>example.app</strong> directory to <strong>app</strong> to install and start coding.<br />';
+    $out .= 'Then come back here and refresh this page.';
     $out .= '</body>';
     $out .= '</html>';
     return $out;
