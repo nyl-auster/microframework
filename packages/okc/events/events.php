@@ -30,7 +30,7 @@ class events {
    * @param array $params
    *   variables to pass to the listener
    */
-  function fire($event, $params = array()) {
+  static function fire($event, $params = array()) {
     if (!isset(self::$listeners[$event])) return false;
     foreach (self::$listeners[$event] as $class => $config) {
       call_user_func_array("$class::$event", $params);

@@ -16,7 +16,7 @@ class i18nView {
    * current language.
    * Search template if a fr_FR or en_EN subfolder in views folder.
    */
-  function viewSetFile(&$file) {
+  static function viewSetFile(&$file) {
     $languageCode = i18n::getLanguage();
     $file_parts = explode(DIRECTORY_SEPARATOR, $file);
     $file_name = array_pop($file_parts);

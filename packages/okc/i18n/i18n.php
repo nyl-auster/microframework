@@ -34,7 +34,7 @@ class i18n {
    *   fr_FR, en_EN etc... If not provided, this function try to determine
    *   current active language with getLanguage() method.
    */
-  public function t($stringId, $languageCode = NULL) {
+  static public function t($stringId, $languageCode = NULL) {
     $languageCode = $languageCode ? $languageCode : self::getLanguage();
     if (isset(self::$translations[$languageCode][$stringId])) {
        return self::$translations[$languageCode][$stringId];
@@ -49,7 +49,7 @@ class i18n {
    * return string
    *   e.g fr-FR, en-EN etc...
    */
-   public function getLanguage() {
+   static public function getLanguage() {
      return config::get('i18n.language.default');
    }
 

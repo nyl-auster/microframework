@@ -24,14 +24,14 @@ class config {
   /**
    * Shortcut to get settings var quickly
    */
-  function get($key) {
+  static function get($key) {
     return self::$config['settings'][$key];
   }
 
   /**
    * Get any config var from any file.
    */
-  function getByType($type, $key = null) {
+  static function getByType($type, $key = null) {
     if ($key) {
       return self::$config[$type][$key];
     }

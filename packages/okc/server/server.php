@@ -49,12 +49,11 @@ class server {
   public function getResource($route = '') {
 
     // search a resource matching our $route. Skip routes beginning by "__".
-    // a hack to not server __http404 and 403 resources by url for now.
+    // a hack to not serve __http404 and 403 special resources by url.
     if (isset($this->routes[$route]) && strpos($route, '__') === FALSE) {
       $class = $this->routes[$route]['class'];
       $resource = new $class();
     }
-
 
     // no resource found, serve the 404 error resource
     if (!isset($resource)) {
@@ -88,7 +87,6 @@ class server {
    *   e.g : for url "www.mydomain/index.php/my/route?argument=1, this function wille return "my/route".
    */
   static function getRouteFromUrl() {
-    $route = '';
     $route = substr_replace($_SERVER['REQUEST_URI'], '', 0, strlen(self::getRouteBasePath()));
     events::fire('serverGetRouteFromUrl', array('route' => &$route));
     return $route;
@@ -99,7 +97,7 @@ class server {
    * Treat differently "index.php" in url, if rewriteEngine is enabled or not.
    * We need this to correctly set routes from url and build links from route.
    */
-  function getRouteBasePath() {
+  static function getRouteBasePath() {
     $routeBasePath = '';
     if (config::get('server.rewriteEngine') && is_readable('.htaccess')) {
       $routeBasePath = self::getBasePath();
