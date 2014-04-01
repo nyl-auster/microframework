@@ -1,6 +1,5 @@
 <?php
 use okc\server\server;
-use okc\i18n\i18n;
 ?>
 
 <html>
@@ -37,7 +36,7 @@ use okc\i18n\i18n;
 
 <div id="wrapper">
 
-  <?php echo $childView ?>
+  <?php echo $childTemplate ?>
 
 </div>
 

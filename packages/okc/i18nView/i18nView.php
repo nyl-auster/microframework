@@ -4,8 +4,8 @@ namespace okc\i18nView;
 use okc\i18n\i18n;
 
 /**
- * Make views translatable :
- * search for views in a subdirectory with langcode if existing.
+ * Make templates translatable :
+ * search for templates in a subdirectory with langcode if existing.
  */
 class i18nView {
 
@@ -14,7 +14,7 @@ class i18nView {
    *
    * Add suggestions template to load a different template according to
    * current language.
-   * Search template if a fr_FR or en_EN subfolder in views folder.
+   * Search template if a fr_FR or en_EN subfolder in templates folder.
    */
   static function viewSetFile(&$file) {
     $languageCode = i18n::getLanguage();

@@ -1,45 +1,42 @@
 <?php
-namespace okc\view;
-
-use okc\events\events;
+namespace okc\template;
 
 /**
  * Generic template class. Render a template file with variables.
  *
  * @code
- * print new view('path/to/my/view.php', array('myvars' => 'myvalue'));
+ * print new template('path/to/my/template.php', array('myvars' => 'myvalue'));
  * @endcode
  *
  * A view my be rendered inside another view :
  * @code
- * $view new view('path/to/my/view.php', array('myvars' => 'myvalue'));
- * $view->setParentView('path/to/parentView.php');
+ * $view new template('path/to/my/template.php', array('myvars' => 'myvalue'));
+ * $view->setParentView('path/to/parentTemplate.php');
  * print $view;
  * @endcode
  */
-class view {
+class template {
 
   protected $variables = array();
   protected $file = '';
-  protected $parentView = null;
-  protected $childViewVariable = null;
+  protected $parentTemplate = null;
+  protected $childTemplateVariable = null;
 
   /**
    * @param string $file
-   *   full relative path to the template file.
+   *   Relative path to the template file.
    * @param array $variables
    *   associatives array of variables to pass to the template file.
-   * @param string $childView
+   * @param string $childTemplateVariable
    *   Wrapper template will render child view printing this variable name.
    */
-  public function __construct($file, $variables = array(), $childViewVariable = 'childView') {
+  public function __construct($file, $variables = [], $childTemplateVariable = 'childTemplate') {
     $this->setFile($file);
     $this->setVariables($variables);
-    $this->childViewVariable = $childViewVariable;
+    $this->childTemplateVariable = $childTemplateVariable;
   }
 
   function setFile($file) {
-    events::fire('viewSetFile', array('file' => &$file));
     return $this->file = $file;
   }
 
@@ -72,9 +69,9 @@ class view {
    */
   public function render() {
     $output = $this->includeParse($this->file, $this->variables); 
-    if ($this->parentView) {
-      $this->parentView->variables[$this->childViewVariable] = $output;
-      $output = $this->parentView->render();     
+    if ($this->parentTemplate) {
+      $this->parentTemplate->variables[$this->childTemplateVariable] = $output;
+      $output = $this->parentTemplate->render();
     }
     return $output;
   }
@@ -92,12 +89,8 @@ class view {
     return $ob_content;
   }
 
-  public function setParent($file, $variables = array(), $language = NULL) {
-    $this->setParentView($file, $variables = array(), $language = NULL);
-  }
-
   /**
-   * call this function in a template allow to wrap him in a wrapper template
+   * call this method allow to wrap view inside a wrapper template
    * @param string $file
    *   template file to use to wrap this view
    * @param string $variableName
@@ -106,9 +99,9 @@ class view {
    * @param array $variables
    *   Allow to overrides parent view variables if needed.
    */
-  public function setParentView($file, $variables = array(), $language = NULL) {
+  public function setParent($file, $variables = array(), $language = NULL) {
     if ($file) {
-      $this->parentView = new view($file, $variables, $language);
+      return $this->parentTemplate = new template($file, $variables, $language);
     }
   }
 

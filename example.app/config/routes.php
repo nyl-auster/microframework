@@ -1,7 +1,7 @@
 <?php
 
 // define your own homepage here :
-return array(
-  '' => array('class' => 'okc\demo\resources\homepage'),
-);
+return [
+  '' => ['class' => 'okc\demo\resources\homepage'],
+];
 

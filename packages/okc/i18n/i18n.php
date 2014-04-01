@@ -1,8 +1,6 @@
 <?php
 namespace okc\i18n;
 
-use okc\config\config;
-
 /**
  * Translates strings Id to a localized string.
  * e.g :
@@ -50,7 +48,7 @@ class i18n {
    *   e.g fr-FR, en-EN etc...
    */
    static public function getLanguage() {
-     return config::get('i18n.language.default');
+     return \app::setting('i18n.language.default');
    }
 
 }

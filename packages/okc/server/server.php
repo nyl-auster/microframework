@@ -2,8 +2,7 @@
 namespace okc\server;
 
 use okc\events\events;
-use okc\config\config;
-use okc\okc\okc;
+
 
 /**
  * Map a route to a resource class.
@@ -99,7 +98,7 @@ class server {
    */
   static function getRouteBasePath() {
     $routeBasePath = '';
-    if (config::get('server.rewriteEngine') && is_readable('.htaccess')) {
+    if (\app::setting('server.rewriteEngine') && is_readable('.htaccess')) {
       $routeBasePath = self::getBasePath();
     }
     else {
@@ -132,7 +131,7 @@ class server {
       $options['attributes']['class'][] = 'active';
     }
     $href = self::getUrlFromRoute($route, $languageCode);
-    $link = sprintf('<a href="%s" %s>%s</a>', $href, okc::setAttributes($options['attributes']), $text);
+    $link = sprintf('<a href="%s">%s</a>', $href, $text);
     return $link;
   }
 

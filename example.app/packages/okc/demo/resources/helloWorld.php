@@ -5,7 +5,7 @@
 namespace okc\demo\resources;
 
 use okc\resource\resource;
-use okc\view\view;
+use okc\template\template;
 use okc\i18n\i18n;
 
 /**
@@ -20,12 +20,12 @@ class helloWorld extends resource {
    * been bring by our model.
    */
   function get() {
-    $variables = array(
+    $variables = [
       'content' => i18n::t('hello.world.test.page'),
-    );
-    $view = new view('app/packages/okc/demo/views/helloWorld.php', $variables);
-    $view->setParentView('app/packages/okc/demo/views/layout.php');
-    return $view;
+    ];
+    $template = new template('okc/demo/templates/helloWorld.php', $variables);
+    $template->setParent('okc/demo/templates/layout.php');
+    return $template;
   }
 
 }
